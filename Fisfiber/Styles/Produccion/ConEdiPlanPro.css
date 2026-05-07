@@ -1,0 +1,26 @@
+﻿
+
+
+/*Estilo de celdas*/
+.celda-d {
+    width: 100%;
+    border: solid 2px var(--whitef);
+    background-color: var(--bs-bgwhitef);
+    padding: 0;
+    margin: 0;
+    text-align:center;
+}
+
+.celda-h {
+    background-color: var(--bs-darkfl);
+    color: var(--whitef);
+    width: 100%;
+    padding: 0 8px;
+    padding-top: 5px;
+    text-align: center;
+    border: 1px solid white;
+}
+
+.celda-d > div {
+    border-bottom: 1px solid white;
+}

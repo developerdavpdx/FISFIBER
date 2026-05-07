@@ -1,0 +1,176 @@
+﻿
+@{
+    ViewBag.Title = "Reporte Planes Generados";
+}
+<link rel="stylesheet" href="~/Styles/PlanProduccion/ConsultaPlanProduccion.css">
+<link rel="stylesheet" href="~/Styles/PlanProduccion/PlanPro.css">
+
+<div class="pt-2 ms-3 me-4">
+    <div class="row pt-1 ps-3 pe-3 pt-4">
+        <div class="col-12 text-center">
+            <h5>
+                Planes Generados
+            </h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 body-table">
+            <table id="PlanesEmbGenerados"
+                   planesEmbG="@Url.Action("GetPlanesEmbGenerados","PlanEmb")"
+                   planesEmbGDetail="@Url.Action("GetPlanEmbGeneradosDetails","PlanEmb")"
+                   class="table table-striped table-bordered table-fixed">
+                <thead>
+                    <tr>
+                        <th>Folio</th>
+                        <th>FechaCreacion</th>
+                        <th>TotalPedidos</th>
+                        <th>TotalAutorizados</th>
+                        <th>TotalNoAutorizados</th>
+                        <th>TotalClientes</th>
+                        <th>TotalArticulos</th>
+                        <th>TotalConCita</th>
+                        <th>TotalEntregaParcial</th>
+                        <th>TotalPiezasEntrega</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color:lightgray">
+                        <td style="text-align:center" colspan="8">SIN DATOS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row pb-2 mt-3 d-none seccionBtns">
+        <div class="col-md-6 text-start pt-1">
+            <h5 style="margin-bottom:0px;">PORCENTAJE CUMPLIMIENTO : 
+                <label class="fw-bold px-2 py-1" id="porcentaje"></label>
+            </h5>
+        </div>
+        <div class="col-md-6 d-flex justify-content-end">
+            <button id="DescargarReporte"
+                    class="btn btn-success" style="height: 95%;">
+                <i class="fas fa-file-excel me-2"></i>
+                Exportar a Excel
+            </button>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col-12">
+            <div class="card bg-light mb-3">
+                <div class="card-header">
+                    <div id="PPHeader" class="d-none bg-white rounded box-shadow">
+                        <div class="card">
+                            <div class="card-body ReportHeaderv2">
+                                <div class="row">
+                                    <div class="col-6 text-start d-flex align-items-center justify-content-start">
+                                        <img src="/Images/logoFisfiber.png" alt="" class="w-50">
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <div class="row">
+                                            <div class="col-12 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2">
+                                                        FECHA DE LIBERACIÓN: <span id="fecha-liberacion">@ViewBag.FechaLib</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2">
+                                                        @ViewBag.CodeISO
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer text-right">
+                                                    <span class="pe-2">
+                                                        REVISION: <span id="">@ViewBag.Revision</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-9 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2">
+                                                        FECHA DE REVISIÓN: <span id="fecha-revisionPv">@ViewBag.FechaRev</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 text-start">
+                                                <div class="TitleReportContainer text-right">
+                                                    <span class="pe-2">
+                                                        NIVEL @ViewBag.Nivel
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2">
+                                                        FOLIO: <span id="folioPEG"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer text-right">
+                                                    <span class="pe-2">
+                                                        FECHA: <span id="fecha-documentoPEG"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 id="PPHeaderTitle" class="text-center">
+                        Detalle de plan de producción <strong id="folioseleccionado"></strong>
+                    </h5>
+                </div>
+                <div id="reportbyline" class="card-body pt-2">
+                    <h5 class="card-title">!Ningún plan seleccionado!</h5>
+                    <p class="card-text">Aquí podrás visualizar el detalle de el plan de producción seleccionado.</p>
+                </div>
+
+            </div>
+            <div class="row body-table mx-1 table-scroll d-none" id="contentTable">
+
+                <table id="PlanesGeneradosDetalle"
+                       class="table table-striped table-bordered table-fixed "
+                       style="table-layout:fixed">
+
+                    <thead>
+                        <tr>
+                            <th width="130px">Unidad</th>
+                            <th width="130px">Viaje</th>
+                            <th width="130px">F.Entrega</th>
+                            <th width="130px">Pedido</th>
+                            <th width="130px">Código Cliente</th>
+                            <th width="220px">Cliente</th>
+                            <th width="130px">Hora Inicio</th>
+                            <th width="130px">Hora Fin</th>
+                            <th width="230px">Articulo</th>
+                            <th width="130px">Núm Rollos</th>
+                            <th width="130px">Piezas Entrega</th>
+                            <th width="130px">Estatus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="10" class="dt-empty">No hay datos disponibles en la tabla</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/Scripts/PlanEmb/PlanesGenerados.js?v=1.0.4"></script>
+

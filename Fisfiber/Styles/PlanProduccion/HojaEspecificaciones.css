@@ -1,0 +1,28 @@
+﻿.BoldFormat {
+    font-weight:bold;
+}
+.WhiteLetter {
+    color: white;
+}
+.border1 {
+    border: 2px solid black;
+    margin-bottom: -2px;
+}
+.separador {
+    margin-top: 1rem;
+}
+.borderRigth {
+    border-right: 0px;
+}
+.verticalText {
+    writing-mode: vertical-rl; /* Cambia la dirección del texto a vertical */
+    transform: rotate(180deg); /* Gira el texto para que empiece desde arriba hacia abajo */
+    padding: 1em;
+    border-left: 0px;
+}
+.FuenteLetter{
+    font-size: small
+}
+.titulosEmpaque{
+    min-height: 9.6rem;
+}

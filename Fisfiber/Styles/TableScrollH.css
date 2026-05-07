@@ -1,0 +1,21 @@
+﻿/*HEADER FIJO*/
+
+.table-scroll {
+    max-height: 70vh; /* Ajusta según tu layout */
+    overflow-y: auto;
+    position: relative;
+}
+
+    /* HEADER FIJO */
+    .table-scroll thead th {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background-color: #fff;
+        box-shadow: 0 2px 6px rgba(0, 88, 161, 0.25);
+    }
+
+    /* Opcional: evitar selección rara */
+    .table-scroll thead th {
+        user-select: none;
+    }

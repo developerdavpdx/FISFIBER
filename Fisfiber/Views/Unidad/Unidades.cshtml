@@ -1,0 +1,139 @@
+﻿@model List<Fisfiber.Models.UnidadViewModel>
+@using System.Web.Mvc
+
+@{
+    ViewBag.Title = "Unidades Carga";
+}
+
+<div class="pt-3 ps-3 pe-4">
+    <div class="row mx-4 text-white bg-dark p-3 rounded align-items-center">
+        <h2 class="col-6 text-center" style="background-color: #343a40; height: 50%;">
+            Listado de Unidades
+        </h2>
+
+        <div class="col-6 text-start d-flex align-items-center justify-content-center">
+            <img src="/Images/logoFisfiber.png" alt="" class="w-50">
+        </div>
+    </div>
+    <div class="row mx-4 mt-2">
+        <div class="col-4">
+            <button id="DescargarUnidades" class="btn btn-success" style="height: 95%;">
+                <i class="fas fa-file-excel me-2"></i>Exportar a Excel
+            </button>
+        </div>
+    </div>
+    <div class="row mx-4 mt-2 align-content-center table-responsive table-bordered table-striped" id="contUnidades"
+         action="@Url.Action("ActualizarUnidad","Unidad")"
+         style="width: 97% !important;"
+         >
+        <table class="table mt-3" id="UnidadesCarga"
+               style="background-color: rgb(248,249,250); min-width: 1600px !important;">
+            <thead style="background-color: #1e76bd; color: white;">
+                <tr>
+                    <th width="50px"></th>
+                    <th width="50px">ID</th>
+                    <th width="120px">Tipo de Unidad</th>
+                    <th width="100px">Capacidad</th>
+                    <th width="100px">Estado</th>
+                    <th>Comentarios</th>
+                    <th>Operador</th>
+                    <th>Ayudante1</th>
+                    <th>Ayudante2</th>
+                    <th>Ayudante3</th>
+                    <th>Ayudante4</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var unidad in Model)
+                {
+                    <tr id="row-@unidad.Id">
+                        <td>
+                            <i class="fa-solid bi bi-pencil-square NewTableRowIcon editUnidad"
+                               IdUnidad="@unidad.Id" Com="@unidad.Comentarios" Estado="@unidad.EstadoNombre" 
+                               Operador="@unidad.Operador" Ayud1="@unidad.Ayudante1" Ayud2="@unidad.Ayudante2"
+                               Ayud3="@unidad.Ayudante3" Ayud4="@unidad.Ayudante4"
+                               ></i>
+                        </td>
+                        <td>@unidad.Id</td>
+                        <td>@unidad.TipoUnidad</td>
+                        <td>@unidad.Capacidad</td>
+                        <td>@unidad.EstadoNombre</td>
+                        <td>@unidad.Comentarios</td>
+                        <td>@unidad.Operador</td>
+                        <td>@unidad.Ayudante1</td>
+                        <td>@unidad.Ayudante2</td>
+                        <td>@unidad.Ayudante3</td>
+                        <td>@unidad.Ayudante4</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #343a40;">
+                <h5 class="modal-title text-white">Editar Unidad</h5>
+                <i class="bi bi-x-circle-fill icon-no"
+                   style="color:white; font-size:20px;"
+                   type="button"
+                   data-bs-dismiss="modal"></i>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editId" />
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label for="editOp" class="form-label">Operador</label>
+                        <input id="editOp" class="form-control" type="text" />
+                    </div>
+                    <div class="col-6">
+                        <label for="editEstado" class="form-label">Estado</label>
+                        <select id="editEstado" class="form-select">
+                            @foreach (var estado in ViewBag.EstadosUnidades)
+                            {
+                                <option value="@estado.Estado">@estado.Estado</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label for="editAy1" class="form-label">Ayudante 1</label>
+                        <input id="editAy1" class="form-control" type="text" />
+                    </div>
+                    <div class="col-6">
+                        <label for="editAy2" class="form-label">Ayudante 2</label>
+                        <input id="editAy2" class="form-control" type="text" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label for="editAy3" class="form-label">Ayudante 3</label>
+                        <input id="editAy3" class="form-control" type="text" />
+                    </div>
+                    <div class="col-6">
+                        <label for="editAy4" class="form-label">Ayudante 4</label>
+                        <input id="editAy4" class="form-control" type="text" />
+                    </div>
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="editComentarios" class="form-label">Comentarios</label>
+                    <textarea id="editComentarios" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn text-white" style="background-color: #1e76bd;" id="GuardarUnidad">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Unidad/Unidades.js?v=1.0.5"></script>

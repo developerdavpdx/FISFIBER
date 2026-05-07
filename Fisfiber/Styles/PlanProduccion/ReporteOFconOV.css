@@ -1,0 +1,36 @@
+﻿/*Medias Queris para resoluciones de tabletas (9-11 pulgadas)*/
+@media only screen and (min-width: 750px) and (max-width: 1300px) {
+    /*Separacion en los ceckbox (en las configuraciones de vista)*/
+    .ChecksConfig {
+        padding-bottom: 30px;
+    }
+
+    /*Tablas*/
+    #OV thead, #OV thead *{
+        font-size: 19px;
+    }
+
+    #OV tbody, #OV tbody *{
+        font-size: 17px;
+    }
+
+    /*Botones*/
+    .BtnBuscarDates{
+        font-size: 1rem;
+    }
+
+    /*Campos de Fechas*/
+    .CamposFecha {
+        font-size: 1.1rem;
+        width: 9.5rem;
+    }
+    /*labels de Fechas*/
+    .LabelFecha, .Configurarvista {
+        font-size: 1.1rem;
+    }
+
+    /*Filtros*/
+    #FiltroseOF{
+        left: 2rem;
+    }
+}

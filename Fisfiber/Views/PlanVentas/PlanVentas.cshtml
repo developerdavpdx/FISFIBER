@@ -1,0 +1,274 @@
+﻿
+@{
+    ViewBag.Title = "PlanVentas";
+}
+
+<link rel="stylesheet" href="~/Styles/PlanProduccion/PlanPro.css">
+
+<!--END BARRA DE FLECHAS-->
+<!--CONTENEDOR PRINCIPAL -->
+<div class="pt-3 ps-3 pe-4">
+    <div class="row ps-3 pe-3">
+        <div class="col-12">
+            <!--BARRA DE FLECHAS (PASOS)-->
+            <div class="wrapper position-relative pt-3">
+                <div class="arrow-steps clearfix w-100">
+                    <div class="step current"> <span> Ordenes de venta</span> </div>
+                    <div class="step"> <span>Vista Previa</span> </div>
+                    <div class="step"> <span>Plan generado</span> </div>
+                </div>
+            </div>
+            <div class="mt-4 col-12 text-start d-none">
+                <a id="edicionPP"
+                   configuracion="@Url.Action("GetConfigxUsuarioPE","PlanVentas")"
+                   updateconfiguracion="@Url.Action("InsertaConfigxUsuarioCML","Logistica")"
+                   href="#">
+                    <p class="edicionPP hover-effect-8">
+                        Configuración Monitor Entregas <i class="fa-solid fa-gear"></i>
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--PASO 1 Ordenes Ventas-->
+    <div id="step-1" class="step-content">
+        <div class="row pt-1 ps-3 pe-3 pt-4 mb-3">
+            <div class="col-12 text-center">
+                <h4>
+                    Ordenes de venta pendientes por entregar
+                </h4>
+            </div>
+        </div>
+        <div class="row pt-1 ps-3 pe-3 pt-4 pb-3">
+            <div class="col-md-7">
+                <h6 class="font-weight-bold">
+                    Selección múltiple
+                </h6>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input anycheck" id="selectAll">
+                    <label class="form-check-label" for="selectAll">Seleccionar todas</label>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <form metodo="FiltroFechaIni" class="pt-1 ps-3 pe-3 needs-validation" novalidate>
+                    <div class=" text-center">
+                        <p class="font-weight-bold">Selecciona la fecha a consultar</p>
+                        <div class="row">
+                            <div class="col-12 d-flex align-items-end justify-content-end">
+                                <div class="pe-3 position-relative">
+                                    <input type="date" class="form-control" id="fecha_entregaS" aria-describedby="FIHelp">
+                                    <div class="invalid-feedback position-absolute">
+                                        Seleccione la fecha de referencia.
+                                    </div>
+                                </div>
+                                <button id="btnFechaEntrega" class="btn btn-outline-secondary">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 body-table">
+                <table id="PedidosEntregas"
+                       action="@Url.Action("GetPedidosParaEntregas","PlanVentas")"
+                       ovdetails="@Url.Action("GetOrdenesVentaDetails","Global")"
+                       savemonitor="@Url.Action("SavePlanVentas","PlanVentas")"
+                       urldestino="@Url.Action("GetPedidosEntregasByDocEntry","PlanVentas")"
+                       class="table table-striped table-bordered table-fixed">
+                    <thead>
+                        <tr id="headPE">
+                            <th>Núm. Viaje</th>
+                            <th>F. Pedido</th>
+                            <th>F. Solicitud Producción</th>
+                            <th>F. Original Entrega</th>
+                            <th>F. Entrega</th>
+                            <th>Pedido</th>
+                            <th>Código Cliente</th>
+                            <th>Cliente</th>
+                            <th>Cita</th>
+                            <th>Hora Inicio</th>
+                            <th>Hora Fin</th>
+                            <th>Hora Entrega</th>
+                            <th>Articulo</th>
+                            <th>Cantidad Metros</th>
+                            <th>Núm Rollos</th>
+                            <th>Piezas Entrega</th>
+                            <th>Piezas Entregadas</th>
+                            <th>Cotejado</th>
+                            <th>Direccion</th>
+                            <th>Comentarios</th>
+                            <th>Linea Prod.Real</th>
+                            <th>Dist Recorrida</th>
+                            <th>Autotransporte</th>
+                            <th>Comentarios SN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <!--END PASO 1 Ordenes Ventas-->
+    <!-- Contenido del PASO 2: Vista previa plan -->
+    <div id="step-2" class="step-content">
+        <div class="row pt-1 ps-3 pe-3 pt-4 mb-3">
+            <div class="col-12 text-center">
+                <h5>
+                    Vista Previa
+                </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 body-table table-scroll">
+                <table id="estatus_carga" class="table table-striped table-bordered table-fixed " style="table-layout:fixed">
+                    <thead>
+                        <tr>
+                            <th width="130px">Núm. Viaje</th>
+                            <th width="130px">F. Pedido</th>
+                            <th width="130px">F. Solicitud Producción</th>
+                            <th width="130px">F. Original Entrega</th>
+                            <th width="130px">F. Entrega</th>
+                            <th width="130px">Pedido</th>
+                            <th width="130px">Código Cliente</th>
+                            <th width="220px">Cliente</th>
+                            <th width="130px">Cita</th>
+                            <th width="130px">Hora Inicio</th>
+                            <th width="130px">Hora Fin</th>
+                            <th width="130px">Hora Entrega</th>
+                            <th width="230px">Articulo</th>
+                            <th width="130px">Cantidad Metros</th>
+                            <th width="130px">Núm Rollos</th>
+                            <th width="130px">Piezas Entrega</th>
+                            <th width="130px">Piezas Restantes</th>
+                            <th width="130px">Cotejado</th>
+                            <th width="320px">Direccion</th>
+                            <th width="300px">Comentarios</th>
+                            <th width="130px">Linea Prod.Real</th>
+                            <th width="130px">Entrega Parcial</th>
+                            <th width="130px">Sucursal</th>
+                            <th width="130px">Dist Recorrida</th>
+                            <th width="130px">Autotransporte</th>
+                            <th width="300px">Comentarios SN</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div id="MenuNuevoRegistro">
+            <ul>
+                <li id="addRow">
+                    <i class="bi bi-database-fill-add NewTableRowIcon"></i>
+                    Nuevo registro en blanco
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Contenido del paso 3: Plan generado -->
+    <div id="step-3" class="step-content text-center">
+        <div class="row pt-1 ps-3 pe-3 pt-4 mb-3">
+            <div class="col-12 text-center">
+                <h5>
+                    Plan generado
+                </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="overflow-y:hidden !important" id="vista_previa">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row pb-4 pt-5 pe-3">
+    <div class="col-12 d-flex justify-content-end">
+        <a href="#" id="regresar" class="btn mb-2 mb-md-0 btn-outline prev me-2">Regresar</a>
+        <a href="#" id="continuar" restart="false" class="btn mb-2 mb-md-0 btn-outline next">Continuar</a>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="RangoInicio" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="HeaderTitle">Fecha Consulta</h5>
+            </div>
+            <form metodo="FiltroFechaIni" class="pt-1 ps-3 pe-3 needs-validation" novalidate>
+                <div class="modal-body text-center">
+                    <p class="font-weight-bold">Selecciona la fecha a consultar</p>
+                    <div class="row">
+                        <div class="col-12 d-flex align-items-end justify-content-center">
+                            <div class="pe-3 position-relative">
+                                <input type="date" class="form-control" id="fecha_entrega" aria-describedby="FIHelp">
+                                <div class="invalid-feedback position-absolute">
+                                    Seleccione la fecha de referencia.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer mt-3">
+                    <button type="submit" class="btn btn-outline-secondary">Continuar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Configuracion de Columnas -->
+<div class="modal fade" id="ConfiguracionPP" tabindex="-1" aria-labelledby="Bitacora" aria-hidden="true" data-bs-backdrop="static" @*data-bs-keyboard="false"*@>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content-transparent">
+            <div class="modal-header-transparent" style="display:block !important">
+
+            </div>
+
+            <div class="modal-body text-center">
+                <form metodo="" class="pt-1 ps-3 pe-3 needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="container">
+                                <div class="row pt-1 m-auto">
+                                    <div class="col-md-12 col-lg-12 pb-3">
+                                        <div class="card card-custom bg-white border-white border-0" style="height: 550px">
+                                            <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);">
+                                                <div class="card-header text-right" style="border:none !important">
+                                                    <span class="text-white font-weight-bold fs-6">* Configura las columnas visibles para el plan de producción *</span>
+                                                    <div class="pb-3 pt-2 ps-3 form-check">
+                                                        <input type="checkbox" class="form-check-input anycheck" id="selectAll">
+                                                        <label class="form-check-label text-white font-weight-bold" for="selectAll">Seleccionar todas</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-custom-avatar">
+                                                <img class="img-fluid" src="~/Images/FFISA.png" alt="Avatar">
+                                            </div>
+                                            <div class="card-body d-flex justify-content-start flex-column" id="configuracionPPContainer" style="overflow-y: auto">
+
+                                            </div>
+                                            <div class="card-footer" style="background: inherit; border-color: inherit;text-align:end">
+                                                <a href="#" class="btn btn-outline-secondary" id="GuardaConfigPP">Guardar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/PlanVentas/PlanVentas.js?v=1.0.4"></script>
+

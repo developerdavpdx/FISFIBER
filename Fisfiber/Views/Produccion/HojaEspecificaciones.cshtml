@@ -1,0 +1,526 @@
+﻿
+@{
+    ViewBag.Title = "Hoja de especificaciones";
+}
+
+<link rel="stylesheet" href="~/Styles/Produccion/HojaEspecificaciones.css" />
+
+<div id="HojaEsp" class="w-100 p-2 mt-5 h-100"
+    GetEsp="@Url.Action("GetEspecificaciones","Produccion")"      
+    GetHH="@Url.Action("GetHeaderHoja","Produccion")"      
+    UpdateHH="@Url.Action("UpdateHeaderHoja","Produccion")"      
+    DatosExtras="@Url.Action("GetDatosExtras","Produccion")"      
+     
+>
+
+
+
+    <div class="row col-12 text-center mb-2">
+        <div class="col-1">
+            <button id="UpdateH" type="button" class="btn btn-outline-secondary UpdateH" disabled>
+                Actualizar
+            </button>
+        </div>
+        <div class="col-10" id="titulo">
+            <h3>Hoja especificaciones : Linea</h3>
+        </div>
+        <div class="row border border-2 encabezado">
+            <div class="col-2 border-right border-2">
+                <i class="bi bi-pencil-square text-primary-emphasis fs-6 editH"></i>
+                <label></label>
+                <label class="labelEdit" id="htipo">PE-GUATA-04-01 </label>
+            </div>
+            <div class="col-2 border-right border-2">
+                <i class="bi bi-pencil-square text-primary-emphasis fs-6 editH"></i>
+                <label>Plantilla: </label>
+                <label class="labelEdit" id="hplantilla">plantilla</label>
+            </div>
+            <div class="col-3 border-right border-2">
+                <i class="bi bi-pencil-square text-primary-emphasis fs-6 editH"></i>
+                <label>Liberado:</label>
+                <label class="labelEdit" id="hFechaLibH">FechaLibH</label>
+            </div>
+            <div class="col-3 border-right border-2">
+                <i class="bi bi-pencil-square text-primary-emphasis fs-6 editH"></i>
+                <label>Revisado:</label>
+                <label class="labelEdit" id="hFechaRebH">FechaRebH</label>
+            </div>
+
+        </div>
+        <div class="row border border-2 encabezado">
+            <div class="col-2 border-right border-2">
+                <label id="hLinea">L10</label>
+            </div>
+            <div class="col-6 border-right border-2">
+                <label id="hProducto">N20/143 L10</label>
+            </div>
+            <div class="col-2 border-right border-2">
+                <label id="hCliente">C05892</label>
+            </div>
+            <div class="col-2">
+                <label id="hNumeroEspecificacion">57</label>
+            </div>
+        </div>
+        <div class="row border border-2 encabezado">
+
+            <div class="col-3 border-right border-2">
+                <label>Fecha Liberacion	:</label>
+                <label id="hFechaLib">FechaLib</label>
+            </div>
+            <div class="col-2 border-right border-2">
+                <label>Revision:</label>
+                <label id="hNumRev">NumRev</label>
+            </div>
+            <div class="col-3 border-right border-2">
+                <label>Fecha Revision:</label>
+                <label id="hFechaRev">FechaRev</label>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+    <div class="row  text-center">
+        <div class="col-5">
+
+            <table class="table table-previewV table-bordered">
+                <tbody class="TbodyContent">
+                    <tr>
+                        <th>Destino</th>
+                        <td class="bg-secondary bg-opacity-10" id="hDestino">Destino</td>
+                    </tr>
+                    <tr>
+                        <th>Metros Por Rollo</th>
+                        <td class="bg-secondary bg-opacity-10" id="hMetrosRollo">MetrosRollo</td>
+                    </tr>
+                    <tr>
+                        <th>Espesor</th>
+                        <td class="bg-secondary bg-opacity-10" id="hEspesor">Espesor</td>
+                    </tr>
+                    <tr>
+                        <th>Ancho</th>
+                        <td id="hAncho" class="bg-secondary bg-opacity-10">Ancho ?</td>
+                    </tr>
+                    <tr>
+                        <th>Refilado</th>
+                        <td id="hRefilado" class="bg-secondary bg-opacity-10">Refilado</td>
+                    </tr>
+                    <tr>
+                        <th>g/m2 </th>
+                        <td id="hGM2" class="bg-secondary bg-opacity-10">GM2 ?</td>
+                    </tr>
+
+                    @*<tr>
+                        <th>Color y Clave</th>
+                        <td class="bg-secondary bg-opacity-10" id="hColorProducto">
+                            ColorProducto
+                        </td>
+                    </tr>*@
+                    <tr>
+                        <th>Uniones de Rollo</th>
+                        <td class="bg-secondary bg-opacity-10"
+                            id="hunionesrollo">
+                            ----
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Max Uniones por Rollo</th>
+                        <td class="bg-secondary bg-opacity-10"
+                            id="hmaxunirollo">
+                            maxunirollo
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Codigo Cliente</th>
+                        <td class="bg-secondary bg-opacity-10"
+                            id="hcodigocliente">
+                            codigocliente
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            @*<div class="col-12" style="height: 200px">
+            <div class="col-12 bg-dark text-white">
+                <p>
+                    OBSERVACIONES/CRITERIOS:
+                </p>
+            </div>
+            <div
+                 class="w-100 bg-secondary bg-opacity-25 align-items-center"
+                 style=" height: 300px; display: flex; flex-direction: column; justify-content: center; ">
+                <label id="hObservaciones">
+                    Observaciones
+                </label>
+            </div>
+        </div>*@
+
+        <div class="col-12 mb-2" style="height: 320px">
+            <div class="col-12 bg-dark text-white">
+                <p>
+                    OBSERVACIONES/CRITERIOS:
+                </p>
+            </div>
+            <div class="w-100 bg-secondary bg-opacity-25 align-items-center"
+                 style="height: 300px; display: flex; flex-direction: column; justify-content: center;">
+                <label id="hObservaciones" class="border p-2">
+                    Aquí va un texto largo que puede desbordarse y debería tener scroll si excede el tamaño del contenedor.
+                </label>
+            </div>
+        </div>
+
+           
+
+
+        </div>
+
+        @*TABLA PESO*@
+        <div class="col-7 ">
+            <div class="row mx-4">
+                <table 
+                       class="table table-preview table-bordered ">
+                    <thead>
+                        <tr>
+                            <th>Receta Fibra</th>
+                            <th>Formulación</th>
+                        </tr>
+                    </thead>
+                    <tbody class="TbodyContent">
+                        <tr>
+                            <td id="hReceta">Receta</td>
+                            <td id="hFormulacion">Formulacion</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="w-90 text-center bg-primary-subtle text-primary-emphasis" style="margin-right:20px">
+                <p>
+                    PESO
+                </p>
+            </div>
+            <div class="row" style="margin-right:20px">
+                <div class="col-3 bg-light-subtle text-light-emphasis">
+                    <p class="fs-6">
+                        METRO LINEAL
+                    </p>
+                    <div class="row">
+                        <table 
+                               class="table table-preview table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>Min</th>
+                                    <th>Max</th>
+                                </tr>
+                            </thead>
+                            <tbody class="TbodyContent">
+                                <tr>
+                                    <td id="hGmLinMin">GmLinMin</td>
+                                    <td id="hGmLinMax">GmLinMax</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-5 bg-light-subtle text-light-emphasis">
+                    <p class="fs-6">
+                        PESO ROLLO <br /> KILOS
+                    </p>
+                    <div class="row">
+                        <table 
+                               class="table table-preview table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>Min</th>
+                                    <th>Max</th>
+                                </tr>
+                            </thead>
+                            <tbody class="TbodyContent">
+                                <tr>
+                                    <td id="hPesoxRolloMin">PesoxRolloMin</td>
+                                    <td id="hPesoxRolloMax">PesoxRolloMax</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-4 bg-light-subtle text-light-emphasis">
+                    <p class="fs-6">
+                        TOLERANCIA PIEZA <br /> KILOS
+                    </p>
+                    <div class="row">
+                        <table 
+                               class="table table-preview table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>Min</th>
+                                    <th>Max</th>
+                                </tr>
+                            </thead>
+                            <tbody class="TbodyContent">
+                                <tr>
+                                    <td id="hLPkabajoMin">hLPkabajoMin</td>
+                                    <td id="hLPkarribaMax">hLPkarribaMax</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="d-none col-4 bg-light-subtle text-light-emphasis">
+                    <p class="fs-6">
+                        LIMITES PESO KILOS
+                    </p>
+                    <div class="row">
+                        <table 
+                               class="table table-preview table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>Inferior</th>
+                                    <th>Superior</th>
+                                </tr>
+                            </thead>
+                            <tbody class="TbodyContent">
+                                <tr>
+                                    <td id="hLPkabajo">LPkabajo</td>
+                                    <td id="hLPkarriba">LPkarriba</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row align-items-end" style="margin-right:20px">
+                <div class="col-4 bg-light-subtle text-light-emphasis">
+                    <p class="fs-6">
+                        TOLERANCIA EN GRAMOS/M2
+                    </p>
+                    <p class="fs-6" id="hTolGm2">
+                        TolGm2
+                    </p>
+                    <div class="row">
+                        <table class="table table-preview table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>Min</th>
+                                    <th>Max</th>
+                                </tr>
+                            </thead>
+                            <tbody class="TbodyContent">
+                                <tr>
+                                    <td id="hTolGM2Min">TolGM2Min</td>
+                                    <td id="hTolGm2Max">TolGm2Max</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-4 bg-light-subtle text-light-emphasis">
+                    <p class="fs-6">
+                        TOLERANCIA EN <br /> ANCHO
+                    </p>
+                    <p class="fs-6" id="hToleranciaAncho">
+                        ToleranciaAncho
+                    </p>
+                    <div class="row">
+                        <table 
+                               class="table table-preview table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>Min</th>
+                                    <th>Max</th>
+                                </tr>
+                            </thead>
+                            <tbody class="TbodyContent">
+                                <tr>
+                                    <td id="hTolAnchoMin">
+                                        TolAnchoMin
+                                    </td>
+                                    <td id="hTolAnchoMax">
+                                        TolAnchoMax
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-4 bg-light-subtle text-light-emphasis">
+                    <p class="fs-6">
+                        ESPESOR <br /> MILIMETROS
+                    </p>
+                    <div class="row">
+                        <table class="table table-preview table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>Min</th>
+                                    <th>Max</th>
+                                </tr>
+                            </thead>
+                            <tbody class="TbodyContent">
+                                <tr>
+                                    <td id="hEspesorMinimo">
+                                        EspesorMinimo
+                                    </td>
+                                    <td id="hEspesorMaximo">
+                                        EspesorMaximo
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row align-items-start" style="margin-right:20px">
+                <div class="col-3 bg-info text-dark">
+                    El porcentaje del recuperado
+                    varia de acuerdo a la existencia del mismo
+                </div>
+                <div class="col-5 bg-light-subtle text-light-emphasis">
+                    <div class="row">
+                        <table 
+                               class="table table-preview table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th width="20px"></th>
+                                    <th>Fibra/Receta</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="listaRecetas" class="TbodyContent">
+                                <tr>
+                                    <td>
+                                        1 ?
+                                    </td>
+                                    <td>
+                                        FibraReceta
+                                    </td>
+                                    <td id="">
+                                        0 ?
+                                    </td>
+                                </tr>
+                       
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-4 bg-light-subtle text-light-emphasis">
+                    <p class="fs-6">
+                        EMPAQUE
+                    </p>
+                    <div class="row">
+                        <table class="table table-previewV table-bordered">
+                            <tbody class="TbodyContent">
+                                <tr>
+                                    <th>Bolsa</th>
+                                    <td id="hBolsa">Bolsa</td>
+                                </tr>
+                                <tr>
+                                    <th>Tubo</th>
+                                    <td id="hTubo">Tubo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div id="divColor" class="row text-dark-emphasis text-center align-items-center " style="height:95px;">
+                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row col-12 text-center">
+
+        <div class="col-12">
+            <div class="row">
+                @*<div class="col-3" style="padding-top: 0px">
+                    <p class="fs-6">
+                        TAMAÑO DE BOLSA
+                    </p>
+                    <div class="row">
+                        <table 
+                               class="table table-preview table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>Ancho</th>
+                                    <th>Largo</th>
+                                </tr>
+                            </thead>
+                            <tbody class="TbodyContent">
+                                <tr>
+                                    <td id="hPolietilenoAncho">PolietilenoAncho</td>
+                                    <td id="hPolietilenoLargo">PolietilenoLargo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>*@
+                <div class="col-9" style="margin-top:24px;">
+                    <div class="row">
+                        <table 
+                               class="table table-preview table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>Aplazta piezas</th>
+                                    <th>Tubo FISSA</th>
+                                    <th>Tamaño del tubo</th>
+                                    <th>Etiqueta de especial</th>
+                                    <th>Etiqueta de color</th>
+                                </tr>
+                            </thead>
+                            <tbody class="TbodyContent">
+                                <tr>
+                                    <td id="hAplastaPiezas">AplastaPiezas</td>
+                                    <td id="hTuboFFISA">TuboFFISA</td>
+                                    <td id="hTuboLargo">TuboLargo</td>
+                                    <td id="hEtiquetaEpecial">EtiquetaEpecial</td>
+                                    <td id="hColorEtiqueta">ColorEtiqueta</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="col-9">
+            <div class="row">
+                <p class="fs-6">
+                    ESPECIFICACIONES ESPECIALES
+                </p>
+                <table 
+                       class="table table-preview table-bordered ">
+                    <thead>
+                        <tr>
+                            <th>Campo</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataExtra" class="TbodyContent">
+                        <tr>
+                            <td>----</td>
+                            <td>----</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script src="~/Scripts/Produccion/HojaEspecificaciones.js?v=1.0.0"></script>
+

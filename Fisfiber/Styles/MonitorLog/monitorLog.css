@@ -1,0 +1,124 @@
+﻿:root {
+    --color-primary: #2c3e50;
+    --color-secondary: #3498db;
+    --color-success: #27ae60;
+    --color-warning: #f39c12;
+    --color-danger: #e74c3c;
+    --color-light: #ecf0f1;
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border: none;
+}
+
+.card-header-monitor {
+    background-color: var(--color-secondary);
+    color: white;
+    border-radius: 8px 8px 0 0 !important;
+    font-weight: 600;
+    padding: 12px 20px;
+}
+
+.table th {
+    background-color: var(--color-light);
+    font-weight: 600;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status-terminado {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-proceso {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+.status-carga {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.status-cola {
+    background-color: #ffe0e0;
+    color: #ef0000;
+}
+
+.progres-bar {
+    height: 30px;
+    width: 90%;
+}
+
+.filter-section {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.section-title {
+    border-left: 4px solid var(--color-secondary);
+    padding-left: 10px;
+    margin: 20px 0 15px;
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.btn-action {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    margin-right: 5px;
+}
+
+.cell-warning {
+    background-color: rgb(249 208 85) !important;
+}
+
+.cell-danger {
+    background-color: rgb(255 158 167) !important;
+}
+
+.subtable {
+    display: block;
+    width: 100%;
+    overflow-x: visible;
+    z-index: 10;
+}
+
+    .subtable thead tr > th {
+        color: #ffffff !important;
+        background: #1e76bd !important;
+        font-weight: bold;
+        text-align: center;
+    }
+
+
+    .subtable tbody tr > td {
+        background-color: #8d8b8b8f !important;
+        color: white !important;
+        font-weight: bold;
+        cursor: pointer;
+    }

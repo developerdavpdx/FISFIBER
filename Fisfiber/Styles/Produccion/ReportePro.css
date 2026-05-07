@@ -1,0 +1,66 @@
+﻿
+/*ESTILOS DE DATA TABLE*/
+
+/* Cambiar el color de fondo y el color del texto en los encabezados */
+table.dataTable thead th {
+    background-color: #343a40;
+    color: #ffffff;
+    text-align: center;
+}
+
+/* Centrar el contenido de todas las celdas */
+table.dataTable td, table.dataTable th {
+    text-align: center;
+}
+
+    /*Centrar el contenido tipo numerico*/
+    table.dataTable td.dt-type-numeric {
+        text-align: center;
+    }
+
+    /*Centrar el contenido tipo numerico*/
+    table.dataTable th.dt-type-numeric {
+        text-align: center;
+    }
+
+/* Cambiar el color de fondo en las filas alternas */
+table.dataTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Cambiar el color de fondo en las filas seleccionadas */
+table.dataTable tbody tr.selected {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+/* Cambiar el color del borde de la tabla */
+table.dataTable {
+    border: 1px solid #ddd;
+}
+
+.dt-layout-table {
+    
+}
+
+#TableDetalleReporte_wrapper {
+    width: 95%;
+    overflow: auto;
+    max-height: 50vh;
+    scrollbar-width: thin;
+    scrollbar-color: var(--bs-redfn) var(--bs-gray-100);
+}
+
+/*Estilos cuando se selecciona una fila*/
+.selectedrow > td {
+    background-color: var(--bs-redfn) !important;
+    color: white !important;
+    font-weight: 400;
+}
+
+    .selectedrow > td > i {
+        color: white !important;
+    }
+
+
+/*<END ESTILOS DATA TABLE*/

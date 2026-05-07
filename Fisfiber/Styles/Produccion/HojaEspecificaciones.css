@@ -1,0 +1,141 @@
+﻿p {
+    margin-bottom: 0;
+}
+
+.encabezado {
+    margin: 0 auto;
+}
+
+.encabezado div {
+    padding-top: 5px;
+}
+
+.editH {
+    cursor: pointer;
+}
+
+#hObservaciones {
+    display: block; /* Asegura que se comporte como un bloque */
+    width: 100%; /* Usa todo el ancho disponible */
+    max-height: 100%; /* No crecerá más allá del contenedor */
+    overflow-y: auto; /* Agrega scroll si el texto se desborda */
+    white-space: pre-wrap; /* Mantiene los saltos de línea */
+    word-wrap: break-word; /* Rompe palabras largas */
+}
+
+
+
+
+.table-previewV tbody tr:nth-child(odd) > th {
+    color: #ffffff;
+    background: #1e76bd !important;
+    /*background: linear-gradient(to bottom, #b70c2a 0%, #F20505 100%);*/
+}
+
+
+.table-previewV tbody tr:nth-child(even) > th {
+    color: #ffffff;
+    background: #1e76bd !important;
+    opacity: 0.9;
+    /*background: linear-gradient(to bottom, #b70c2a 0%, #F20505 100%);*/
+}
+
+/* Color para encabezados en posiciones impares (1, 3, 5...) */
+/*th:nth-child(odd) {
+    background-color: #ffcccb;*/ /* Rojo claro */
+    /*color: black;
+}*/
+
+/* Color para encabezados en posiciones pares (2, 4, 6...) */
+/*th:nth-child(even) {
+    background-color: #add8e6;*/ /* Azul claro */
+    /*color: black;
+}*/
+
+/*Activamos los scroll en horizontal cuando las tablas se desborda de la pantalla*/
+.TableScroll {
+    overflow: auto;
+    max-width: 100%;
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+/*Ajustes para el contenido de las tablas*/
+.TbodyContent tr td {
+    font-size: 20px !important;
+}
+/*sobreescribimos el min-width de .table ya que afecta en el visual*/
+.table {
+    min-width: 100% !important; /* O establece un valor específico que funcione en tu diseño */
+}
+/*Desactivamos los eventos hover en los datos de las tablas*/
+table.dataTable {
+    pointer-events: none;
+}
+/*Resaltamos el borde de las tablas que no se podran modificar*/
+.bordeResalt{
+    border: solid 3px;
+}
+/*Subtitulos de tablas*/
+.subtitlesTables{
+    background-color: gray !important;
+}
+
+
+/*AJUSTES INDIVIDUALES*/
+/*TABLA DE ESPECIFICACIONES ESTANDAR*/
+#EspecificacionesEstandarTitle {
+    background-color: #2657DA;
+    color: white;
+}
+/*ocultamos los thead ya que no se usan, en su lugar se usan los span*/
+#Table9 thead {
+    display: none;
+}
+#Table9{
+    margin-top: -1.5rem;
+    border-top: none;
+}
+/*Titulo de especificaciones especiales*/
+#EspecEspTitle1 {
+    background-color: #dc372f;
+    color: white;
+    font-weight: bold;
+    border: solid 3px black;
+    border-bottom: none;
+    margin-top: 1.5rem;
+    height: 3rem;
+}
+
+#EspecEspTitle2 {
+    width: 86%;
+    text-align: center;
+    padding-top: 0.7rem;
+    background-color: black;
+}
+
+.EspecEspTitle3 {
+    width: 14%;
+    text-align: center;
+    padding-top: 0.7rem;
+}
+/*#EspecificacionesEstandarPesoTitle {
+    background-color: blue;
+    color: white;
+}*/
+
+/*TABLA EMPAQUE*/
+#EmpaqueTitle {
+    background-color: #2657DA;
+    color: white;
+}
+#ContentEmpaque td:nth-child(7),
+#ContentEmpaque td:nth-child(8) {
+    background-color: orange; /*Cambiamos el fondo de las ultimas lineas*/
+}
+
+/*TABLA OBSERVACIONES*/
+#Table5 tbody tr td {
+/*Nos aseguramos de que el contenido haga saltos de linea en lugar de desbordarse*/
+    white-space: normal; /* Permite saltos de línea en el texto */
+    word-wrap: break-word; /* Ajusta el contenido al ancho de la celda */
+    overflow-wrap: break-word; /* Alternativa para asegurar el ajuste en algunos navegadores */
+}

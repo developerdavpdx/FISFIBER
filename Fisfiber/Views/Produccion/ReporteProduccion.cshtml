@@ -1,0 +1,227 @@
+﻿
+@{
+    ViewBag.Title = "Reporte de Producción";
+}
+
+<link rel="stylesheet" href="~/Styles/Produccion/ReportePro.css">
+<div class="pt-5 ps-2 pe-2">
+    <table id="TableReporteProdu" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Línea</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Detalle</th>
+                <th>Descargar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>12</td>
+                <td>16/05/2024</td>
+                <td>Pendiente</td>
+                <td>
+                    <i class="bi bi-card-list text-secondary"
+                       style="cursor:pointer"
+                       id="detail"></i>
+                </td>
+                <td>
+                    <i class="bi bi-file-earmark-arrow-down-fill text-secondary" style="cursor:pointer"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td>16/05/2024</td>
+                <td>Pendiente</td>
+                <td>
+                    <i class="bi bi-card-list text-secondary"
+                       style="cursor:pointer"
+                       id="detail"></i>
+                </td>
+                <td>
+                    <i class="bi bi-file-earmark-arrow-down-fill text-secondary" style="cursor:pointer"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>16/05/2024</td>
+                <td>Pendiente</td>
+                <td>
+                    <i class="bi bi-card-list text-secondary"
+                       style="cursor:pointer"
+                       id="detail"></i>
+                </td>
+                <td>
+                    <i class="bi bi-file-earmark-arrow-down-fill text-secondary" style="cursor:pointer"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>16/05/2024</td>
+                <td>Pendiente</td>
+                <td>
+                    <i class="bi bi-card-list text-secondary"
+                       style="cursor:pointer"
+                       id="detail"></i>
+                </td>
+                <td>
+                    <i class="bi bi-file-earmark-arrow-down-fill text-secondary" style="cursor:pointer"></i>
+                </td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>16/05/2024</td>
+                <td>Pendiente</td>
+                <td>
+                    <i class="bi bi-card-list text-secondary"
+                       style="cursor:pointer"
+                       id="detail"></i>
+                </td>
+                <td>
+                    <i class="bi bi-file-earmark-arrow-down-fill text-secondary" style="cursor:pointer"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<!--MODALES-->
+<!-- MODAL CAMBIAR ESTATUS -->
+<div class="modal modal-lg fade" id="detailModal" tabindex="-1" aria-labelledby="detailModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modalH" data-bs-theme="dark">
+                <h5 class="modal-title" id="exampleModalLabel">Detalle Producción</h5>
+                <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="TableDetalleReporte" 
+                       class="table table-striped table-bordered mx-auto" 
+                       style="width:100%;"
+                 >
+                    <thead>
+                        <tr>
+                            <th>Folio</th>
+                            <th>Num. OV</th>
+                            <th>Cliente</th>
+                            <th>Num. Cliente</th>
+                            <th>Eficiencia</th>
+                            <th>Cantidad</th>
+                            <th>Prioridad</th>
+                            <th>Fecha</th>
+                            <th>Fecha Entrega</th>
+                            <th>Materiales</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>012</td>
+                            <td>1232</td>
+                            <td>xdhjdsa</td>
+                            <td>123-32</td>
+                            <td>89%</td>
+                            <td>8932</td>
+                            <td>3</td>
+                            <td>12/02/2024</td>
+                            <td>30/02/2024</td>
+                            <td>-----</td>
+                        </tr>
+                        <tr>
+                            <td>012</td>
+                            <td>1232</td>
+                            <td>xdhjdsa</td>
+                            <td>123-32</td>
+                            <td>89%</td>
+                            <td>8932</td>
+                            <td>3</td>
+                            <td>12/02/2024</td>
+                            <td>30/02/2024</td>
+                            <td>-----</td>
+                        </tr>
+                        <tr>
+                            <td>012</td>
+                            <td>1232</td>
+                            <td>xdhjdsa</td>
+                            <td>123-32</td>
+                            <td>89%</td>
+                            <td>8932</td>
+                            <td>3</td>
+                            <td>12/02/2024</td>
+                            <td>30/02/2024</td>
+                            <td>-----</td>
+                        </tr>
+                        <tr>
+                            <td>012</td>
+                            <td>1232</td>
+                            <td>xdhjdsa</td>
+                            <td>123-32</td>
+                            <td>89%</td>
+                            <td>8932</td>
+                            <td>3</td>
+                            <td>12/02/2024</td>
+                            <td>30/02/2024</td>
+                            <td>-----</td>
+                        </tr>
+                        <tr>
+                            <td>012</td>
+                            <td>1232</td>
+                            <td>xdhjdsa</td>
+                            <td>123-32</td>
+                            <td>89%</td>
+                            <td>8932</td>
+                            <td>3</td>
+                            <td>12/02/2024</td>
+                            <td>30/02/2024</td>
+                            <td>-----</td>
+                        </tr>
+                        <tr>
+                            <td>012</td>
+                            <td>1232</td>
+                            <td>xdhjdsa</td>
+                            <td>123-32</td>
+                            <td>89%</td>
+                            <td>8932</td>
+                            <td>3</td>
+                            <td>12/02/2024</td>
+                            <td>30/02/2024</td>
+                            <td>-----</td>
+                        </tr>
+                        <tr>
+                            <td>012</td>
+                            <td>1232</td>
+                            <td>xdhjdsa</td>
+                            <td>123-32</td>
+                            <td>89%</td>
+                            <td>8932</td>
+                            <td>3</td>
+                            <td>12/02/2024</td>
+                            <td>30/02/2024</td>
+                            <td>-----</td>
+                        </tr>
+                        <tr>
+                            <td>012</td>
+                            <td>1232</td>
+                            <td>xdhjdsa</td>
+                            <td>123-32</td>
+                            <td>89%</td>
+                            <td>8932</td>
+                            <td>3</td>
+                            <td>12/02/2024</td>
+                            <td>30/02/2024</td>
+                            <td>-----</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-prcancel" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-prsuccess">Descargar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Layout/ReportePro.js?v=1.0.0"></script>
+

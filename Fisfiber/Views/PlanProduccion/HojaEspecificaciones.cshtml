@@ -1,0 +1,414 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<link rel="stylesheet" href="~/Styles/PlanProduccion/HojaEspecificaciones.css" />
+
+<div class="container">
+    <div class="row text-center border1">
+        <p class="fs-1">
+            Hoja de especificaciones
+        </p> 
+    </div>
+    <div class="row border1">
+        <div class="col-4 border-end">
+            <span class="">Plantilla: Rev 05</span>
+        </div>
+        <div class="col-4 border-end">
+            <span class="">Liberado: </span><span id="DateLiberado" class="BoldFormat">Nov 19</span>
+        </div>
+        <div class="col-4 border-end">
+            <span class="">Revisado: </span><span id="DateRevisado" class="BoldFormat">Nov 21</span>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-1 border1 d-flex justify-content-center align-items-center BoldFormat borderRigth">
+            <span>
+               L10
+            </span>
+        </div>
+        <div class="col-7 border1 borderRigth d-flex justify-content-center align-items-center">
+            <span>
+                N20/143 L10
+            </span>
+        </div>
+        <div class="col-2 text-center">
+            <div class="row bg-success-subtle border1 borderRigth">
+                <span>
+                    C05894
+                </span>
+            </div>
+            <div class="row border1 borderRigth">
+                -----------------
+            </div>
+        </div>
+        <div class="col-2 WhiteLetter d-flex justify-content-center align-items-center border1 BoldFormat" style="background-color: #C00000">
+            <span>57</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 text-center">
+            @*TABLA DE DESTINO*@
+            <div class="separador">
+                <div class="row">
+                    <div class="col-4 border1 borderRigth FuenteLetter">
+                        DESTINO
+                    </div>
+                    <div class="col-8 border1 FuenteLetter">
+                        VENTAS
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-4 border1 borderRigth FuenteLetter">
+                        METROS X ROLLO
+                    </div>
+                    <div class="col-8 border1" id="MetrosxRollo">
+                        40
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-4 border1 borderRigth FuenteLetter">
+                        ESPESOR
+                    </div>
+                    <div class="col-8 border1" id="Espesor">
+                        22 a 32 mm
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-4 border1 borderRigth FuenteLetter">
+                        ANCHO
+                    </div>
+                    <div class="col-8 border1" id="Ancho">
+                        143 CM +/- 2
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-4 border1 borderRigth FuenteLetter">
+                        REFILADO
+                    </div>
+                    <div class="col-8 border1" id="Refilado">
+                        NO
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-4 border1 borderRigth FuenteLetter">
+                        GM2
+                    </div>
+                    <div class="col-8 border1" id="GM2">
+                        153 +/- 10%
+                    </div>
+                </div>
+            </div>
+           
+            @*OBSERVACIONES*@
+        <div class="">
+            <div class="row border1 separador FuenteLetter BoldFormat">
+                <span> OBSERVACIONES </span>
+            </div>
+            <div class="row d-flex justify-content-center align-items-center border1" style="height: 200px">
+                <span id="ObservacionesComent">Observaciones 57</span>
+            </div>
+            <div class="row border1 separador">
+                <span> PE-GUATA-04-01 </span>
+            </div>
+            <div class="row">
+                <div class="col-9 border1 borderRigth FuenteLetter">
+                    <span> FECHA DE LIBERACIÓN </span>
+                </div>
+                <div class="col-3">
+                    <div class="row text-center border1 BoldFormat">
+                        <span id="FechaLib">FEB-18</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9 border1 borderRigth FuenteLetter">
+                    <span> REVISIÓN </span>
+                </div>
+                <div class="col-3">
+                    <div class="row text-center border1 BoldFormat">
+                        <span id="NumRev">05</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9 border1 borderRigth FuenteLetter">
+                    <span> FECHA DE REVISIÓN </span>
+                </div>
+                <div class="col-3">
+                    <div class="row text-center border1 BoldFormat">
+                        <span id="FechaRev">JUL-23</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9 border1 borderRigth FuenteLetter">
+                    <span> NIVEL </span>
+                </div>
+                <div class="col-3">
+                    <div class="row text-center border1 BoldFormat">
+                        <span id="Nivel">3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        @* ESPECIFICACIONES ESTANDAR *@
+    <div class="col-6 separador" style="padding-left: 1.5em;">
+        <div class="row bg-body-tertiary text-center border1 BoldFormat">
+            <span style="background-color: #A6A6A6">
+                Especificaciones estándar
+            </span>
+        </div>
+        <div class="row text-center border1 BoldFormat WhiteLetter border1" style="background-color: #003FBC">
+            <span>PESO</span>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="row d-flex justify-content-center align-items-center border1 borderRigth FuenteLetter" style="max-height: 51%;">
+                    GRAMOS METRO LINEAL
+                </div>
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-center align-items-center border1 borderRigth FuenteLetter">
+                        <span>
+                            MIN
+                        </span>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center align-items-center border1 borderRigth FuenteLetter">
+                        <span>
+                            MAX
+                        </span>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-6 text-center border1 borderRigth">
+                        <span id="PesoMinLin">213</span>
+                    </div>
+                    <div class="col-6 text-center border1 borderRigth">
+                        <span id="PesoMaxLin">218</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 ">
+                <div class="row d-flex justify-content-center align-items-center border1 borderRigth FuenteLetter" style="max-height: 51%">
+                    PESO ROLLO KILOS
+                </div>
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-center align-items-center border1 borderRigth FuenteLetter">
+                        <span>
+                            MIN
+                        </span>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center align-items-center border1 borderRigth FuenteLetter">
+                        <span>
+                            MAX
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-center border1 borderRigth">
+                        <span id="PesoMinKil">8,520.00</span>
+                    </div>
+                    <div class="col-6 text-center border1 borderRigth">
+                        <span id="PesoMaxKil">8,720.00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="row d-flex justify-content-center align-items-center border1 FuenteLetter" style="max-height:51%">
+                    TOLERANCIA PIEZA KILOS
+                </div>
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-center align-items-center border1 borderRigth FuenteLetter">
+                        <span>
+                            ABAJO
+                        </span>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center align-items-center border1 FuenteLetter">
+                        <span>
+                            ARRIBA
+                        </span>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-6 text-center border1 borderRigth">
+                        <span id="ToleranciaDown">
+                            0.5
+                        </span>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center align-items-center border1">
+                        <span id="ToleranciaUp">
+                            0.5
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* Empaque *@
+        <div class="row bg-body-tertiary text-center border1 BoldFormat">
+            <span style="background-color: #0070C0">
+                EMPAQUE
+            </span>
+        </div>
+        <div class="row ">
+            <div class="col-1">
+                <div class="row d-flex justify-content-center align-items-center FuenteLetter border1 verticalText titulosEmpaque">
+                    APLAZTA PIEZAS
+                </div>
+                <div class="row text-center d-flex justify-content-center align-items-center border1 borderRigth">
+                    <span style="min-height: 1.5rem;" id="AplzataPiezas"> SI </span>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="row text-center text-center d-flex justify-content-center align-items-center FuenteLetter border1 borderRigth titulosEmpaque">
+                    BOLSAS DE COLOR
+                </div>
+                <div class="row d-flex justify-content-center align-items-center BoldFormat border1 borderRigth">
+                    <span class="d-flex justify-content-center align-items-center" style="font-size: 0.6rem; min-height: 1.5rem;" id="BolsaColor">
+                        TRANSPARENTE
+                    </span>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row text-center d-flex justify-content-center align-items-center FuenteLetter border1 borderRigth" style="min-height: 8.3rem">
+                    TAMAÑO DE BOLSA
+                </div>
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-center align-items-center border1 FuenteLetter borderRigth">
+                        <span>
+                            ANCHO
+                        </span>
+                    </div>
+                    <div class="col-6 d-flex justify-content-center align-items-center FuenteLetter border1 borderRigth">
+                        <span>
+                            LARGO
+                        </span>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-6 text-center border1 borderRigth">
+                        <span id="BolsaAncho" style="min-height: 1.5rem;">
+                            0.6
+                        </span>
+                    </div>
+                    <div class="col-6 text-center border1 borderRigth">
+                        <span id="BolsaLargo" style="min-height: 1.5rem;">
+                            0.5
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="row text-center text-center d-flex justify-content-center align-items-center FuenteLetter border1 borderRigth titulosEmpaque">
+                    TUBO FISSA
+                </div>
+                <div class="row text-center d-flex justify-content-center align-items-center border1 FuenteLetter BoldFormat borderRigth">
+                    <span style="min-height: 1.5rem;" id="TuboFisa"> NO </span>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="row text-center FuenteLetter border1 verticalText titulosEmpaque">
+                    TAMAÑO DEL TUBO
+                </div>
+                <div class="row border1 borderRigth">
+                    <span class="text-center" style="min-height: 1.5rem;" id="TamanoTubo">
+                        1.5m
+                    </span>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="row text-center border1 FuenteLetter" style="background-color: #BF8F00;">
+                    ETIQUETA DE ESPECIAL
+                </div>
+                <div class="row border1 FuenteLetter" style="background-color: #FFC300; ">
+                    <span class="text-center" id="EitquetaEspecial">
+                        SI, MODATELAS
+                    </span>
+                </div>
+                <div class="row border1 FuenteLetter" style="background-color: #BF8F00; ">
+                    <span class="text-center">
+                        ETIQUETA DE COLOR
+                    </span>
+                </div>
+                <div class="row border1 d-flex justify-content-center align-items-center">
+                    <span class="text-center d-flex justify-content-center align-items-center" style="min-height: 6.99rem" id="EtiquetaColor">
+                        --
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row separador">
+            <div class="col-5">
+                <div class="row text-center border1" style="background-color: #FFD966;">
+                    <span>RECETA DE FIBRA</span>
+                </div>
+                <div class="row border1 d-flex justify-content-center align-items-center">
+                    <span class="text-center">
+                        10-1
+                    </span>
+                </div>
+            </div>
+            <div class="col-5" style="left: 17%;">
+                <div class="row text-center border1" style="background-color: #FFD966;">
+                    <span>FORMULACIÓN</span>
+                </div>
+                <div class="row border1 d-flex justify-content-center align-items-center">
+                    <span class="text-center">
+                        N/A
+                    </span>
+                </div>
+            </div>
+        </div>
+        @* ESPECIFICACIONES ESPECIALES *@
+        <div class="row separador">
+            <div class="col-10">
+                <div class="row text-center border1 WhiteLetter BoldFormat" style="background-color: #000000;">
+                    <span>ESPECIFICACIONES ESPECIALES</span>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="row text-center border1 BoldFormat">
+                    <span>NO</span>
+                </div>
+            </div>
+        </div>
+        <div class="row separador">
+            <div class="col-6">
+                <div class="row text-center border1 borderRigth">
+                    <span>0.00</span>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row text-center border1">
+                    <span>0.00</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="row text-center border1 borderRigth">
+                    <span>0.00</span>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row text-center border1">
+                    <span>0.00</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="row text-center border1 borderRigth">
+                    <span>0.00</span>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row text-center border1">
+                    <span>0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+

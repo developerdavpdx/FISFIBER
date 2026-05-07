@@ -1,0 +1,438 @@
+﻿
+@{
+    ViewBag.Title = "Mascara Plan Embarque";
+}
+<link rel="stylesheet" href="~/Styles/PlanProduccion/ConsultaPlanProduccion.css">
+<link rel="stylesheet" href="~/Styles/PlanProduccion/PlanPro.css">
+<link rel="stylesheet" href="~/Styles/PlanEmb/MascPlan.css" />
+
+@*<script src="~/Scripts/jquery.signalR-2.4.3.min.js?v=1.0.0"></script>
+<script src="~/signalr/hubs"></script>*@
+
+<div class="pt-2 ms-3 me-4">
+    <div class="row pt-1 ps-3 pe-3 pt-4">
+        <div class="col-12 text-center">
+            <h5>
+                PROGRAMA DIARIO DE EMBARQUES
+            </h5>
+        </div>
+    </div>
+
+    <div class="row pt-3">
+        <div class="col-md-12 body-table">
+            <table id="PlanesEmbMasc"
+                   action="@Url.Action("GetPlanesEmbarques","PlanEmb")"
+                   class="table table-striped table-bordered table-fixed">
+                <thead>
+                    <tr>
+                        <th>Folio</th>
+                        <th>FechaCreacion</th>
+                        <th>TotalPedidos</th>
+                        <th>TotalAutorizados</th>
+                        <th>TotalNoAutorizados</th>
+                        <th>TotalClientes</th>
+                        <th>TotalArticulos</th>
+                        <th>TotalConCita</th>
+                        <th>TotalEntregaParcial</th>
+                        <th>TotalPiezasEntrega</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color:lightgray">
+                        <td style="text-align:center" colspan="8">SIN DATOS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row pt-5 px-2 planVacio">
+        <div class="col-12">
+            <div class="card bg-light mb-3">
+                <div class="card-header">
+                    <h5 class="text-center">
+                        Detalle de mascara del plan
+                    </h5>
+                </div>
+
+
+                <div class="card-body pt-2">
+
+                    <h5 class="card-title">!Ningún plan seleccionado!</h5>
+                    <p class="card-text">Aquí podrás visualizar el detalle del plan de embarques seleccionado.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row ps-3 pt-4 mascaraPlan d-none">
+        <div class="col-12 text-end">
+            <button type="button" id="FinPlanEmb"
+                    class="btn btn-outline-secondary">
+                Finalizar plan embarques
+            </button>
+        </div>
+    </div>
+
+    <div class="row pt-4 justify-content-center mascaraPlan d-none"
+         id="bodyMasc"
+         DetalleMasc="@Url.Action("GetMascPlanEmbFolio","PlanEmb")"
+         EstatusCarga="@Url.Action("GetEstatusCarga","PlanEmb")"
+         UpdateEstPedido="@Url.Action("UpdateEstPedidoPlanEmb","PlanEmb")"
+         FinalizarPlanEmb="@Url.Action("FinalizarPlanEmbarques","PlanEmb")">
+
+        <div id="PPHeader" class="bg-black rounded box-shadow" style="width:98%">
+            <div class="card bg-black" style="color: white">
+                <div class="card-body ReportHeaderv2">
+                    <div class="row">
+                        <div class="col-6 text-start d-flex align-items-center justify-content-start">
+                            <img src="/Images/logoFisfiber.png" alt="" class="w-50" />
+                        </div>
+                        <div class="col-6 text-end">
+                            <div class="row EditRow">
+                                <div class="col-6">
+                                    <div class="input-group input-group-sm editAdmin mb-2">
+                                        <span class="input-group-text">Fecha Liberación:</span>
+                                        <input type="date" id="FL"
+                                               value="@Convert.ToDateTime(ViewBag.FechaLib).ToString("yyyy-MM-dd")"
+                                               class="form-control" style="height:34.2px" aria-label="Sizing
+                example input" aria-describedby="inputGroup-sizing-sm">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group input-group-sm editAdmin mb-2">
+                                        <span class="input-group-text">Code:</span>
+                                        <input type="text"
+                                               id="Code"
+                                               value="@ViewBag.CodeIso"
+                                               class="form-control"
+                                               style="height: 34.2px"
+                                               aria-label="Sizing example input"
+                                               aria-describedby="inputGroup-sizing-sm" />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group input-group input-group-sm editAdmin mb-2">
+                                        <span class="input-group-text">Fecha Revisión:</span>
+                                        <input type="date" id="FR"
+                                               value="@Convert.ToDateTime(ViewBag.FechaRev).ToString("yyyy-MM-dd")"
+                                               class="form-control" style="height:34.2px" aria-label="Sizing
+                example input" aria-describedby="inputGroup-sizing-sm">
+                                    </div>
+                                </div>
+
+                                <div class="col-3">
+                                    <div class="input-group input-group-sm editAdmin mb-2">
+                                        <span class="input-group-text">Nivel:</span>
+                                        <input type="number"
+                                               id="Nivel"
+                                               value="@ViewBag.Nivel"
+                                               class="form-control"
+                                               style="height: 34.2px"
+                                               aria-label="Sizing example input"
+                                               aria-describedby="inputGroup-sizing-sm" />
+                                    </div>
+                                </div>
+
+                                <div class="col-3">
+                                    <div class="input-group input-group-sm editAdmin mb-2">
+                                        <span class="input-group-text">Revisión:</span>
+                                        <input type="number"
+                                               id="Revision"
+                                               value="@ViewBag.Revision"
+                                               class="form-control"
+                                               style="height: 34.2px"
+                                               aria-label="Sizing example input"
+                                               aria-describedby="inputGroup-sizing-sm" />
+                                    </div>
+                                </div>
+
+                                <div class="col-3 text-start">
+                                    <button type="button" class="btn btn-primary btn-sm btnSave">
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row headRow">
+                                <div class="col-8 text-start">
+                                    <div class="TitleReportContainer">
+                                        <span class="ps-2 ISO">
+                                            FECHA DE LIBERACIÓN:
+                                            <span id="fecha-liberacion">@ViewBag.FechaLib</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-4 btnEditHead">
+                                    <i class="editHead bi bi-pencil-square pointer-event"></i>
+                                </div>
+                            </div>
+                            <div class="row mt-2 headRow">
+                                <div class="col-6 text-start">
+                                    <div class="TitleReportContainer">
+                                        <span class="ps-2 ISO"> @ViewBag.CodeISO </span>
+                                    </div>
+                                </div>
+                                <div class="col-6 text-start">
+                                    <div class="TitleReportContainer text-right">
+                                        <span class="pe-2">
+                                            REVISION: <span>@ViewBag.Revision</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2 headRow">
+                                <div class="col-9 text-start">
+                                    <div class="TitleReportContainer">
+                                        <span class="ps-2 ISO">
+                                            FECHA DE REVISIÓN:
+                                            <span id="fecha-revisionPE">@ViewBag.FechaRev</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-3 text-start">
+                                    <div class="TitleReportContainer text-right">
+                                        <span class="pe-2 ISO"> NIVEL @ViewBag.Nivel </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 text-start">
+                                    <div class="TitleReportContainer">
+                                        <span class="ps-2"> FOLIO: <span id="folioPE"></span> </span>
+                                    </div>
+                                </div>
+                                <div class="col-6 text-start">
+                                    <div class="TitleReportContainer text-right">
+                                        <span class="pe-2">
+                                            FECHA: <span id="fecha-documentoPE"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid mt-3">
+            <ul class="nav nav-tabs" id="viajesTabs" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active" id="primer-tab" data-bs-toggle="tab" data-bs-target="#primer" type="button" role="tab">Primer Viaje</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="segundo-tab" data-bs-toggle="tab" data-bs-target="#segundo" type="button" role="tab">Segundo Viaje</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="tercer-tab" data-bs-toggle="tab" data-bs-target="#tercer" type="button" role="tab">Tercer Viaje</button>
+                </li>
+            </ul>
+
+            <div class="tab-content mt-3" id="viajesTabsContent">
+                <!-- PRIMER VIAJE -->
+                <div class="tab-pane fade show active" id="primer" role="tabpanel">
+                    <div class="mx-2 mb-2">
+                        <h5 class="titulo-seccion">CAMIONETAS</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm" style="min-width: 1200px !important;">
+                                <thead>
+                                    <tr>
+                                        <th>Unidad</th>
+                                        <th>Pedido</th>
+                                        <th>Nombre del Cliente</th>
+                                        <th>Personal</th>
+                                        <th>Estatus</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="unidad-col">----</td>
+                                        <td>----</td>
+                                        <td>----</td>
+                                        <td>----</td>
+                                        <td>----</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="unidad-col">----</td>
+                                        <td>---</td>
+                                        <td>----</td>
+                                        <td>---</td>
+                                        <td>-----</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mx-2 mb-2">
+                        <h5 class="titulo-seccion">CAMIONES</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm" style="min-width: 1200px !important;">
+                                <thead>
+                                    <tr>
+                                        <th>Unidad</th>
+                                        <th>Pedido</th>
+                                        <th>Nombre del Cliente</th>
+                                        <th>Personal</th>
+                                        <th>Estatus</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="unidad-col">----</td>
+                                        <td>----</td>
+                                        <td>----</td>
+                                        <td>----</td>
+                                        <td>----</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mx-2 mb-2">
+                        <h5 class="titulo-seccion">QUINTAS</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm" style="min-width: 1200px !important;">
+                                <thead>
+                                    <tr>
+                                        <th>Unidad</th>
+                                        <th>Pedido</th>
+                                        <th>Nombre del Cliente</th>
+                                        <th>Personal</th>
+                                        <th>Estatus</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="unidad-col">----</td>
+                                        <td>----</td>
+                                        <td>----</td>
+                                        <td>---- ----</td>
+                                        <td>----</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- SEGUNDO VIAJE -->
+                <div class="tab-pane fade" id="segundo" role="tabpanel">
+                    <p>Contenido del segundo viaje...</p>
+                </div>
+
+                <!-- TERCER VIAJE -->
+                <div class="tab-pane fade" id="tercer" role="tabpanel">
+                    <p>Contenido del tercer viaje...</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+<!-- Modal mostrar todos los pediddos de una unidad -->
+<div class="modal fade " id="modalAllPedidos"
+     tabindex="-1" aria-labelledby="Bitacora" aria-hidden="true"
+     data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal100">
+        <div class="modal-content">
+            <div class="modal-header" style="display:block !important">
+                <h5 class="modal-title">
+                    Pedidos Unidad :
+                    <span id="unidadTitle"></span>
+                    Viaje:
+                    <span id="viajeTitle"></span>
+
+                    <strong></strong>
+                    <button id="closeAllPedidos" type="button"
+                            class="close" data-dismiss="modal" aria-label="Close">
+                        <span id="RestarModalCloseEdi" restart="true"
+                              class="btn mb-2 mb-md-0 btn-outline-danger next">
+                            Cancelar
+                        </span>
+                    </button>
+                </h5>
+
+            </div>
+            <div class="modal-body text-center">
+
+                <div class="row body-table">
+                    <table id="TableAllPedidos"
+                           class="table table-striped table-bordered table-fixed "
+                           style="table-layout:fixed; min-width:1200px !important;"
+                           SugPlanEmb="@Url.Action("GetSugPlanEmb","PlanEmb")">
+                        <thead>
+                            <tr>
+                                <th>Pedido</th>
+                                <th>Nombre del Cliente</th>
+                                <th>Personal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="unidad-col">2</td>
+                                <td>1111</td>
+                                <td>PARISINA</td>
+                                <td>ARTURO R</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer mt-3">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal Motivo Estado-->
+<div class="modal fade" id="modalMotivoEst" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #343a40;">
+                <h5 class="modal-title text-white"><strong id="estTitle"></strong> </h5>
+                <i class="bi bi-x-circle-fill icon-no backModalMotEst"
+                   style="color:white; font-size:20px;"
+                   type="button"
+                   data-bs-dismiss="modal"></i>
+            </div>
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <label for="motComentarios" class="form-label">Comentarios</label>
+                    <textarea id="motComentarios" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary backModalMotEst" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn text-white"
+                        style="background-color: #1e76bd;" id="guardarComEst">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../Scripts/PlanEmb/MascPlan.js?v=1.1.4"></script>
+
+
+
+

@@ -1,0 +1,639 @@
+﻿@{
+    ViewBag.Title = "Consumo Materia Prima";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Styles/Produccion/ConsumoMateriaPrima.css" rel="stylesheet" />
+
+<div class="container-fluid mt-4">
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100">
+        <div id="toastEtiqueta" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-pr text-white">
+                <i class="bi bi-check-circle me-2"></i>
+                <strong class="me-auto">Éxito</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">Etiqueta generada</div>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Línea de Producción</label>
+                            <select id="selectLinea" class="form-select">
+                                <option value="">Seleccionar...</option>
+                                <option value="Línea 10">Línea 10</option>
+                                <option value="Línea 2">Línea 2</option>
+                                <option value="Línea 3">Línea 3</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Pedido Actual</label>
+                            <p id="pedidoActual" class="form-control-plaintext fs-5">-</p>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Artículo</label>
+                            <p id="articuloActual" class="form-control-plaintext fs-5">-</p>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Receta Seleccionada</label>
+                            <select id="selectReceta" class="form-select">
+                                <option value="1">Receta Estándar</option>
+                                <option value="2">Receta Premium</option>
+                                <option value="3">Receta Industrial</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detalle de Receta (After Header) -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-pr text-white d-flex justify-content-between align-items-center" 
+                 role="button" data-bs-toggle="collapse" data-bs-target="#detalleReceta"
+                 aria-expanded="true" style="cursor: pointer;">
+                <h5 class="mb-0">
+                    <i class="bi bi-clipboard-data me-2"></i>DETALLE DE RECETA
+                </h5>
+                <i class="bi bi-chevron-down toggle-icon"></i>
+            </div>
+            <div id="detalleReceta" class="collapse show">
+                <div class="card-body">
+                    <!-- Cargadoras -->
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h6 class="fw-bold mb-3 text-uppercase" style="letter-spacing: 1px;">CARGADORAS</h6>
+                            <div id="cargadorasContainer" class="row g-3">
+                                <!-- Contenido dinámico -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Observaciones -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="alert alert-info d-flex align-items-center" role="alert">
+                                <i class="bi bi-info-circle-fill me-2 fs-4"></i>
+                                <div>
+                                    <strong class="fw-bold">OBSERVACIONES: </strong>
+                                    <span id="observacionesReceta" class="ms-1">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Materia Prima Section (After Header) -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-pr text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="bi bi-boxes me-2"></i>Materia Prima</h5>
+                    <div>
+                        <button class="btn btn-light btn-sm me-2" data-bs-toggle="modal" data-bs-target="#modalAgregarMaterial">
+                            <i class="bi bi-plus-circle me-1"></i>Agregar Material
+                        </button>
+                        <button class="btn btn-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#modalDevolverMaterial">
+                            <i class="bi bi-arrow-return-left me-1"></i>Devolver Material
+                        </button>
+                        <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modalRetiroSobrante">
+                            <i class="bi bi-box-arrow-right me-1"></i>Retiro Sobrante
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="tablaMateriales" class="table table-hover table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Material</th>
+                                    <th>Unidad</th>
+                                    <th>Cantidad</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyMateriales">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Métricas Unificadas (Progress + Piezas + Peso) -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-pr text-white">
+                    <h5 class="mb-0"><i class="bi bi-speedometer2 me-2"></i>MÉTRICAS DE PRODUCCIÓN</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Barra de Progreso -->
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Progreso</label>
+                            <div class="progress" style="height: 30px;">
+                                <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                                     role="progressbar" style="width: 0%;" aria-valuenow="0" 
+                                     aria-valuemin="0" aria-valuemax="100">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Piezas y Peso -->
+                    <div class="row align-items-center mb-3">
+                        <div class="col-md-6 text-center">
+                            <label class="form-label fw-bold">Piezas Producidas</label>
+                            <h2 id="piezasProducidas" class="text-primary" style="font-weight: 700; font-size: 2.5rem;">0 / 200</h2>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <label class="form-label fw-bold">Peso Actual (kg)</label>
+                            <h2 id="pesoActual" class="text-info" style="font-weight: 700; font-size: 2.5rem;">0.00</h2>
+                        </div>
+                    </div>
+                    
+                    <!-- Botones -->
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <button id="btnGenerarEtiqueta" class="btn btn-pr w-100">
+                                <i class="bi bi-printer-fill me-2"></i>Generar Etiqueta
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button id="btnProdPaquete" class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#modalProdPaquete">
+                                <i class="bi bi-box-seam me-2"></i>Producción por Paquete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Agregar Material -->
+<div class="modal fade" id="modalAgregarMaterial" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-pr text-white">
+                <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Agregar Material</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Escanear Material (Enter para agregar)</label>
+                    <input type="text" id="inputEscanear" class="form-control" placeholder="Escanear el código de barras...">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Material</th>
+                                <th>Unidad</th>
+                                <th>Cantidad</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyAgregarMaterial">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-prcancel" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-pr" id="btnGuardarMaterial">
+                    <i class="bi bi-save me-1"></i>Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Devolver Material -->
+<div class="modal fade" id="modalDevolverMaterial" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title"><i class="bi bi-arrow-return-left me-2"></i>Devolver Material</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Material</th>
+                                <th>Lote</th>
+                                <th>Cantidad Disponible</th>
+                                <th>Seleccionar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyDevolverMaterial">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-warning" id="btnConfirmarDevolucion">
+                    <i class="bi bi-check-circle me-1"></i>Confirmar Devolución
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Retiro Material Sobrante -->
+<div class="modal fade" id="modalRetiroSobrante" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-secondary text-white">
+                <h5 class="modal-title"><i class="bi bi-box-arrow-right me-2"></i>Retiro Material Sobrante</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Material</th>
+                                <th>Cantidad</th>
+                                <th>Seleccionar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyRetiroSobrante">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-prcancel" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-pr" id="btnGenerarEtiquetaSobrante">
+                    <i class="bi bi-printer me-1"></i>Generar Etiqueta
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Producción por Paquete -->
+<div class="modal fade" id="modalProdPaquete" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title"><i class="bi bi-box-seam me-2"></i>Producción por Paquete</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Cantidad de piezas en el paquete</label>
+                    <input type="number" id="inputPiezasPaquete" class="form-control" value="10" min="1">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-prcancel" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-info text-white" id="btnGenerarEtiquetaPaquete">
+                    <i class="bi bi-printer me-1"></i>Generar Etiqueta
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Mock Data
+    const mockData = {
+        linea: "Línea 10",
+        pedido: "195562",
+        articulo: "U270/200 L10",
+        receta: "Receta estándar",
+        recetaId: 1,
+        progreso: 45,
+        piezas: 120,
+        piezasTotal: 200,
+        peso: 0,
+        recetas: [
+            {
+                id: 1,
+                nombre: "Receta Estándar",
+                observaciones: "Normales, mayor a 120 g/m²",
+                cargadoras: [
+                    { id: 1, denier: "6", porcentaje: 40 },
+                    { id: 2, denier: "7x64", porcentaje: 35 },
+                    { id: 3, denier: "5", porcentaje: 25 }
+                ]
+            },
+            {
+                id: 2,
+                nombre: "Receta Premium",
+                observaciones: "Alta densidad, refuerzo estructural para aplicaciones premium",
+                cargadoras: [
+                    { id: 1, denier: "8", porcentaje: 50 },
+                    { id: 2, denier: "6x48", porcentaje: 50 }
+                ]
+            },
+            {
+                id: 3,
+                nombre: "Receta Industrial",
+                observaciones: "Uso industrial pesado, resistencia extrema",
+                cargadoras: [
+                    { id: 1, denier: "10", porcentaje: 30 },
+                    { id: 2, denier: "8x64", porcentaje: 30 },
+                    { id: 3, denier: "6", porcentaje: 20 },
+                    { id: 4, denier: "4x32", porcentaje: 20 }
+                ]
+            }
+        ],
+        materiales: [
+            { id: 1, nombre: "Fibra A", unidad: "kg", cantidad: 50, estado: "Disponible", lote: "L-001" },
+            { id: 2, nombre: "Resina B", unidad: "kg", cantidad: 30, estado: "Disponible", lote: "L-002" },
+            { id: 3, nombre: "Aditivo C", unidad: "kg", cantidad: 10, estado: "Disponible", lote: "L-003" }
+        ]
+    };
+
+    let materialesAgregados = [];
+    let simulacionInterval;
+
+    $(document).ready(function () {
+        initializeView();
+        setupEventHandlers();
+        startAutomaticSimulation();
+        loadRecetaDetalle(mockData.recetaId);
+    });
+
+    function initializeView() {
+        updateHeaderInfo();
+        loadMaterialesTable();
+        updateProgress();
+    }
+
+    function updateHeaderInfo() {
+        $('#pedidoActual').text(mockData.pedido);
+        $('#articuloActual').text(mockData.articulo);
+        $('#recetaActual').text(mockData.receta);
+        $('#piezasProducidas').text(mockData.piezas + ' / ' + mockData.piezasTotal);
+        $('#pesoActual').text(mockData.peso.toFixed(2));
+        $('#selectLinea').val(mockData.linea);
+    }
+
+    function updateProgress() {
+        $('#progressBar').css('width', mockData.progreso + '%').attr('aria-valuenow', mockData.progreso).text(mockData.progreso + '%');
+    }
+
+    function loadMaterialesTable() {
+        const tbody = $('#tbodyMateriales');
+        tbody.empty();
+        mockData.materiales.forEach(function (mat) {
+            const estadoClass = mat.estado === 'Devuelto' ? 'badge bg-danger' : 'badge bg-success';
+            tbody.append(`<tr data-id="${mat.id}">
+                <td>${mat.nombre}</td>
+                <td>${mat.unidad}</td>
+                <td>${mat.cantidad}</td>
+                <td><span class="${estadoClass}">${mat.estado}</span></td>
+                <td><button class="btn btn-sm btn-outline-danger btn-eliminar-material" data-id="${mat.id}"><i class="bi bi-trash"></i></button></td>
+            </tr>`);
+        });
+    }
+
+    function loadDevolverMaterialTable() {
+        const tbody = $('#tbodyDevolverMaterial');
+        tbody.empty();
+        mockData.materiales.filter(m => m.estado !== 'Devuelto').forEach(function (mat) {
+            tbody.append(`<tr>
+                <td>${mat.nombre}</td>
+                <td>${mat.lote}</td>
+                <td>${mat.cantidad}</td>
+                <td><input type="checkbox" class="form-check-input chk-devolver" data-id="${mat.id}" data-nombre="${mat.nombre}" data-cantidad="${mat.cantidad}"></td>
+            </tr>`);
+        });
+    }
+
+    function loadRetiroSobranteTable() {
+        const tbody = $('#tbodyRetiroSobrante');
+        tbody.empty();
+        mockData.materiales.filter(m => m.estado !== 'Devuelto').forEach(function (mat) {
+            tbody.append(`<tr>
+                <td>${mat.nombre}</td>
+                <td>${mat.cantidad}</td>
+                <td><input type="checkbox" class="form-check-input chk-sobrante" data-id="${mat.id}" data-nombre="${mat.nombre}"></td>
+            </tr>`);
+        });
+    }
+
+    function startAutomaticSimulation() {
+        simulacionInterval = setInterval(function() {
+            mockData.piezas++;
+            mockData.progreso = Math.min(100, mockData.progreso + 1);
+            mockData.peso = Math.random() * 10;
+            
+            $('#piezasProducidas').text(mockData.piezas + ' / ' + mockData.piezasTotal);
+            $('#pesoActual').text(mockData.peso.toFixed(2));
+            updateProgress();
+        }, 8000);
+    }
+
+    function setupEventHandlers() {
+        $('#btnGenerarEtiqueta').click(function () {
+            showToast('Etiqueta generada');
+        });
+
+        $('#selectLinea').change(function () {
+            mockData.linea = $(this).val();
+            showToast('Línea cambiada a: ' + mockData.linea);
+        });
+
+        $('#selectReceta').change(function () {
+            const recetaId = parseInt($(this).val());
+            mockData.recetaId = recetaId;
+            const receta = mockData.recetas.find(r => r.id === recetaId);
+            $('#recetaActual').text(receta.nombre);
+            loadRecetaDetalle(recetaId);
+        });
+
+        $('#inputEscanear').keypress(function (e) {
+            if (e.which === 13) {
+                const materialName = $(this).val();
+                if (!materialName) return;
+
+                const existe = materialesAgregados.find(m => m.nombre === materialName);
+                if (existe) {
+                    alert('El material ya fue escaneado previamente.');
+                    $(this).val('');
+                    return;
+                }
+
+                const nuevoMaterial = {
+                    id: Date.now(),
+                    nombre: materialName,
+                    unidad: 'kg',
+                    cantidad: Math.floor(Math.random() * 50) + 10
+                };
+                materialesAgregados.push(nuevoMaterial);
+                addMaterialToTable(nuevoMaterial);
+                $(this).val('');
+            }
+        });
+
+        $('#btnGuardarMaterial').click(function () {
+            materialesAgregados.forEach(function (mat) {
+                mockData.materiales.push({
+                    id: mat.id,
+                    nombre: mat.nombre,
+                    unidad: mat.unidad,
+                    cantidad: mat.cantidad,
+                    estado: 'Disponible',
+                    lote: 'L-' + Math.floor(Math.random() * 999)
+                });
+            });
+            materialesAgregados = [];
+            $('#tbodyAgregarMaterial').empty();
+            loadMaterialesTable();
+            $('#modalAgregarMaterial').modal('hide');
+            showToast('Materiales guardados correctamente');
+        });
+
+        $(document).on('click', '.btn-eliminar-material', function () {
+            const id = $(this).data('id');
+            mockData.materiales = mockData.materiales.filter(m => m.id !== id);
+            loadMaterialesTable();
+        });
+
+        $('#btnConfirmarDevolucion').click(function () {
+            const seleccionados = $('.chk-devolver:checked');
+            if (seleccionados.length === 0) {
+                alert('Seleccione al menos un material para devolver.');
+                return;
+            }
+            seleccionados.each(function () {
+                const id = $(this).data('id');
+                const material = mockData.materiales.find(m => m.id == id);
+                if (material) {
+                    material.estado = 'Devuelto';
+                }
+            });
+            loadMaterialesTable();
+            $('#modalDevolverMaterial').modal('hide');
+            showToast('Materiales devueltos correctamente');
+        });
+
+        $('#btnGenerarEtiquetaSobrante').click(function () {
+            const seleccionados = $('.chk-sobrante:checked');
+            if (seleccionados.length === 0) {
+                alert('Seleccione al menos un material sobrante.');
+                return;
+            }
+            showToast('Etiqueta de sobrantes generada');
+            $('#modalRetiroSobrante').modal('hide');
+        });
+
+        $('#btnGenerarEtiquetaPaquete').click(function () {
+            const piezas = parseInt($('#inputPiezasPaquete').val());
+            if (piezas > 0) {
+                mockData.piezas += piezas;
+                mockData.progreso = Math.min(100, mockData.progreso + piezas);
+                $('#piezasProducidas').text(mockData.piezas + ' / ' + mockData.piezasTotal);
+                updateProgress();
+                $('#modalProdPaquete').modal('hide');
+                showToast('Etiqueta de paquete generada - ' + piezas + ' piezas añadidas');
+            }
+        });
+
+        $(document).on('click', '.btn-eliminar-agregar', function () {
+            const id = $(this).data('id');
+            materialesAgregados = materialesAgregados.filter(m => m.id !== id);
+            $(this).closest('tr').remove();
+        });
+
+        $('#modalDevolverMaterial').on('show.bs.modal', function () {
+            loadDevolverMaterialTable();
+        });
+
+        $('#modalRetiroSobrante').on('show.bs.modal', function () {
+            loadRetiroSobranteTable();
+        });
+    }
+
+    function addMaterialToTable(material) {
+        $('#tbodyAgregarMaterial').append(`<tr data-id="${material.id}">
+            <td>${material.nombre}</td>
+            <td>${material.unidad}</td>
+            <td>${material.cantidad}</td>
+            <td><button class="btn btn-sm btn-outline-danger btn-eliminar-agregar" data-id="${material.id}"><i class="bi bi-trash"></i></button></td>
+        </tr>`);
+    }
+
+    function generarCargadoraCard(cargadora, index, colSize) {
+        return `
+        <div class="col-md-${colSize} mb-3">
+            <div class="card h-100" style="border: 2px solid var(--bs-redfn);">
+                <div class="card-header bg-light">
+                    <small class="text-muted fw-bold" style="font-family: 'Poppins', sans-serif; letter-spacing: 1px;">CARGADORA ${index + 1}</small>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <small class="text-uppercase text-muted" style="font-size: 0.7rem; letter-spacing: 2px;">DENIER</small>
+                        <p class="fw-bold fs-4 mb-0" style="color: var(--bs-redfn);">${cargadora.denier}</p>
+                    </div>
+                    <div>
+                        <small class="text-uppercase text-muted" style="font-size: 0.7rem; letter-spacing: 2px;">PORCENTAJE</small>
+                        <div class="progress mt-1" style="height: 25px;">
+                            <div class="progress-bar bg-success fw-bold" 
+                                 style="width: ${cargadora.porcentaje}%;">${cargadora.porcentaje}%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+
+    function loadRecetaDetalle(recetaId) {
+        const receta = mockData.recetas.find(r => r.id === recetaId);
+        if (!receta) return;
+        
+        // Update observaciones
+        $('#observacionesReceta').text(receta.observaciones);
+        
+        // Calculate column size based on number of cargadoras
+        const numCargadoras = receta.cargadoras.length;
+        const colSize = numCargadoras === 4 ? 3 : numCargadoras === 3 ? 4 : 6;
+        
+        // Load cargadoras
+        const container = $('#cargadorasContainer');
+        container.empty();
+        
+        receta.cargadoras.forEach((cargadora, index) => {
+            const html = generarCargadoraCard(cargadora, index, colSize);
+            container.append(html);
+        });
+    }
+
+    function showToast(message) {
+        const toastElement = $('#toastEtiqueta');
+        toastElement.find('.toast-body').text(message || 'Etiqueta generada');
+        const toast = new bootstrap.Toast(toastElement[0]);
+        toast.show();
+    }
+
+    // Limpiar intervalo al salir
+    $(window).on('beforeunload', function() {
+        if (simulacionInterval) {
+            clearInterval(simulacionInterval);
+        }
+    });
+</script>

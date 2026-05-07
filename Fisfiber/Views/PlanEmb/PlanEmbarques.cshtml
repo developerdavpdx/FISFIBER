@@ -1,0 +1,479 @@
+﻿
+@{
+    ViewBag.Title = "Plan Embarques";
+}
+
+<link rel="stylesheet" href="~/Styles/PlanProduccion/ConsultaPlanProduccion.css">
+<link rel="stylesheet" href="~/Styles/PlanProduccion/PlanPro.css">
+
+<div class="pt-2 ms-3 me-4">
+    <div class="row pt-1 ps-3 pe-3 pt-4">
+        <div class="col-12 text-center">
+            <h5>
+                PROGRAMA DIARIO DE EMBARQUES
+            </h5>
+        </div>
+    </div>
+
+    <div class="row pt-3">
+        <div class="col-md-12 body-table">
+            <table id="PlanesEmb"
+                   action="@Url.Action("GetPlanesEmbarques","PlanEmb")"
+                   details="@Url.Action("GetPlanesVetnasDetails","PlanVentas")"
+                   ovdetails="@Url.Action("GetOrdenesVentaDetails","Global")"
+                   update="@Url.Action("ActualizarOV","PlanVentas")"
+                   modifyPP="@Url.Action("ActualizarOF","PlanProduccion")"
+                   configuracion="@Url.Action("GetConfigxUsuarioPP","PlanProduccion")"
+                   finalizarPlan="@Url.Action("FinalizarPlanVentas","PlanVentas")"
+                   enviarReporteCyC="@Url.Action("EnviarReporteCyC","PlanVentas")"
+                   class="table table-striped table-bordered table-fixed">
+                <thead>
+                    <tr>
+                        <th>Folio</th>
+                        <th>FechaCreacion</th>
+                        <th>TotalPedidos</th>
+                        <th>TotalAutorizados</th>
+                        <th>TotalNoAutorizados</th>
+                        <th>TotalClientes</th>
+                        <th>TotalArticulos</th>
+                        <th>TotalConCita</th>
+                        <th>TotalEntregaParcial</th>
+                        <th>TotalPiezasEntrega</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color:lightgray">
+                        <td style="text-align:center" colspan="8">SIN DATOS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row pt-3 border-top border-3 mt-2  d-none tablePlanEmb">
+
+        <div class="col-4 text-start pt-1">
+            <h5 style="margin-bottom:0px;">ESTATUS PLAN : <label class="fw-bold px-2 py-1" style="color:white;" id="estVentas"></label></h5>
+        </div>
+        <div class="col-2 text-start nodoLog">
+            <button id="DescargarPlanVentas" class="btn btn-success" style="height: 95%;">
+                <i class="fas fa-file-excel me-2"></i>Exportar a Excel
+            </button>
+        </div>
+        <div class="col-2 text-start nodoLog">
+            <button type="button" id="ShowModalSugPlan" class="btn btn-outline-secondary">
+                Sugerir Plan Embarque
+            </button>
+        </div>
+        <div class="col-2 text-start nodoAlmacen">
+            <button type="button" id="SaveAlm"
+                    class="btn btn-outline-secondary">
+                Guardar Ubicaciones
+            </button>
+        </div>
+        <div class="col-2 text-start nodoVentas">
+            <button type="button" id="AuthPlan"
+                    class="btn btn-outline-secondary">
+                Autorizar Plan
+            </button>
+        </div>
+
+
+    </div>
+
+    <div class="row pt-3">
+        <div class="col-12">
+            <div class="card bg-light mb-3">
+                <div class="card-header">
+                    <div id="PPHeader" class="d-none bg-white rounded box-shadow">
+                        <div class="card">
+                            <div class="card-body ReportHeaderv2">
+                                <div class="row">
+                                    <div class="col-6 text-start d-flex align-items-center justify-content-start">
+                                        <img src="/Images/logoFisfiber.png" alt="" class="w-50">
+                                    </div>
+                                    <div class="col-6 text-end">
+
+                                        <div class="row EditRow">
+
+                                            <div class="col-6">
+                                                <div class="input-group input-group-sm  editAdmin mb-2">
+                                                    <span class="input-group-text">Fecha Liberación:</span>
+                                                    <input type="date"
+                                                           id="FL"
+                                                           value="@Convert.ToDateTime(ViewBag.FechaLib).ToString("yyyy-MM-dd")"
+                                                           class="form-control"
+                                                           style="height:34.2px"
+                                                           aria-label="Sizing example input"
+                                                           aria-describedby="inputGroup-sizing-sm">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Code:</span>
+                                                    <input type="text"
+                                                           id="Code"
+                                                           value="@ViewBag.CodeIso"
+                                                           class="form-control"
+                                                           style="height:34.2px"
+                                                           aria-label="Sizing example input"
+                                                           aria-describedby="inputGroup-sizing-sm">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="input-group input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Fecha Revisión:</span>
+                                                    <input type="date"
+                                                           id="FR"
+                                                           value="@Convert.ToDateTime(ViewBag.FechaRev).ToString("yyyy-MM-dd")"
+                                                           class="form-control"
+                                                           style="height:34.2px"
+                                                           aria-label="Sizing example input"
+                                                           aria-describedby="inputGroup-sizing-sm">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <div class="input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Nivel:</span>
+                                                    <input type="number"
+                                                           id="Nivel"
+                                                           value="@ViewBag.Nivel"
+                                                           class="form-control"
+                                                           style="height:34.2px"
+                                                           aria-label="Sizing example input"
+                                                           aria-describedby="inputGroup-sizing-sm">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-3">
+                                                <div class="input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Revisión:</span>
+                                                    <input type="number"
+                                                           id="Revision"
+                                                           value="@ViewBag.Revision"
+                                                           class="form-control"
+                                                           style="height: 34.2px"
+                                                           aria-label="Sizing example input"
+                                                           aria-describedby="inputGroup-sizing-sm" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 text-start">
+                                                <button type="button"
+                                                        class="btn btn-primary btn-sm btnSave ">
+                                                    Guardar
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row headRow">
+                                            <div class="col-8 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2 ISO">
+                                                        FECHA DE LIBERACIÓN:
+                                                        <span id="fecha-liberacion">@ViewBag.FechaLib</span>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-4 btnEditHead">
+
+                                                <i id="editHead" class="bi bi-pencil-square pointer-event"></i>
+                                            </div>
+
+                                        </div>
+                                        <div class="row mt-2 headRow">
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2 ISO">
+                                                        @ViewBag.CodeISO
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer text-right">
+                                                    <span class="pe-2">
+                                                        REVISION: <span> @ViewBag.Revision</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2 headRow">
+                                            <div class="col-9 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2 ISO">
+                                                        FECHA DE REVISIÓN: <span id="fecha-revisionPv">@ViewBag.FechaRev</span>
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-3 text-start">
+                                                <div class="TitleReportContainer text-right">
+                                                    <span class="pe-2 ISO">
+                                                        NIVEL @ViewBag.Nivel
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2">
+                                                        FOLIO: <span id="folioPv"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer text-right">
+                                                    <span class="pe-2">
+                                                        FECHA: <span id="fecha-documentoPv"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5 id="PPHeaderTitle" class="text-center">
+                        Detalle de plan de producción <strong id="folioseleccionado"></strong>
+                    </h5>
+                </div>
+
+
+                <div id="reportbyline" class="card-body pt-2">
+
+                    <h5 class="card-title">!Ningún plan seleccionado!</h5>
+                    <p class="card-text">Aquí podrás visualizar el detalle de el plan de producción seleccionado.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12 body-table d-none tablePlanEmb table-scroll" id="contentPlanEmb">
+            <table id="PlanEmbarques"
+                   class="table table-striped table-bordered table-fixed "
+                   style="table-layout:fixed"
+                   PlanEmb="@Url.Action("GetDetailsPlanEmb","PlanEmb")"
+                   UniByPedido="@Url.Action("GetUniByPedido","PlanEmb")"
+                   EstatusCarga="@Url.Action("GetEstatusCarga","PlanEmb")"
+                   OperadorInfo="@Url.Action("GetOperadores","PlanEmb")"
+                   UniOpInfo="@Url.Action("GetUniOp","PlanEmb")"
+                   TipoUnidadesInfo="@Url.Action("GetTipoUnidades","PlanEmb")"
+                   LocalesInfo="@Url.Action("GetLocales","PlanEmb")"
+                   SumPzsEntregaPedido="@Url.Action("GetSumPzsEntrega","PlanEmb")"
+                   PedidosInfo="@Url.Action("GetPedidosInPP","PlanEmb")"
+                   UpdatePlanEmbAlm="@Url.Action("UpdatePlanEmbAlm","PlanEmb")"
+                   AuthPlanEmb="@Url.Action("AuthPlanEmbByVentas","PlanEmb")"
+                   PlanProduccionDet="@Url.Action("GetPlanesProduccionDetails","PlanEmb")">
+
+                <thead>
+                    <tr>
+                        <th width="130px">Unidad</th>
+                        <th width="130px">Viaje</th>
+                        <th width="130px">F.Entrega</th>
+                        <th width="130px">Pedido</th>
+                        <th width="130px">Código Cliente</th>
+                        <th width="220px">Cliente</th>
+                        <th width="130px">Hora Inicio</th>
+                        <th width="130px">Hora Fin</th>
+                        <th width="230px">Articulo</th>
+                        <th width="130px">Núm Rollos</th>
+                        <th width="130px">Piezas Entrega</th>
+                        <th width="130px">Estatus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+
+    <!-- Modal Agregar ordenes de venta -->
+    <div class="modal fade nodoLog" id="modalSugPlan"
+         tabindex="-1" aria-labelledby="Bitacora" aria-hidden="true"
+         data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-xl modal100">
+            <div class="modal-content">
+                <div class="modal-header" style="display:block !important">
+                    <h5 class="modal-title">
+                        Sugerencia plan embarques Folio:
+                        <span id="folioSug"></span>
+                        <strong></strong>
+                        <button id="closeSug" type="button"
+                                class="close" data-dismiss="modal" aria-label="Close">
+                            <span id="RestarModalCloseEdi" restart="true"
+                                  class="btn mb-2 mb-md-0 btn-outline-danger next">
+                                Cancelar
+                            </span>
+                        </button>
+                    </h5>
+
+                </div>
+                <div class="modal-body text-center">
+
+                    <div class="row body-table table-scroll" id="containerSugPlanEmb">
+                        <table id="SugPlanEmbarques"
+                               class="table table-striped table-bordered table-fixed "
+                               style="table-layout:fixed"
+                               SugPlanEmb="@Url.Action("GetSugPlanEmb","PlanEmb")"
+                               UpdatePlanEmb="@Url.Action("UpdatePlanEmb","PlanEmb")"
+                               DeletePedidoPlanEmb="@Url.Action("DeletePedidoEmb","PlanEmb")"
+                               DuplicarPedido="@Url.Action("NuevoEnvio","PlanEmb")"
+                               UpdateHeaderISO="@Url.Action("UpdateHeadPlanEmb","PlanEmb")">
+
+                            <thead class="header-fijo">
+                                <tr>
+                                    <th width="130px">Unidad</th>
+                                    <th width="130px">Viaje</th>
+                                    <th width="130px">F.Entrega</th>
+                                    <th width="130px">Pedido</th>
+                                    <th width="130px">Código Cliente</th>
+                                    <th width="220px">Cliente</th>
+                                    <th width="130px">Hora Inicio</th>
+                                    <th width="130px">Hora Fin</th>
+                                    <th width="230px">Articulo</th>
+                                    <th width="130px">Núm Rollos</th>
+                                    <th width="130px">Piezas Entrega</th>
+                                    <th width="130px">Estatus</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td colspan="10" class="dt-empty">No hay datos disponibles en la tabla</td></tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="col-12 d-flex justify-content-end">
+                        <a href="#" id="savePE"
+                           class="btn mb-2 mt-2 mb-md-0 btn-outline">
+                            Guardar
+                        </a>
+                    </div>
+                    <!--Menu Contextual Elimiar Linea-->
+                    <div id="MenuContextDeleteRow">
+                        <ul>
+                            <li id="duplicarPedido"
+                                >
+                                <i class="bi bi-plus-circle-fill text-primary"></i>
+                                Duplicar Pedido
+                                <label class="fw-bold" id="pedidoDup"></label>
+                            </li>
+                            <li id="deleteRow"
+                              >
+                                <i class="fa-solid fa-trash text-danger"></i>
+                                Eliminar Pedido
+                                <label class="fw-bold" id="pedidoD"></label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer mt-3">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal mostrar plan produccion -->
+    <div class="modal fade nodoLog" id="modalPlanPro"
+         tabindex="-1" aria-labelledby="Bitacora" aria-hidden="true"
+         data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-xl modal100">
+            <div class="modal-content">
+                <div class="modal-header" style="display:block !important">
+                    <h5 class="modal-title">
+                        Plan Producción Folio:
+                        <span id="folioPlanPro"></span>
+                        <strong></strong>
+                        <button id="closePlanPro" type="button"
+                                class="close" data-dismiss="modal" aria-label="Close">
+                            <span id="" restart="true"
+                                  class="btn mb-2 mb-md-0 btn-outline-danger next">
+                                Cerrar
+                            </span>
+                        </button>
+                    </h5>
+
+                </div>
+                <div class="modal-body text-center">
+                    <div class="row body-table">
+                        <table id="PlanProduccion"
+                               class="table table-preview table-striped table-bordered m-0 tableReport"
+                               style="table-layout: fixed;">
+                            <thead>
+                                <tr>
+                                    <th>Folio</th>
+                                    <th>Linea</th>
+                                    <th>Fecha Creación</th>
+                                    <th>Cantidad Kilos</th>
+                                    <th>Artículo</th>
+                                    <th>Descripción Artículo</th>
+                                    <th>Generar</th>
+                                    <th>No Orden Fabricación</th>
+                                    <th>Estatus</th>
+                                    <th>Bitácora</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color:lightgray">
+                                    <td style="text-align:center" colspan="8">SIN DATOS</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer mt-3">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Motivo Estado-->
+    <div class="modal fade" id="modalMotivoEst" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #343a40;">
+                    <h5 class="modal-title text-white"><strong id="estTitle"></strong> </h5>
+                    <i class="bi bi-x-circle-fill icon-no backModalMotEst"
+                       style="color:white; font-size:20px;"
+                       type="button"
+                       data-bs-dismiss="modal"></i>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="motComentarios" class="form-label">Comentarios</label>
+                        <textarea id="motComentarios" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary backModalMotEst" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn text-white"
+                            style="background-color: #1e76bd;" id="guardarComEst">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="~/Scripts/PlanEmb/PlanEmb.js?v=1.1.8"></script>
+
+
+

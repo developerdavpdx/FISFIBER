@@ -1,0 +1,662 @@
+﻿
+@{
+    ViewBag.Title = "Consulta y edicion plan ventas";
+}
+
+<link rel="stylesheet" href="~/Styles/PlanProduccion/ConsultaPlanProduccion.css">
+<link rel="stylesheet" href="~/Styles/PlanProduccion/PlanPro.css">
+
+<div class="pt-2 ms-3 me-4">
+    <div class="row pt-1 ps-3 pe-3 pt-4">
+        <div class="col-12 text-center">
+            <h5>
+                Planes de ventas preliminales
+            </h5>
+        </div>
+    </div>
+
+    <div id="MenuContextBitacora">
+        <ul>
+            <li id="editPPM">
+                <i class="fa-solid bi bi-pencil-square NewTableRowIcon"></i>
+                Agregar Pedidos
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12 body-table">
+            <table id="PlanesVentas"
+                   action="@Url.Action("GetPlanesVentas","PlanVentas")"
+                   details="@Url.Action("GetPlanesVetnasDetails","PlanVentas")"
+                   ovdetails="@Url.Action("GetOrdenesVentaDetails","Global")"
+                   update="@Url.Action("ActualizarOV","PlanVentas")"
+                   modifyPP="@Url.Action("ActualizarOF","PlanProduccion")"
+                   configuracion="@Url.Action("GetConfigxUsuarioPP","PlanProduccion")"
+                   finalizarPlan="@Url.Action("FinalizarPlanVentas","PlanVentas")"
+                   enviarReporteCyC="@Url.Action("EnviarReporteCyC","PlanVentas")"
+                   class="table table-striped table-bordered table-fixed">
+                <thead>
+                    <tr>
+                        <th>Folio</th>
+                        <th>FechaCreacion</th>
+                        <th>TotalPedidos</th>
+                        <th>TotalAutorizados</th>
+                        <th>TotalNoAutorizados</th>
+                        <th>TotalClientes</th>
+                        <th>TotalArticulos</th>
+                        <th>TotalConCita</th>
+                        <th>TotalEntregaParcial</th>
+                        <th>TotalPiezasEntrega</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color:lightgray">
+                        <td style="text-align:center" colspan="8">SIN DATOS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="row pb-2 mb-3 d-none" id="ContenedorBtnExcel">
+            <div class="col-md-6 ps-4">
+                <h5 style="margin-bottom:0px;">ESTATUS PLAN : <label class="fw-bold px-2 py-1" style="color:white;" id="estPVCC"></label></h5>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+                <button id="DescargarPlanVentas"
+                        class="btn btn-success" style="height: 95%;">
+                    <i class="fas fa-file-excel me-2"></i>
+                    Exportar a Excel
+                </button>
+                <button type="button"
+                        id="BtnEnviarReporte"
+                        class="btn btn-outline-tertiary ms-2"
+                        style="border: solid; font-weight: bold;"
+                        >
+                    Enviar Reporte CyC
+                </button>
+                <button type="button" 
+                        id="BtnFinalizacion" 
+                        class="btn btn-outline-danger ms-2"
+                        style="border: solid; font-weight: bold;"
+                        >
+                    Cerrar Plan
+                </button>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card bg-light mb-3">
+                <div class="card-header">
+
+                    <div id="PPHeader" class="bg-black rounded box-shadow d-none">
+                        <div class="card bg-black" style="color: white">
+                            <div class="card-body ReportHeaderv2">
+                                <div class="row">
+                                    <div class="col-6 text-start d-flex align-items-center justify-content-start">
+                                        <img src="/Images/logoFisfiber.png" alt="" class="w-50" />
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <div class="row EditRow">
+                                            <div class="col-6">
+                                                <div class="input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Fecha Liberación:</span>
+                                                    <input type="date" id="FL"
+                                                           value="@Convert.ToDateTime(ViewBag.FechaLib).ToString("yyyy-MM-dd")"
+                                                           class="form-control" style="height:34.2px" aria-label="Sizing
+                example input" aria-describedby="inputGroup-sizing-sm">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Code:</span>
+                                                    <input type="text"
+                                                           id="Code"
+                                                           value="@ViewBag.CodeIso"
+                                                           class="form-control"
+                                                           style="height: 34.2px"
+                                                           aria-label="Sizing example input"
+                                                           aria-describedby="inputGroup-sizing-sm" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="input-group input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Fecha Revisión:</span>
+                                                    <input type="date" id="FR"
+                                                           value="@Convert.ToDateTime(ViewBag.FechaRev).ToString("yyyy-MM-dd")"
+                                                           class="form-control" style="height:34.2px" aria-label="Sizing
+                example input" aria-describedby="inputGroup-sizing-sm">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <div class="input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Nivel:</span>
+                                                    <input type="number"
+                                                           id="Nivel"
+                                                           value="@ViewBag.Nivel"
+                                                           class="form-control"
+                                                           style="height: 34.2px"
+                                                           aria-label="Sizing example input"
+                                                           aria-describedby="inputGroup-sizing-sm" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <div class="input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Revisión:</span>
+                                                    <input type="number"
+                                                           id="Revision"
+                                                           value="@ViewBag.Revision"
+                                                           class="form-control"
+                                                           style="height: 34.2px"
+                                                           aria-label="Sizing example input"
+                                                           aria-describedby="inputGroup-sizing-sm" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 text-start">
+                                                <button type="button" class="btn btn-primary btn-sm btnSave">
+                                                    Guardar
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row headRow">
+                                            <div class="col-8 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2 ISO">
+                                                        FECHA DE LIBERACIÓN:
+                                                        <span id="fecha-liberacion">@ViewBag.FechaLib</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-4 btnEditHead">
+                                                <i class="editHead bi bi-pencil-square pointer-event"></i>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2 headRow">
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2 ISO"> @ViewBag.CodeISO </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer text-right">
+                                                    <span class="pe-2">
+                                                        REVISION: <span id="">@ViewBag.Revision</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2 headRow">
+                                            <div class="col-9 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2 ISO">
+                                                        FECHA DE REVISIÓN:
+                                                        <span id="fecha-revisionPE">@ViewBag.FechaRev</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 text-start">
+                                                <div class="TitleReportContainer text-right">
+                                                    <span class="pe-2 ISO"> NIVEL @ViewBag.Nivel </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2"> FOLIO: <span id="folioPV"></span> </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer text-right">
+                                                    <span class="pe-2">
+                                                        FECHA: <span id="fecha-documento"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <h5 id="PPHeaderTitle" class="text-center">
+                        Detalle de plan de producción <strong id="folioseleccionado"></strong>
+                    </h5>
+                </div>
+                <!--Menu Contextual Elimiar Linea-->
+                <div id="MenuContextDeleteRow">
+                    <ul>
+                        <li id="deleteRow"
+                            deleteDetails="@Url.Action("DeleteItemPV","PlanVentas")">
+                            <i class="fa-solid fa-trash text-danger"></i>
+                            Eliminar
+                        </li>
+                        <li id="addRow">
+                            <i class="bi bi-database-fill-add NewTableRowIcon"></i>
+                            Nuevo registro en blanco
+                        </li>
+                    </ul>
+                </div>
+                <div id="reportbyline" class="card-body pt-2">
+                    <h5 class="card-title">!Ning&uacute;n plan seleccionado!</h5>
+                    <p class="card-text">Aquí podrás visualizar el detalle de el plan de producción seleccionado.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pb-4 pt-2 pe-3">
+        <div class="col-12 d-flex justify-content-end">
+            <a href="#" id="actualizar" restart="false" class="d-none btn mb-2 mb-md-0 btn-outline">Actualizar</a>
+        </div>
+    </div>
+
+    <!-- Modal para confirmacion de finalizacion -->
+    <div class="modal fade" id="ConFinalizacion" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mx-auto">
+                        ¿Quieres continuar?
+                    </h5>
+                </div>
+                <form metodo="" class="pt-1 ps-3 pe-3 needs-validation" novalidate>
+                    <div class="modal-body text-center">
+                        <p class="font-weight-bold message">
+                            Una vez finalizado el plan, ya no será posible editarlo.
+                        </p>
+                    </div>
+                    <div class="modal-footer mt-3">
+                        <button type="button"
+                                class="btn btn-outline-danger"
+                                id="CancelFinalizacion">
+                            Cancelar
+                        </button>
+                        <button type="button"
+                                class="btn btn-outline-secondary"
+                                id="ConfirmFinaliacion">
+                            Continuar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="Bitacora" tabindex="-1" aria-labelledby="Bitacora" aria-hidden="true" data-bs-backdrop="static" @*data-bs-keyboard="false"*@>
+        <div class="modal-dialog modal-dialog-centered modal-lg modal100">
+            <div class="modal-content">
+                <div class="modal-header" style="display:block !important">
+                    <h5 class="modal-title" id="HeaderTitle">
+                        Bitácora de plan de producción
+                        <strong id="folioPP"></strong>
+                        <button id="CloseBitacora" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+                    <span>
+                        Aqui se muestra el historial de versiones anteriores del plan,
+                        la ultima versión se muestra en la página principal en la parte
+                        inferiór al dar click en un folio
+                    </span>
+                    @*<i role="button" class="fa-solid fa-xmark" data-bs-dismiss="modal" aria-label="Close"></i>*@
+                </div>
+                <form metodo="" class="pt-1 ps-3 pe-3 needs-validation" novalidate>
+                    <div class="modal-body text-center">
+                        <div class="row">
+                            <div class="col-md-12 body-table">
+                                <table id="BitacoraPP" class="table table-striped table-bordered table-fixed">
+                                    <thead>
+                                        <tr>
+                                            <th width="150">Folio</th>
+                                            <th>Revisión</th>
+                                            <th>Descripción</th>
+                                            <th width="300">Usuario</th>
+                                            <th width="250">Fecha</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="background-color:lightgray">
+                                            <td style="text-align:center" colspan="5">SIN DATOS</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer mt-3">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Detalle Bitacora -->
+    <div class="modal fade" id="BitacoraDetalle" tabindex="-1" aria-labelledby="Bitacora" aria-hidden="true" data-bs-backdrop="static" @*data-bs-keyboard="false"*@>
+        <div class="modal-dialog modal-dialog-centered modal-lg modal100">
+            <div class="modal-content">
+                <div class="modal-header" style="display:block !important">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div><h6 class="modal-title" id="HeaderTitle">Bitácora de plan de producción <strong id="folioRevision"></strong></h6></div>
+                        <div><h6 class="modal-title"> Revisión <strong id="Revision"></strong></h6></div>
+                        <div><h6 class="modal-title"> Fecha <strong id="FechaRevision"></strong></h6></div>
+                    </div>
+                </div>
+                <form metodo="" class="pt-1 ps-3 pe-3 needs-validation" novalidate>
+                    <div class="modal-body text-center">
+                        <div class="row pb-2">
+                            <div class="col-md-12 d-flex justify-content-end">
+                                <button type="button" id="DescargarBitacora" class="btn btn-outline-secondary">Descargar Excel</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row m-0 pb-4">
+                                    <div class="col-md-12 p-0 body-table">
+                                        <table id="BitacoraDetailsList" class="table table-striped table-bordered" style="table-layout:fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th width="240">Línea</th>
+                                                    <th width="200">Comentarios Extras</th>
+                                                    <th width="200">Prioridad</th>
+                                                    <th width="200">Ubicación Propuesta</th>
+                                                    <th width="200">Hora Propuesta</th>
+                                                    <th width="200">Ubicación Final</th>
+                                                    <th width="200">Rollos</th>
+                                                    <th width="200">Piezas Producidas</th>
+                                                    <th width="200">Pedido</th>
+                                                    <th width="200">Codigo Cliente</th>
+                                                    <th width="200">Solicitado</th>
+                                                    <th width="200">Núm. Artículo</th>
+                                                    <th width="250">Descripción Artículo</th>
+                                                    <th width="200">Almacén</th>
+                                                    <th width="200">Metros Rollo</th>
+                                                    <th width="200">Especificación</th>
+                                                    <th width="200">Hora Inicio</th>
+                                                    <th width="200">Hora Final</th>
+                                                    <th width="200">Tiempo Producción</th>
+                                                    <th width="200">Cantidad Metros</th>
+                                                    <th width="200">Comentarios</th>
+                                                    <th width="200">Fecha Contabilización</th>
+                                                    <th width="200">Fecha Fabricación</th>
+                                                    <th width="200">Fecha Entrega</th>
+                                                    <th width="200">Cliente</th>
+                                                    <th width="200">Cantidad Kilos</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer mt-3">
+                        <button id="CloseBitacoraDetalle" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span class="btn mb-2 mb-md-0 btn-outline-danger ">
+                                Cerrar
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <!-- Modal Agregar ordenes de venta -->
+    <div class="modal fade" id="EdicionOrdenes" tabindex="-1" aria-labelledby="Bitacora" aria-hidden="true" data-bs-backdrop="static" @*data-bs-keyboard="false"*@>
+        <div class="modal-dialog modal-dialog-centered modal-xl modal100">
+            <div class="modal-content">
+                <div class="modal-header" style="display:block !important">
+                    <h5 class="modal-title">
+                        Edición de plan de ventas 
+                        <span id="folioedicionPP"></span>
+                        <strong></strong>
+                        <button id="CloseEdicionOrdenes" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span id="RestarModalCloseEdi" restart="true" class="btn mb-2 mb-md-0 btn-outline-danger next">
+                                Cancelar
+                            </span>
+                        </button>
+                    </h5>
+
+                </div>
+                <div class="modal-body text-center">
+
+                    <!--CONTENEDOR PRINCIPAL -->
+                    <div class="pt-3 ps-3 pe-4">
+                        <div class="row ps-3 pe-3">
+                            <div class="col-12">
+                                <!--BARRA DE FLECHAS (PASOS)-->
+                                <div class="wrapper position-relative pt-3">
+                                    <div class="arrow-steps clearfix w-100">
+                                        <div class="step current"> <span> Ordenes de venta</span> </div>
+                                        <div class="step"> <span>Vista Previa</span> </div>
+                                        <div class="step"> <span>Plan generado</span> </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 col-12 text-start d-none">
+                                    <a id="edicionPP"
+                                       configuracion="@Url.Action("GetConfigxUsuarioPE","PlanVentas")"
+                                       href="#">
+                                        <p class="edicionPP hover-effect-8">
+                                            Configuración Monitor Entregas <i class="fa-solid fa-gear"></i>
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--PASO 1 Ordenes Ventas-->
+                        <div id="step-1" class="step-content">
+                            <div class="row pt-1 ps-3 pe-3 pt-4 mb-3">
+                                <div class="col-12 text-center">
+                                    <h4>
+                                        Ordenes de venta pendientes por entregar
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="row pt-1 ps-3 pe-3 pt-4 pb-3">
+                                <div class="col-md-7">
+                                    <h6 class="font-weight-bold">
+                                        Selección múltiple
+                                    </h6>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input anycheck" id="selectAll">
+                                        <label class="form-check-label" for="selectAll">Seleccionar todas</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <form metodo="FiltroFechaIni" class="pt-1 ps-3 pe-3 needs-validation" novalidate>
+                                        <div class=" text-center">
+                                            <p class="font-weight-bold">Selecciona la fecha a consultar</p>
+                                            <div class="row">
+                                                <div class="col-12 d-flex align-items-end justify-content-end">
+                                                    <div class="pe-3 position-relative">
+                                                        <input type="date" class="form-control" id="fecha_entregaS" aria-describedby="FIHelp">
+                                                        <div class="invalid-feedback position-absolute">
+                                                            Seleccione la fecha de referencia.
+                                                        </div>
+                                                    </div>
+                                                    <button id="btnFechaEntrega" class="btn btn-outline-secondary">Buscar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 body-table">
+                                    <table id="PedidosEntregas"
+                                           action="@Url.Action("GetPedidosParaEntregas","PlanVentas")"
+                                           ovdetails="@Url.Action("GetOrdenesVentaDetails","Global")"
+                                           savemonitor="@Url.Action("SavePlanVentas","PlanVentas")"
+                                           addmonitor="@Url.Action("AddOrdenesVentas","PlanVentas")"
+                                           urldestino="@Url.Action("GetPedidosEntregasByDocEntry","PlanVentas")"
+                                           class="table table-striped table-bordered table-fixed">
+                                        <thead>
+                                            <tr id="headPE">
+                                                <th>Núm. Viaje</th>
+                                                <th>F. Pedido</th>
+                                                <th>F. Solicitud Producción</th>
+                                                <th>F. Original Entrega</th>
+                                                <th>F. Entrega</th>
+                                                <th>Pedido</th>
+                                                <th>Código Cliente</th>
+                                                <th>Cliente</th>
+                                                <th>Cita</th>
+                                                <th>Hora Inicio</th>
+                                                <th>Hora Fin</th>
+                                                <th>Hora Entrega</th>
+                                                <th>Articulo</th>
+                                                <th>Cantidad Metros</th>
+                                                <th>Núm Rollos</th>
+                                                <th>Piezas Entrega</th>
+                                                <th>Cotejado</th>
+                                                <th>Direccion</th>
+                                                <th>Comentarios</th>
+                                                <th>Linea Prod.Real</th>
+                                                <th>Dist Recorrida</th>
+                                                <th>Autotransporte</th>
+                                                <th>Comentarios SN</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--END PASO 1 Ordenes Ventas-->
+                        <!-- Contenido del PASO 2: Vista previa plan -->
+                        <div id="step-2" class="step-content">
+                            <div class="row pt-1 ps-3 pe-3 pt-4 mb-3">
+                                <div class="col-12 text-center">
+                                    <h5>
+                                        Vista Previa
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 body-table">
+                                    <table id="estatus_carga" class="table table-striped table-bordered table-fixed " style="table-layout:fixed">
+                                        <thead>
+                                            <tr>
+                                                <th width="130px">Núm. Viaje</th>
+                                                <th width="130px">F. Pedido</th>
+                                                <th width="130px">F. Solicitud Producción</th>
+                                                <th width="130px">F. Original Entrega</th>
+                                                <th width="130px">F. Entrega</th>
+                                                <th width="130px">Pedido</th>
+                                                <th width="130px">Código Cliente</th>
+                                                <th width="220px">Cliente</th>
+                                                <th width="130px">Cita</th>
+                                                <th width="130px">Hora Inicio</th>
+                                                <th width="130px">Hora Fin</th>
+                                                <th width="130px">Hora Entrega</th>
+                                                <th width="230px">Articulo</th>
+                                                <th width="130px">Cantidad Metros</th>
+                                                <th width="130px">Núm Rollos</th>
+                                                <th width="130px">Piezas Entrega</th>
+                                                <th width="130px">Cotejado</th>
+                                                <th width="320px">Direccion</th>
+                                                <th width="300px">Comentarios</th>
+                                                <th width="130px">Linea Prod.Real</th>
+                                                <th width="130px">Entrega Parcial</th>
+                                                <th width="130px">Sucursal</th>
+                                                <th width="130px">Dist Recorrida</th>
+                                                <th width="130px">Autotransporte</th>
+                                                <th width="300px">Comentarios SN</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div id="MenuNuevoRegistro">
+                                <ul>
+                                    <li id="addRow">
+                                        <i class="bi bi-database-fill-add NewTableRowIcon"></i>
+                                        Nuevo registro en blanco
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Contenido del paso 3: Plan generado -->
+                        <div id="step-3" class="step-content text-center">
+                            <div class="row pt-1 ps-3 pe-3 pt-4 mb-3">
+                                <div class="col-12 text-center">
+                                    <h5>
+                                        Plan generado
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="overflow-y:hidden !important" id="vista_previa">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row pb-4 pt-5 pe-3">
+                        <div class="col-12 d-flex justify-content-end">
+                            <a href="#" id="regresar" class="btn mb-2 mb-md-0 btn-outline prev me-2">Regresar</a>
+                            <a href="#" id="continuar" restart="false" class="btn mb-2 mb-md-0 btn-outline next">Continuar</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer mt-3">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="RangoInicio" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="HeaderTitle">Fecha Consulta</h5>
+                </div>
+                <form metodo="FiltroFechaIni" class="pt-1 ps-3 pe-3 needs-validation" novalidate>
+                    <div class="modal-body text-center">
+                        <p class="font-weight-bold">Selecciona la fecha a consultar</p>
+                        <div class="row">
+                            <div class="col-12 d-flex align-items-end justify-content-center">
+                                <div class="pe-3 position-relative">
+                                    <input type="date" class="form-control" id="fecha_entrega" aria-describedby="FIHelp">
+                                    <div class="invalid-feedback position-absolute">
+                                        Seleccione la fecha de referencia.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer mt-3">
+                        <button type="submit" class="btn btn-outline-secondary">Continuar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="~/Scripts/PlanVentas/ConsultaEdicionPV.js?v=1.0.5"></script>
+<script src="~/Scripts/PlanVentas/EdicionPlanVentas.js?v=1.0.3"></script>

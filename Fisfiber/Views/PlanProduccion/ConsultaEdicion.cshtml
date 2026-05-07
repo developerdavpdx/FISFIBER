@@ -1,0 +1,1322 @@
+﻿
+@{
+    ViewBag.Title = "Consulta Del Plan De Producción";
+}
+<link rel="stylesheet" href="~/Styles/PlanProduccion/ConsultaPlanProduccion.css">
+<link rel="stylesheet" href="~/Styles/PlanProduccion/PlanPro.css">
+
+<div class="pt-2 ms-3 me-4">
+    <div class="row pt-1 ps-3 pe-3 pt-4">
+        <div class="col-12 text-center">
+            <h5>
+                Planes de producción generados
+            </h5>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="form-check form-switch">
+            <input class="form-check-input"
+                   type="checkbox" role=""
+                   id="swichCapLinea" checked>
+            <label class="form-check-label" for="swichCapLinea">
+                Mostrar capacidades linea
+            </label>
+        </div>
+    </div>
+    <div class="col-md-6 col-auto">
+        <h6 class="font-weight-bold">
+            Lineas de producción
+        </h6>
+        <form metodo="FiltroLineas" class="needs-validation" novalidate>
+            <div class="row">
+                <div id="NombreLineas" class="row lineas-container" style="gap:2px;">
+                    <div class="form-check lineas-check">
+                        <input type="checkbox" class="form-check-input anycheck" id="178948">
+                        <label class="form-check-label" for="178948">Check me out</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row pt-1 ps-3 pe-3 pt-4">
+        <div class="col-12 text-right">
+            <a id="edicionPP" href="#">
+                <p class="edicionPP hover-effect-8 Configurarvista">
+                    Configuración plan producción <i class="fa-solid fa-gear"></i>
+                </p>
+            </a>
+        </div>
+    </div>
+    <div id="MenuContextBitacora">
+        <ul>
+            <li id="editPPM">
+                <i class="fa-solid bi bi-pencil-square NewTableRowIcon"></i>
+                OF sin apertura
+            </li>
+            <li id="addOFL">
+                <i class="fa-solid fa-square-plus NewTableRowIcon"></i>
+                Agregar Ordenes Fabricación
+            </li>
+            <li id="openBitM">
+                <i class="fa-solid fa-book NewTableRowIcon"></i>
+                Bitácora plan de producción
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12 body-table">
+            <table id="PlanProduccion"
+                   action="@Url.Action("GetPlanesProduccion","PlanProduccion")"
+                   details="@Url.Action("GetPlanesProduccionDetails","PlanProduccion")"
+                   bitacora="@Url.Action("GetBitacoraPP","PlanProduccion")"
+                   bitacoradetails="@Url.Action("GetBitacoraDetailsPP","PlanProduccion")"
+                   update="@Url.Action("ActualizarOF","PlanProduccion")"
+                   modifyPP="@Url.Action("ActualizarOF","PlanProduccion")"
+                   configuracion="@Url.Action("GetConfigxUsuarioPP","PlanProduccion")"
+                   updateconfiguracion="@Url.Action("InsertaConfigxUsuarioPP","PlanProduccion")"
+                   class="table table-striped table-bordered table-fixed">
+                <thead>
+                    <tr>
+                        <th>Folio</th>
+                        <th>Linea</th>
+                        <th>Fecha Creación</th>
+                        <th>Cantidad Kilos</th>
+                        <th>Artículo</th>
+                        <th>Descripción Artículo</th>
+                        <th>Generar</th>
+                        <th>No Orden Fabricación</th>
+                        <th>Estatus</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color:lightgray">
+                        <td style="text-align:center" colspan="8">SIN DATOS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-12">
+            <div class="card bg-light mb-3">
+                <div class="card-header">
+
+                   
+
+                    <div id="PPHeader" class="d-none bg-black rounded box-shadow">
+                        <div class="card bg-black" style="color: white">
+                            <div class="card-body ReportHeaderv2">
+                                <div class="row">
+                                    <div class="col-6 text-start d-flex align-items-center justify-content-start">
+                                        <img src="/Images/logoFisfiber.png" alt="" class="w-50" />
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <div class="row EditRow">
+                                            <div class="col-6">
+                                                <div class="input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Fecha Liberación:</span>
+                                                    <input type="date" id="FL"
+                                                           value="@Convert.ToDateTime(ViewBag.FechaLib).ToString("yyyy-MM-dd")"
+                                                           class="form-control" style="height:34.2px" aria-label="Sizing
+                example input" aria-describedby="inputGroup-sizing-sm">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Code:</span>
+                                                    <input type="text"
+                                                           id="Code"
+                                                           value="@ViewBag.CodeIso"
+                                                           class="form-control"
+                                                           style="height: 34.2px"
+                                                           aria-label="Sizing example input"
+                                                           aria-describedby="inputGroup-sizing-sm" />
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="input-group input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Fecha Revisión:</span>
+                                                    <input type="date" id="FR"
+                                                           value="@Convert.ToDateTime(ViewBag.FechaRev).ToString("yyyy-MM-dd")"
+                                                           class="form-control" style="height:34.2px" aria-label="Sizing
+                example input" aria-describedby="inputGroup-sizing-sm">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <div class="input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Nivel:</span>
+                                                    <input type="number"
+                                                           id="Nivel"
+                                                           value="@ViewBag.Nivel"
+                                                           class="form-control"
+                                                           style="height: 34.2px"
+                                                           aria-label="Sizing example input"
+                                                           aria-describedby="inputGroup-sizing-sm" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <div class="input-group input-group-sm editAdmin mb-2">
+                                                    <span class="input-group-text">Revisión:</span>
+                                                    <input type="number"
+                                                           id="Revision"
+                                                           value="@ViewBag.Revision"
+                                                           class="form-control"
+                                                           style="height: 34.2px"
+                                                           aria-label="Sizing example input"
+                                                           aria-describedby="inputGroup-sizing-sm" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3 text-start">
+                                                <button type="button" class="btn btn-primary btn-sm btnSave">
+                                                    Guardar
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row headRow">
+                                            <div class="col-8 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2 ISO">
+                                                        FECHA DE LIBERACIÓN:
+                                                        <span id="">@ViewBag.FechaLib</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-4 btnEditHead">
+                                                <i class="editHead bi bi-pencil-square pointer-event"></i>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2 headRow">
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2 ISO"> @ViewBag.CodeISO </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer text-right">
+                                                    <span class="pe-2">
+                                                        REVISION: <span id="">@ViewBag.Revision</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2 headRow">
+                                            <div class="col-9 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2 ISO">
+                                                        FECHA DE REVISIÓN:
+                                                        <span id="">@ViewBag.FechaRev</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 text-start">
+                                                <div class="TitleReportContainer text-right">
+                                                    <span class="pe-2 ISO"> NIVEL @ViewBag.Nivel </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer">
+                                                    <span class="ps-2"> FOLIO: <span id="folio"></span> </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 text-start">
+                                                <div class="TitleReportContainer text-right">
+                                                    <span class="pe-2">
+                                                        FECHA: <span id="fecha-documento"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <h5 id="PPHeaderTitle" class="text-center">
+                        Detalle de plan de producción <strong id="folioseleccionado"></strong>
+                    </h5>
+                </div>
+                <!--Menu Contextual Elimiar Linea-->
+                <div id="MenuContextDeleteRow">
+                    <ul>
+                        <li id="deleteRow" deleteDetails="@Url.Action("DeletePlanDetail","PlanProduccion")">
+                            <i class="fa-solid fa-trash text-danger"></i>
+                            Eliminar
+                        </li>
+                        <li id="addRow">
+                            <i class="bi bi-database-fill-add NewTableRowIcon"></i>
+                            Nuevo registro en blanco
+                        </li>
+                    </ul>
+                </div>
+                <div id="reportbyline" class="card-body pt-2">
+                    <h5 class="card-title">!Ning&uacute;n plan seleccionado!</h5>
+                    <p class="card-text">Aquí podrás visualizar el detalle de el plan de producción seleccionado.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pb-4 pt-2 pe-3">
+        <div class="col-12 d-flex justify-content-end">
+            <a href="#" id="actualizar" restart="false" class="d-none btn mb-2 mb-md-0 btn-outline">Actualizar</a>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="Bitacora" tabindex="-1" aria-labelledby="Bitacora" aria-hidden="true" data-bs-backdrop="static" @*data-bs-keyboard="false"*@>
+        <div class="modal-dialog modal-dialog-centered modal-lg modal100">
+            <div class="modal-content">
+                <div class="modal-header" style="display:block !important">
+                    <h5 class="modal-title" id="HeaderTitle">
+                        Bitácora de plan de producción
+                        <strong id="folioPP"></strong>
+                        <button id="CloseBitacora" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+                    <span>
+                        Aqui se muestra el historial de versiones anteriores del plan,
+                        la ultima versión se muestra en la página principal en la parte
+                        inferiór al dar click en un folio
+                    </span>
+                    @*<i role="button" class="fa-solid fa-xmark" data-bs-dismiss="modal" aria-label="Close"></i>*@
+                </div>
+                <form metodo="" class="pt-1 ps-3 pe-3 needs-validation" novalidate>
+                    <div class="modal-body text-center">
+                        <div class="row">
+                            <div class="col-md-12 body-table">
+                                <table id="BitacoraPP" class="table table-striped table-bordered table-fixed">
+                                    <thead>
+                                        <tr>
+                                            <th width="150">Folio</th>
+                                            <th>Revisión</th>
+                                            <th>Descripción</th>
+                                            <th width="300">Usuario</th>
+                                            <th width="250">Fecha</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="background-color:lightgray">
+                                            <td style="text-align:center" colspan="5">SIN DATOS</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer mt-3">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="BitacoraDetalle" tabindex="-1" aria-labelledby="Bitacora" aria-hidden="true" data-bs-backdrop="static" @*data-bs-keyboard="false"*@>
+        <div class="modal-dialog modal-dialog-centered modal-lg modal100">
+            <div class="modal-content">
+                <div class="modal-header" style="display:block !important">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div><h6 class="modal-title" id="HeaderTitle">Bitácora de plan de producción <strong id="folioRevision"></strong></h6></div>
+                        <div><h6 class="modal-title"> Revisión <strong id="Revision"></strong></h6></div>
+                        <div><h6 class="modal-title"> Fecha <strong id="FechaRevision"></strong></h6></div>
+                    </div>
+                </div>
+                <form metodo="" class="pt-1 ps-3 pe-3 needs-validation" novalidate>
+                    <div class="modal-body text-center">
+                        <div class="row pb-2">
+                            <div class="col-md-12 d-flex justify-content-end">
+                                <button type="button" id="DescargarBitacora" class="btn btn-outline-secondary">Descargar Excel</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row m-0 pb-4">
+                                    <div class="col-md-12 p-0 body-table table-scroll">
+                                        <table id="BitacoraDetailsList" class="table table-striped table-bordered" style="table-layout:fixed">
+                                            <thead>
+                                                <tr>
+                                                    <th width="240">Línea</th>
+                                                    <th width="200">Comentarios Extras</th>
+                                                    <th width="200">Prioridad</th>
+                                                    <th width="200">Ubicación Propuesta</th>
+                                                    <th width="200">Hora Propuesta</th>
+                                                    <th width="200">Ubicación Final</th>
+                                                    <th width="200">Rollos</th>
+                                                    <th width="200">Piezas Producidas</th>
+                                                    <th width="200">Pedido</th>
+                                                    <th width="200">Codigo Cliente</th>
+                                                    <th width="200">Solicitado</th>
+                                                    <th width="200">Núm. Artículo</th>
+                                                    <th width="250">Descripción Artículo</th>
+                                                    <th width="200">Almacén</th>
+                                                    <th width="200">Metros Rollo</th>
+                                                    <th width="200">Especificación</th>
+                                                    <th width="200">Hora Inicio</th>
+                                                    <th width="200">Hora Final</th>
+                                                    <th width="200">Tiempo Producción</th>
+                                                    <th width="200">Cantidad Metros</th>
+                                                    <th width="200">Comentarios</th>
+                                                    <th width="200">Fecha Contabilización</th>
+                                                    <th width="200">Fecha Fabricación</th>
+                                                    <th width="200">Fecha Entrega</th>
+                                                    <th width="200">Cliente</th>
+                                                    <th width="200">Cantidad Kilos</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer mt-3">
+                        <button id="CloseBitacoraDetalle" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span class="btn mb-2 mb-md-0 btn-outline-danger ">
+                                Cerrar
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ConfiguracionPP" tabindex="-1" aria-labelledby="Bitacora" aria-hidden="true" data-bs-backdrop="static" @*data-bs-keyboard="false"*@>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content-transparent">
+                <div class="modal-header-transparent" style="display:block !important">
+
+                </div>
+
+                <div class="modal-body text-center">
+                    <form metodo="" class="pt-1 ps-3 pe-3 needs-validation" novalidate>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="container">
+                                    <div class="row pt-1 m-auto">
+                                        <div class="col-md-12 col-lg-12 pb-3">
+                                            <div class="card card-custom bg-white border-white border-0" style="height: 550px">
+                                                <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);">
+                                                    <div class="card-header text-center" style="border:none !important">
+                                                        <span class="text-white font-weight-bold fs-4">Configuración de columnas</span>
+                                                        <div class="pb-3 pt-2 ps-3 form-check">
+                                                            <input type="checkbox" class="form-check-input anycheck" id="selectAll">
+                                                            <label class="form-check-label text-white font-weight-bold" for="selectAll">Seleccionar todas</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-custom-avatar">
+                                                    <img class="img-fluid" src="~/Images/FFISA.png" alt="Avatar">
+                                                </div>
+                                                <div class="card-body d-flex justify-content-start flex-column" id="configuracionPPContainer" style="overflow-y: auto">
+
+                                                </div>
+                                                <div class="card-footer" style="background: inherit; border-color: inherit;text-align:end">
+                                                    <a href="#" class="btn btn-outline-secondary" id="GuardaConfigPP">Guardar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" configPPSN="@Url.Action("GetConfigSN","PlanProduccion")" id="EdicionOrdenes" tabindex="-1" aria-labelledby="Bitacora" aria-hidden="true" data-bs-backdrop="static" @*data-bs-keyboard="false"*@>
+        <div class="modal-dialog modal-dialog-centered modal-xl modal100">
+            <div class="modal-content">
+                <div class="modal-header" style="display:block !important">
+                    <h5 class="modal-title">
+                        Edicion de plan de producción
+                        <span id="folioedicionPP"></span>
+                        <strong></strong>
+                        <button id="CloseEdicionOrdenes" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span id="RestarModalCloseEdi" restart="true" class="btn mb-2 mb-md-0 btn-outline-danger next">
+                                Cancelar
+                            </span>
+                        </button>
+                    </h5>
+
+                </div>
+                <div class="modal-body text-center">
+
+                    <!--END BARRA DE FLECHAS-->
+                    <!--CONTENEDOR PRINCIPAL -->
+                    <div class="pt-3">
+                        <div class="row ps-3 pe-3">
+                            <div class="col-12">
+                                <!--BARRA DE FLECHAS (PASOS)-->
+                                <div class="wrapper position-relative pt-3">
+                                    <div class="arrow-steps clearfix w-100">
+                                        <div class="step current"> <span> Ordenes de ventas</span> </div>
+                                        <div class="step"> <span>Asignación Linea</span> </div>
+                                        <div class="step"> <span>Asignar Prioridad</span> </div>
+                                        <div class="step"> <span>Vista Previa</span> </div>
+                                        <div class="step"> <span>Plan Actualizado</span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--PASO 1 Ordenes Ventas-->
+                        <div id="step-1" class="step-content">
+                            <div class="row pt-1 ps-3 pe-3 pt-4">
+                                <div class="col-12 text-center">
+                                    <h5>
+                                        Ordenes de venta nuevas
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="row pt-1 ps-3 pe-3 pt-4">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-auto mb-3">
+                                            <h6 class="font-weight-bold text-left">
+                                                Rangos de fecha
+                                            </h6>
+                                            <form metodo="FiltroFecha" class="needs-validation" novalidate>
+                                                <div class="row">
+                                                    <div class="col-6 d-flex align-items-end justify-content-start">
+                                                        <div class="pe-3 position-relative">
+                                                            <label for="FI" class="form-label">Fecha Inicio</label>
+                                                            <input type="date" class="form-control" id="FI" aria-describedby="FIHelp">
+                                                            <div class="invalid-feedback position-absolute">
+                                                                Seleccione la fecha de inicio.
+                                                            </div>
+                                                        </div>
+                                                        <div class="pe-3 position-relative">
+                                                            <label for="FF" class="form-label">Fecha Fin</label>
+                                                            <input type="date" class="form-control" id="FF">
+                                                            <div class="invalid-feedback position-absolute">
+                                                                Seleccione la fecha de fin.
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <button type="submit" class="btn btn-outline-secondary">Buscar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6 col-auto">
+                                            <h6 class="font-weight-bold text-left">
+                                                Series de numeración
+                                            </h6>
+                                            <form metodo="FiltroSeriesNum" class="needs-validation" novalidate>
+                                                <div class="row">
+                                                    <div id="SerNumC" updateconfigPP="@Url.Action("UpdateConfigSN","PlanProduccion")" class="col-12 series-container">
+                                                        <div class="form-check series-check">
+                                                            <input type="checkbox" class="form-check-input anycheck" id="178948">
+                                                            <label class="form-check-label" for="178948">Check me out</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="col-md-6 col-auto">
+                                            <h6 class="font-weight-bold">
+                                                Familias
+                                            </h6>
+                                            <form metodo="FiltroFamilias" class="needs-validation" novalidate>
+                                                <div class="row">
+                                                    <div id="FiltroFamilias" class="row lineas-container">
+                                                        <div class="form-check lineas-check">
+                                                            <input type="checkbox" class="form-check-input anycheck" id="178948">
+                                                            <label class="form-check-label" for="178948">Check me out</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-1 ps-3 pe-3 pt-4">
+                                <div class="col-md-12 text-left">
+                                    <h6 class="font-weight-bold">
+                                        Selección múltiple
+                                    </h6>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input anycheck" id="selectAll">
+                                        <label class="form-check-label" for="selectAll">Seleccionar todas</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 body-table p-0">
+                                <table id="OV" urldestino="@Url.Action("GetOrdenesVenta","PlanProduccion")" ovdetails="@Url.Action("GetOrdenesVentaDetails","Global")" generateOF="@Url.Action("GenerarOF","PlanProduccion")" ModifyOF="@Url.Action("ModifyOF","PlanProduccion")" getitemsbyov="@Url.Action("GetItemsByOV","PlanProduccion")" checktimeov="@Url.Action("CheckTimeOV","PlanProduccion")" class="table table-striped table-bordered table-fixed">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>DocEntry</th>
+                                            <th>Línea</th>
+                                            <th>Series</th>
+                                            <th>No. de documento</th>
+                                            <th>Cliente</th>
+                                            <th>Num. Cliente</th>
+                                            <th>Num Artículo</th>
+                                            <th>Descripción Artículo</th>
+                                            <th>Almacén</th>
+                                            <th>No. Rollos</th>
+                                            <th>Cantidad en Metros</th>
+                                            <th>Fecha de contabilización</th>
+                                            <th>Fecha de fabricación</th>
+                                            <th>Fecha de entrega</th>
+                                            <th>Comentarios</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="background-color:lightgray">
+                                            <td style="text-align:center" colspan="14">SIN DATOS</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--END PASO 1 Ordenes Ventas-->
+                        <!-- Contenido del PASO 2: Asignación Linea -->
+                        <div id="step-2" class="step-content">
+                            <div class="row ps-3 pe-3 pt-4">
+                                <div class="col-12 text-center">
+                                    <h5>
+                                        Asignación de línea
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col-md-12 body-table">
+                                <table id="OVSelected" class="table table-striped table-bordered" style="table-layout:fixed">
+                                    <thead>
+                                        <tr>
+                                            <th width="240">Línea</th> @*1*@
+                                            <th class="d-none alwayshidden" width="200">DocEntry</th> @*0*@
+                                            <th class="d-none" width="200">Comentarios Extras</th> @*0*@
+                                            <th class="d-none" width="200">Ubicación Propuesta</th> @*0*@
+                                            <th class="d-none" width="200">Hora propuesta</th> @*0*@
+                                            <th class="d-none" width="200">Ubicación Final</th> @*0*@
+                                            <th width="200">Rollos</th> @*2*@
+                                            <th width="200">Piezas Producidas</th> @*3*@
+                                            <th width="200">Pedido</th> @*4*@
+                                            <th width="200">Codigo Cliente</th> @*5*@
+                                            <th width="200">Solicitado</th> @*6*@
+                                            <th width="200">Núm. Artículo</th> @*7*@
+                                            <th width="280">Descripción Artículo</th> @*8*@
+                                            <th width="200">Almacén</th>
+                                            @*9*@
+                                            <th width="200">Metros Rollo</th> @*10*@
+                                            <th width="200">Especificación</th> @*11*@
+                                            <th width="200">Hora Inicio</th> @*12*@
+                                            <th width="200">Hora Final</th> @*13*@
+                                            <th width="200">Tiempo Producción</th> @*43*@
+                                            <th width="200">Cantidad Metros</th> @*15*@
+                                            <th width="200">Comentarios</th> @*16*@
+                                            <th width="200">Fecha Contabilización</th> @*17*@
+                                            <th width="200">Fecha Fabricación</th> @*18*@
+                                            <th width="200">Fecha Entrega</th> @*19*@
+                                            <th width="200">Cliente</th> @*20*@
+                                            <th width="200">Cantidad Kilos</th> @*21*@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="background-color:lightgray">
+                                            <td style="text-align:center" colspan="21">SIN DATOS</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Contenido del paso 3: Asignación Prioridad y Comentarios -->
+                        <div id="step-3" getconfigOCAPC="@Url.Action("GetConfigOCAPC","PlanProduccion")" getconfigAPC="@Url.Action("GetConfigAPC","PlanProduccion")" updateconfigAPC="@Url.Action("UpdateConfigAPC","PlanProduccion")" class="step-content">
+                            <div class="row ps-3 pe-3 pt-4">
+                                <div class="col-12 text-center">
+                                    <h5>
+                                        Asignación de prioridad y comentarios
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="row pt-1 ps-3 pe-3 pt-4">
+                                <div class="col-12 text-right">
+                                    <a id="configAP" href="#">
+                                        <p class="edicionPP hover-effect-8">
+                                            Configuración columnas visibles <i class="fa-solid fa-gear"></i>
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                            <div id="OVPrioridad" class="col-md-12 body-table">
+
+                            </div>
+                            <div id="MenuPrioridadComentarios">
+                                <ul>
+                                    <li id="option1">
+                                        <i class="bi bi-database-fill-add NewTableRowIcon"></i>
+                                        Nuevo registro en blanco
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Contenido del paso 4: Preview Plan Produccion -->
+                        <div id="step-4" class="step-content text-center">
+                            <div class="row ps-3 pe-3 pt-4">
+                                <div class="col-12 text-center">
+                                    <h5>
+                                        Vista Previa Plan Producción
+                                    </h5>
+                                </div>
+                            </div>
+                            <div id="PreviewOFabricacion" class="col-md-12">
+                                <div class="p-3 bg-white rounded box-shadow">
+                                    <div class="card">
+                                        <div class="card-body ReportHeaderv2">
+                                            <div class="row">
+                                                <div class="col-6 text-start d-flex align-items-center justify-content-start">
+                                                    <img src="~/Images/logoFisfiber.png" alt="" class="w-50">
+                                                </div>
+                                                <div class="col-6 text-end">
+                                                    <div class="row">
+                                                        <div class="col-12 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    FECHA DE LIBERACIÓN: <span id="fecha-liberacion"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    RC-PLANEACION-01-01
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer text-right">
+                                                                <span class="pe-2">
+                                                                    REVISION: 01
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-9 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    FECHA DE REVISIÓN: <span id="fecha-revision"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3 text-start">
+                                                            <div class="TitleReportContainer text-right">
+                                                                <span class="pe-2">
+                                                                    NIVEL 3
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    FOLIO: <span id="folio"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer text-right">
+                                                                <span class="pe-2">
+                                                                    FECHA: <span id="fecha-documento"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div id="reportbylinepreview" class="col-12 text-start">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Contenido del paso 5: Ordenes de fabricacion -->
+                        <div id="step-5" class="step-content text-center">
+                            <div class="row ps-3 pe-3 pt-4">
+                                <div class="col-12 text-center">
+                                    <h5>
+                                        Ordenes de fabricación generadas
+                                    </h5>
+                                </div>
+                            </div>
+                            <div id="OFabricacion" class="col-md-12">
+                                <div class="p-3 bg-white rounded box-shadow">
+                                    <div class="card">
+                                        <div class="card-body ReportHeaderv2">
+                                            <div class="row">
+                                                <div class="col-6 text-start d-flex align-items-center justify-content-start">
+                                                    <img src="~/Images/logoFisfiber.png" alt="" class="w-50">
+                                                </div>
+                                                <div class="col-6 text-end">
+                                                    <div class="row">
+                                                        <div class="col-12 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    FECHA DE LIBERACIÓN: <span id="fecha-liberacionf"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    RC-PLANEACION-01-01
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer text-right">
+                                                                <span class="pe-2">
+                                                                    REVISION: 01
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-9 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    FECHA DE REVISIÓN: <span id="fecha-revisionf"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3 text-start">
+                                                            <div class="TitleReportContainer text-right">
+                                                                <span class="pe-2">
+                                                                    NIVEL 3
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    FOLIO: <span id="foliof"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer text-right">
+                                                                <span class="pe-2">
+                                                                    FECHA: <span id="fecha-documentof"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div id="reportfinal" class="col-12 text-start">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pb-4 pt-5 pe-3">
+                            <div class="col-12 d-flex justify-content-end">
+                                <a href="#" id="regresar" class="btn mb-2 mb-md-0 btn-outline prev me-2">Regresar</a>
+                                <a href="#" id="continuar" restart="false" class="btn mb-2 mb-md-0 btn-outline next">Continuar</a>
+                            </div>
+                        </div>
+                        <div id="notificaciones">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer mt-3">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" configPPSN="@Url.Action("GetConfigSN","PlanProduccion")" id="AddOrdenesFabricacion" tabindex="-1" aria-labelledby="Bitacora" aria-hidden="true" data-bs-backdrop="static" @*data-bs-keyboard="false"*@>
+        <div class="modal-dialog modal-dialog-centered modal-xl modal100">
+            <div class="modal-content">
+                <div class="modal-header" style="display:block !important">
+                    <h5 class="modal-title">
+                        Agregar Ordenes de Fabricación
+                        <span id="folioaddofPP"></span>
+                        <strong></strong>
+                        <button id="CloseAddOrdenesFabricacion" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span id="RestarModalCloseAddOF" restart="true" class="btn mb-2 mb-md-0 btn-outline-danger next">
+                                Cancelar
+                            </span>
+                        </button>
+                    </h5>
+
+                </div>
+                <div class="modal-body text-center">
+
+                    <!--END BARRA DE FLECHAS-->
+                    <!--CONTENEDOR PRINCIPAL -->
+                    <div class="pt-3">
+                        <div class="row ps-3 pe-3">
+                            <div class="col-12">
+                                <!--BARRA DE FLECHAS (PASOS)-->
+                                <div class="wrapper position-relative pt-3">
+                                    <div class="arrow-steps clearfix w-100">
+                                        <div class="step stepOF current"> <span> Ordenes de ventas</span> </div>
+                                        <div class="step stepOF"> <span>Asignación Linea</span> </div>
+                                        <div class="step stepOF"> <span>Asignar Prioridad</span> </div>
+                                        <div class="step stepOF"> <span>Vista Previa</span> </div>
+                                        <div class="step stepOF"> <span>Plan Actualizado</span> </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--PASO 1 Ordenes Ventas-->
+                        <div id="stepOF-1" class="step-content">
+                            <div class="row pt-1 ps-3 pe-3 pt-4">
+                                <div class="col-12 text-center">
+                                    <h5>
+                                        Ordenes de fabricación liberadas
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="row pt-1 ps-3 pe-3 pt-4">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-auto mb-3">
+                                            <h6 class="font-weight-bold text-left">
+                                                Rangos de fecha
+                                            </h6>
+                                            <form metodo="FiltroFecha" class="needs-validation" novalidate>
+                                                <div class="row">
+                                                    <div class="col-6 d-flex align-items-end justify-content-start">
+                                                        <div class="pe-3 position-relative">
+                                                            <label for="FIOF" class="form-label">Fecha Inicio</label>
+                                                            <input type="date" class="form-control" id="FIOF" aria-describedby="FIHelp">
+                                                            <div class="invalid-feedback position-absolute">
+                                                                Seleccione la fecha de inicio.
+                                                            </div>
+                                                        </div>
+                                                        <div class="pe-3 position-relative">
+                                                            <label for="FFOF" class="form-label">Fecha Fin</label>
+                                                            <input type="date" class="form-control" id="FFOF">
+                                                            <div class="invalid-feedback position-absolute">
+                                                                Seleccione la fecha de fin.
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <button id="btnFechaOF" class="btn btn-outline-secondary">Buscar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-6 col-auto">
+                                            <h6 class="font-weight-bold text-left">
+                                                Series de numeración
+                                            </h6>
+                                            <form metodo="FiltroSeriesNum" class="needs-validation" novalidate>
+                                                <div class="row">
+                                                    <div id="SerNumCOF" updateconfigPP="@Url.Action("UpdateConfigSN","PlanProduccion")" class="col-12 series-container">
+                                                        <div class="form-check series-check">
+                                                            <input type="checkbox" class="form-check-input anycheck" id="178948">
+                                                            <label class="form-check-label" for="178948">Check me out</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="col-md-6 col-auto mt-3">
+                                            <h6 class="font-weight-bold">
+                                                Familias
+                                            </h6>
+                                            <form metodo="FiltroFamilias" class="needs-validation" novalidate>
+                                                <div class="row">
+                                                    <div id="FiltroFamiliasOF" class="row lineas-container">
+                                                        <div class="form-check lineas-check">
+                                                            <input type="checkbox" class="form-check-input anycheck" id="178948">
+                                                            <label class="form-check-label" for="178948">Check me out</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-1 ps-3 pe-3 pt-4">
+                                <div class="col-md-12 text-left">
+                                    <h6 class="font-weight-bold">
+                                        Selección múltiple
+                                    </h6>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input anycheck" id="selectAllOF">
+                                        <label class="form-check-label" for="selectAllOF">Seleccionar todas</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 body-table p-0">
+                                <table id="OF"
+                                       urldestino="@Url.Action("GetOrdenesOF","PlanProduccion")"
+                                       ovdetails="@Url.Action("GetOrdenesVentaDetails","Global")"
+                                       generateOF="@Url.Action("GenerarOF","PlanProduccion")"
+                                       AddOF="@Url.Action("AddOF","PlanProduccion")"
+                                       getitemsbyov="@Url.Action("GetItemsByOV","PlanProduccion")"
+                                       checktimeov="@Url.Action("CheckTimeOV","PlanProduccion")"
+                                       class="table table-striped table-bordered table-fixed">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>DocEntry</th>
+                                            <th>Línea</th>
+                                            <th>Series</th>
+                                            <th>No. de documento</th>
+                                            <th>Cliente</th>
+                                            <th>Num. Cliente</th>
+                                            <th>Num Artículo</th>
+                                            <th>Descripción Artículo</th>
+                                            <th>Almacén</th>
+                                            <th>No. Rollos</th>
+                                            <th>Cantidad en Metros</th>
+                                            <th>Fecha de contabilización</th>
+                                            <th>Fecha de fabricación</th>
+                                            <th>Fecha de entrega</th>
+                                            <th>Comentarios</th>
+                                            <th>Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="background-color:lightgray">
+                                            <td style="text-align:center" colspan="14">SIN DATOS</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--END PASO 1 Ordenes Ventas-->
+                        <!-- Contenido del PASO 2: Asignación Linea -->
+                        <div id="stepOF-2" class="step-content">
+                            <div class="row ps-3 pe-3 pt-4">
+                                <div class="col-12 text-center">
+                                    <h5>
+                                        Asignación de línea
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col-md-12 body-table">
+                                <table id="OFSelected" class="table table-striped table-bordered" style="table-layout:fixed">
+                                    <thead>
+                                        <tr>
+                                            <th width="240">Línea</th> @*1*@
+                                            <th class="d-none alwayshidden" width="200">DocEntry</th> @*0*@
+                                            <th class="d-none" width="200">Comentarios Extras</th> @*0*@
+                                            <th class="d-none" width="200">Ubicación Propuesta</th> @*0*@
+                                            <th class="d-none" width="200">Hora propuesta</th> @*0*@
+                                            <th class="d-none" width="200">Ubicación Final</th> @*0*@
+                                            <th width="200">Rollos</th> @*2*@
+                                            <th width="200">Piezas Producidas</th> @*3*@
+                                            <th width="200">Pedido</th> @*4*@
+                                            <th width="200">Codigo Cliente</th> @*5*@
+                                            <th width="200">Solicitado</th> @*6*@
+                                            <th width="200">Núm. Artículo</th> @*7*@
+                                            <th width="280">Descripción Artículo</th> @*8*@
+                                            <th width="200">Almacén</th>
+                                            @*9*@
+                                            <th width="200">Metros Rollo</th> @*10*@
+                                            <th width="200">Especificación</th> @*11*@
+                                            <th width="200">Hora Inicio</th> @*12*@
+                                            <th width="200">Hora Final</th> @*13*@
+                                            <th width="200">Tiempo Producción</th> @*43*@
+                                            <th width="200">Cantidad Metros</th> @*15*@
+                                            <th width="200">Comentarios</th> @*16*@
+                                            <th width="200">Fecha Contabilización</th> @*17*@
+                                            <th width="200">Fecha Fabricación</th> @*18*@
+                                            <th width="200">Fecha Entrega</th> @*19*@
+                                            <th width="200">Cliente</th> @*20*@
+                                            <th width="200">Cantidad Kilos</th> @*21*@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="background-color:lightgray">
+                                            <td style="text-align:center" colspan="21">SIN DATOS</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Contenido del paso 3: Asignación Prioridad y Comentarios -->
+                        <div id="stepOF-3" getconfigOCAPC="@Url.Action("GetConfigOCAPC","PlanProduccion")" getconfigAPC="@Url.Action("GetConfigAPC","PlanProduccion")" updateconfigAPC="@Url.Action("UpdateConfigAPC","PlanProduccion")" class="step-content">
+                            <div class="row ps-3 pe-3 pt-4">
+                                <div class="col-12 text-center">
+                                    <h5>
+                                        Asignación de prioridad y comentarios
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="row pt-1 ps-3 pe-3 pt-4">
+                                <div class="col-12 text-right">
+                                    <a id="configAPOF" href="#">
+                                        <p class="edicionPP hover-effect-8">
+                                            Configuración columnas visibles <i class="fa-solid fa-gear"></i>
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                            <div id="OFPrioridad" class="col-md-12 body-table">
+
+                            </div>
+                            <div id="MenuPrioridadComentarios">
+                                <ul>
+                                    <li id="option1">
+                                        <i class="bi bi-database-fill-add NewTableRowIcon"></i>
+                                        Nuevo registro en blanco
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Contenido del paso 4: Preview Plan Produccion -->
+                        <div id="stepOF-4" class="step-content text-center">
+                            <div class="row ps-3 pe-3 pt-4">
+                                <div class="col-12 text-center">
+                                    <h5>
+                                        Vista Previa Plan Producción
+                                    </h5>
+                                </div>
+                            </div>
+                            <div id="PreviewOF" class="col-md-12">
+                                <div class="p-3 bg-white rounded box-shadow">
+                                    <div class="card">
+                                        <div class="card-body ReportHeaderv2">
+                                            <div class="row">
+                                                <div class="col-6 text-start d-flex align-items-center justify-content-start">
+                                                    <img src="~/Images/logoFisfiber.png" alt="" class="w-50">
+                                                </div>
+                                                <div class="col-6 text-end">
+                                                    <div class="row">
+                                                        <div class="col-12 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    FECHA DE LIBERACIÓN: <span id="fecha-liberacionOF"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    RC-PLANEACION-01-01
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer text-right">
+                                                                <span class="pe-2">
+                                                                    REVISION: 01
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-9 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    FECHA DE REVISIÓN: <span id="fecha-revisionOF"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3 text-start">
+                                                            <div class="TitleReportContainer text-right">
+                                                                <span class="pe-2">
+                                                                    NIVEL 3
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    FOLIO: <span id="folioOF"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer text-right">
+                                                                <span class="pe-2">
+                                                                    FECHA: <span id="fecha-documentoOF"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div id="reportbylinepreviewOF" class="col-12 text-start">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Contenido del paso 5: Ordenes de fabricacion -->
+                        <div id="stepOF-5" class="step-content text-center">
+                            <div class="row ps-3 pe-3 pt-4">
+                                <div class="col-12 text-center">
+                                    <h5>
+                                        Ordenes de fabricación generadas
+                                    </h5>
+                                </div>
+                            </div>
+                            <div id="OFabricacionOF" class="col-md-12">
+                                <div class="p-3 bg-white rounded box-shadow">
+                                    <div class="card">
+                                        <div class="card-body ReportHeaderv2">
+                                            <div class="row">
+                                                <div class="col-6 text-start d-flex align-items-center justify-content-start">
+                                                    <img src="~/Images/logoFisfiber.png" alt="" class="w-50">
+                                                </div>
+                                                <div class="col-6 text-end">
+                                                    <div class="row">
+                                                        <div class="col-12 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    FECHA DE LIBERACIÓN: <span id="fecha-liberacionf"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    RC-PLANEACION-01-01
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer text-right">
+                                                                <span class="pe-2">
+                                                                    REVISION: 01
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-9 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    FECHA DE REVISIÓN: <span id="fecha-revisionf"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3 text-start">
+                                                            <div class="TitleReportContainer text-right">
+                                                                <span class="pe-2">
+                                                                    NIVEL 3
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-2">
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer">
+                                                                <span class="ps-2">
+                                                                    FOLIO: <span id="foliof"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 text-start">
+                                                            <div class="TitleReportContainer text-right">
+                                                                <span class="pe-2">
+                                                                    FECHA: <span id="fecha-documentof"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div id="reportfinalOF" class="col-12 text-start">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pb-4 pt-5 pe-3">
+                            <div class="col-12 d-flex justify-content-end">
+                                <a href="#" id="regresarOF" class="btn mb-2 mb-md-0 btn-outline prevOF me-2">Regresar</a>
+                                <a href="#" id="continuarOF" restart="false" class="btn mb-2 mb-md-0 btn-outline nextOF">Continuar</a>
+                            </div>
+                        </div>
+                        <div id="notificaciones">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer mt-3">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal Mostrar/Ocultar Columnas Step 2 : Asignacion prioridad -->
+    <div class="modal fade" id="ConfiguracionAP" tabindex="-1" aria-labelledby="ConfiguracionAP" aria-hidden="true" data-bs-backdrop="static" @*data-bs-keyboard="false"*@>
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="HeaderTitle">Configuración de columnas visibles</h5>
+                </div>
+                <div class="modal-body">
+                    <div id="columnToggle" class="row">
+
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="background: inherit; border-color: inherit;text-align:end">
+                    <a href="#" class="btn btn-outline-secondary" id="CerrarConfigAP">Cerrar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="~/Scripts/PlanProduccion/ConsultaPlanProduccion.js?v=1.2.6"></script>
+@*REUTILIZAR VISTA PLAN PRODUCCION PARA ACTUALIZAR PLANES DE PRODUCCION*@
+<script src="~/Scripts/PlanProduccion/EdicionPlanProduccion.js?v=1.2.5"></script>

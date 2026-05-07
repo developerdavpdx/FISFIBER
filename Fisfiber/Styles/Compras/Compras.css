@@ -1,0 +1,11 @@
+﻿.busquedaOC {
+    right: 0;
+    z-index: 1;
+    top: 0;
+    position: absolute;
+}
+
+/*Contenedor de tabla OC*/
+.dt-container {
+    padding-top: 0px;
+}

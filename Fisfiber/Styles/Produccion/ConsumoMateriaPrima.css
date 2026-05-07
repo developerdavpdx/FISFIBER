@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* ============================================
+   CONSUMO MATERIA PRIMA - Light Theme
+   Consistent with FISFIBER Design System
+   Primary: #8C1B24 (--bs-redfn)
+   ============================================ */
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* ============================================
+   CARDS AND PANELS
+   ============================================ */
+.card {
+    border: 1px solid #dee2e6;
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-header {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.card-header.bg-pr {
+    background-color: var(--bs-redfn) !important;
+    border-bottom: 2px solid var(--bs-redfm);
+}
+
+.card-header.bg-info {
+    background-color: #0091ea !important;
+    border-bottom: 2px solid #0078c8;
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+.progress {
+    background-color: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* ============================================
+   TABLES
+   ============================================ */
+#tablaMateriales {
+    vertical-align: middle;
+}
+
+#tablaMateriales thead.table-dark {
+    background-color: var(--bs-darkfl) !important;
+}
+
+#tablaMateriales tbody tr:hover {
+    background-color: var(--bs-grayf) !important;
+    transition: background-color 0.2s ease;
+}
+
+#tablaMateriales .badge {
+    font-size: 0.75rem;
+    padding: 0.35em 0.65em;
+    font-weight: 600;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn-pr {
+    background-color: var(--bs-redfn) !important;
+    border-color: var(--bs-redfn) !important;
+    color: white !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-pr:hover {
+    background-color: #7a1620 !important;
+    border-color: #7a1620 !important;
+    color: white !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(140, 27, 36, 0.4);
+}
+
+.btn-pr:active {
+    transform: scale(0.98);
+}
+
+.btn-prcancel {
+    background-color: var(--bs-darkfl) !important;
+    border-color: var(--bs-darkfl) !important;
+    color: white !important;
+}
+
+.btn-prcancel:hover {
+    background-color: #23272b !important;
+    border-color: #23272b !important;
+    color: white !important;
+    opacity: 0.9;
+}
+
+/* ============================================
+   FORM CONTROLS
+   ============================================ */
+.form-control-plaintext {
+    font-weight: 600;
+    color: var(--bs-redfn);
+}
+
+.form-select:focus,
+.form-control:focus {
+    border-color: var(--bs-redfn);
+    box-shadow: 0 0 0 0.2rem rgba(140, 27, 36, 0.25);
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+.badge.bg-success {
+    background-color: #00c853 !important;
+    color: white;
+}
+
+.badge.bg-danger {
+    background-color: #ff1744 !important;
+    color: white;
+}
+
+.badge.bg-warning {
+    background-color: #ffd600 !important;
+    color: #000 !important;
+}
+
+/* ============================================
+   TOAST
+   ============================================ */
+.toast-header.bg-pr {
+    background-color: var(--bs-redfn) !important;
+}
+
+.toast {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   DISPLAY VALUES
+   ============================================ */
+h2.text-primary,
+h3.text-primary {
+    color: var(--bs-redfn) !important;
+    font-weight: 700 !important;
+}
+
+h2.text-info,
+h3.text-info {
+    color: #0091ea !important;
+    font-weight: 700 !important;
+}
+
+h5.mb-0 {
+    font-weight: 600;
+}
+
+/* ============================================
+   SIMULATION PANEL (Removed, keeping for reference)
+   ============================================ */
+.sim-panel {
+    background: linear-gradient(135deg, #2D5A3D, #1A3D2E);
+    color: white;
+    border: none;
+}
+
+/* ============================================
+   ACTION BUTTONS CONTAINER
+   ============================================ */
+.action-bar {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 0.75rem;
+    }
+    
+    h2.text-primary,
+    h2.text-info,
+    h3.text-primary,
+    h3.text-info {
+        font-size: 1.5rem;
+    }
+    
+    .btn-sm {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .action-bar {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f5f3f0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--bs-redfn), var(--bs-redfm));
+    border-radius: 3px;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* ============================================
+   CHECKBOXES
+   ============================================ */
+.form-check-input:checked {
+    background-color: var(--bs-redfn);
+    border-color: var(--bs-redfn);
+}
+
+.form-check-input:focus {
+    border-color: var(--bs-redfn);
+    box-shadow: 0 0 0 0.2rem rgba(140, 27, 36, 0.25);
+}
+
+/* ============================================
+   DETALLE DE RECETA
+   ============================================ */
+#detalleReceta {
+    transition: all 0.3s ease;
+}
+
+#detalleReceta.show {
+    display: block;
+}
+
+.card-header[aria-expanded="true"] .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.card[style*="border: 2px solid var(--bs-redfn)"] {
+    transition: all 0.3s ease;
+}
+
+.card[style*="border: 2px solid var(--bs-redfn)"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(140, 27, 36, 0.15);
+}
+
+/* ============================================
+   CARD HEADERS FOR CHARGERS
+   ============================================ */
+.card-header small {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #6c757d;
+}
+
+/* ============================================
+   DENIER DISPLAY
+   ============================================ */
+.card-body p[style*="color: var(--bs-redfn)"] {
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -0.5px;
+}

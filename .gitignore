@@ -1,0 +1,84 @@
+.vs/
+Fisfiber/.vs/
+Fisfiber/obj/
+Fisfiber/bin/
+# Ignorar archivos binarios generados
+**/obj/
+**/bin/
+
+
+# Archivos de usuario de Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Archivos de compilación
+bin/
+obj/
+*.cache
+*.pdb
+*.ilk
+*.log
+
+# Configuración y paquetes
+*.dbmdl
+*.jfm
+node_modules/
+packages/
+npm-debug.log
+yarn-error.log
+
+# Archivos de publicación y deployment
+.publish/
+*.publishsettings
+*.deploy.cmd
+*.deploy-readme.txt
+*.pubxml
+*.pfx
+
+# Dependencias de NuGet
+project.lock.json
+*.nuget.props
+*.nuget.targets
+.nuget/
+packages/
+
+# Archivos de configuración del IIS
+iisexpress/
+/.vs/
+App_Data/
+
+# Archivos de log y temporales
+logs/
+*.log
+*.tlog
+*.tmp
+*.swp
+*.scc
+Thumbs.db
+
+# Configuración de usuario en el IDE
+*.vspscc
+*.vssscc
+*.suo
+*.psess
+*.vsp
+
+# Archivos de configuración local
+appsettings.Development.json
+appsettings.Local.json
+
+# Caché de análisis de código
+*.sarif
+*.CodeAnalysisLog.xml
+
+# Archivos de configuración de Rider y Resharper
+.idea/
+*.DotSettings.user
+
+# Archivos generados por herramientas externas
+Generated/
+ServiceFabricBackup/
+

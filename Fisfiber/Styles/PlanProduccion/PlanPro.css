@@ -1,0 +1,362 @@
+﻿.bg-alert {
+    background-color: rgba(250, 122, 48, 0.63) !important;
+}
+
+#OV td, #OV th {
+    white-space: nowrap;
+}
+
+/*LAS VARIABLES DE COLOR ESTAN EN EN custom-color.css*/
+.RowAttend {
+    border: 3px solid #d32018 !important;
+    border-width: 3px !important;
+}
+
+/*ESTILOS DE BARRA DE FLECHAS*/
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.pull-right {
+    float: right;
+}
+
+.arrow-steps .step {
+    font-size: 14px;
+    text-align: center;
+    color: #666;
+    cursor: default;
+    margin: 0 3px;
+    padding: 10px 10px 10px 30px;
+    min-width: 19%;
+    float: left;
+    position: relative;
+    background-color: var(--bs-grayf);
+    transition: background-color 0.2s ease;
+}
+
+    .arrow-steps .step::after,
+    .arrow-steps .step::before {
+        content: " ";
+        position: absolute;
+        top: 0px;
+        right: -16px;
+        width: 0;
+        height: 0;
+        border-top: 21px solid transparent;
+        border-bottom: 20px solid transparent;
+        border-left: 17px solid var(--bs-grayf);
+        z-index: 2;
+        transition: border-color 0.2s ease;
+    }
+
+    .arrow-steps .step::before {
+        right: auto;
+        left: 0;
+        border-left: 17px solid #fff;
+        z-index: 0;
+    }
+
+    .arrow-steps .step:first-child::before {
+        border: none;
+    }
+
+    .arrow-steps .step:first-child {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+
+    .arrow-steps .step span {
+        position: relative;
+    }
+
+        .arrow-steps .step span::before {
+            opacity: 0;
+            content: "✔";
+            position: absolute;
+            top: -2px;
+            left: -20px;
+        }
+
+    .arrow-steps .step.done span::before {
+        opacity: 1;
+        transition: opacity 0.3s ease 0.5s;
+    }
+
+.step.done {
+    color: #fff;
+    background-color: var(--bs-redfn);
+}
+
+.arrow-steps .step.done::after {
+    border-left: 17px solid var(--bs-redfn);
+}
+
+
+.arrow-steps .step.current {
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #8d8b8b;
+}
+
+    .arrow-steps .step.current::after {
+        border-left: 17px solid var(--bs-redfm);
+    }
+/* < END ESTILOS DE BARRA DE FLECHAS*/
+
+.step-content {
+    display: none;
+}
+
+    .step-content.active {
+        display: block;
+    }
+
+/*Contenedor de tabla OC*/
+.dt-container {
+    padding-top: 8px;
+}
+
+
+.colspan-background {
+    background-color: white !important; /* Fondo blanco para las celdas con colspan */
+}
+
+.colspan-td {
+    background-color: #f2f2f2;
+    color: #0d6efd;
+    font-weight: bold;
+}
+
+.checkov, .anycheck {
+    border: 2px solid #8d8b8b;
+    font-size: 18px;
+}
+
+
+    .anycheck + .form-check-label {
+        padding-top: 3px;
+        margin-left: 4px;
+    }
+
+
+.editline {
+    border: 2px solid #8d8b8b;
+    font-size: 23px;
+    position: absolute;
+    margin-top:0px !important;
+    top: 50% !important;
+    left: 16% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.PrioridadAlta {
+    background-color: #cc0000 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+.PrioridadMedia {
+    background-color: #FF9326 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+.PrioridadBaja {
+    background-color: #00ff00 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+.ReporteContainer {
+    border: 5px solid gray;
+    background-color: white;
+}
+
+.ReportHeader {
+    background-color: #ffffff;
+    color: black;
+    font-weight: bold;
+    border: 2px solid gray;
+}
+
+.ReportHeaderv2 {
+    background-color: #000000;
+    color: white;
+    font-weight: bold;
+}
+
+.ReportTitle {
+    font-size: 11px;
+}
+
+.TitleReportContainer {
+    /*border: 2px solid #ffffff;*/
+    font-size: 11px;
+}
+
+.TitleReportContainerv2 {
+    border: 2px solid #4fa1e3;
+    font-size: 11px;
+}
+
+.ui-sortable-helper {
+    border: none !important; /* Eliminar bordes */
+    box-shadow: none !important; /* Eliminar sombras, si las hay */
+}
+
+.ui-state-highlight {
+    height: 30px;
+}
+
+
+
+.ItemDefault {
+    font-size:20px;
+}
+.ItemDefaultCc {
+    position: absolute;
+    top: 13%;
+    left: 50%;
+}
+
+.NewTableRowIcon {
+    color: #0056b3;
+}
+.OVfinisihed {
+    background-color:aqua !important;
+}
+
+/*Asignamos un color diferente a los head de la tabla "tablaOVSelected"*/
+#tablaOVSelected thead th {
+    background-color: #1e76bd !important;
+}
+
+.PlanGenerado thead th {
+    background-color: #1e76bd !important;
+}
+
+/*Medias Queris para resoluciones de tabletas (9-11 pulgadas)*/
+@media only screen and (min-width: 750px) and (max-width: 1300px) {
+    /*Separacion en los ceckbox*/
+    .lineas-check {
+        margin-bottom: 15px
+    }
+    /*Separacion en los ceckbox (en las configuraciones de vista)*/
+    .ChecksConfig {
+        padding-bottom: 30px;
+    }
+
+    /*Tablas*/
+    #tablaOVSelected thead, #tablaOVSelected thead *, #OV thead, #OV thead *, .table-preview thead, .table-preview thead *, #PlanProduccion thead, #PlanProduccion thead * {
+        font-size: 22px;
+    }
+
+    #tablaOVSelected tbody, #tablaOVSelected tbody *, #OV tbody, #OV tbody *, .table-preview tbody, .table-preview tbody *, #PlanProduccion tbody, #PlanProduccion tbody * {
+        font-size: 17px;
+    }
+
+    /*Botones*/
+    #limpiarSelected, .BtnBuscarDates, #regresar, #continuar {
+        font-size: 1rem;
+    }
+
+    /*Campos de Fechas*/
+    .CamposFecha {
+        font-size: 1.1rem;
+    }
+    /*labels de Fechas*/
+    .LabelFecha, .Configurarvista {
+        font-size: 1.1rem;
+    }
+
+    .ReportHeaderv2 .TitleReportContainer span {
+        font-size: 16px;
+    }
+}
+
+#MenuNuevoRegistro {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#MenuNuevoRegistro ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+}
+
+    #MenuNuevoRegistro li {
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+.mi-inputgroup {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    }
+
+
+.unidadP {
+    background-color: #ffc10775;
+}
+
+.tabla-bloqueada {
+    pointer-events: none;
+    opacity: 0.6; /* opcional, para que se vea bloqueada */
+}
+
+
+th.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+
+th.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.sort-icon i {
+    font-size: 0.75rem;
+    color: #1e76bd;
+}
+
+/*HEADER FIJO*/
+
+.table-scroll {
+    max-height: 70vh; /* Ajusta según tu layout */
+    overflow-y: auto;
+    position: relative;
+}
+
+    /* HEADER FIJO */
+    .table-scroll thead th {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background-color: #fff;
+        box-shadow: 0 2px 6px rgba(0, 88, 161, 0.25);
+    }
+
+    /* Opcional: evitar selección rara */
+    .table-scroll thead th {
+        user-select: none;
+    }
+
+
+.row-highlight {
+    background-color: #ffe08a !important; /* amarillo suave */
+    transition: background-color 0.6s ease;
+}

@@ -1,0 +1,51 @@
+﻿:root {
+    --bs-redfn: #8C1B24;
+    --bs-redfm: #BF0F3E;
+    --bs-redfl: #F20505;
+    --bs-grayf: #F0F1F2;
+    --bs-darkf: #0D0D0D;
+    --whitef: #ffffff;
+    --bs-darkfl: #343a40;
+    --bs-bgwhitef: #f2f2f2;
+}
+
+.btn-pr , .btn-prsuccess{
+    background: var(--bs-redfn);
+    color: var(--whitef);
+}
+
+.btn-pr:hover , .btn-prsuccess:hover{
+   background: var(--bs-redfn);
+   border-color: var(--bs-redfn) !important;
+   color: var(--whitef);
+   opacity: 0.9;
+}
+
+.btn-prcancel {
+    background: var( --bs-darkfl);
+    color: var(--whitef);
+}
+
+.btn-prcancel:hover {
+   background: var( --bs-darkfl);
+   border-color: var( --bs-darkfl) !important;
+   color: var(--whitef);
+   opacity: 0.9;
+}
+
+.btn-pr:active{
+   color: var(--bs-redfn);
+   transform: scale(0.98); 
+}
+
+.bg-pr {
+    background: var(--bs-redfn);
+    color: var(--whitef);
+}
+
+
+/*ESTILOS GENERALES DE MODALES*/
+.modalH {
+    background-color: var(--bs-darkfl);
+    color: var(--whitef);
+}

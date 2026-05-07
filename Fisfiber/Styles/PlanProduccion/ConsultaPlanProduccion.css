@@ -1,0 +1,125 @@
+﻿.edicionPP {
+    cursor: pointer !important;
+    color: #1e76bd;
+}
+.BitacoraDetails {
+    cursor: pointer;
+}
+.modal100 {
+    width: 95%;
+    max-width: none;
+}
+.ofcreated {
+    font-size: 22px;
+    font-weight: bold;
+    color: #1e76bd;
+}
+
+
+/*CONTENEDOR DE DETALLES*/
+.detalles {
+    height: 40vh;
+    overflow-x: auto;
+    border-top: solid 2px var(--bs-darkfl);
+    scrollbar-width: thin;
+    scrollbar-color: var(--bs-redfn) var(--bs-grayf);
+    animation: scaleInUp 1s ease-out;
+}
+
+.detalles > .row {
+  border-radius: 10px;
+}
+/*<END CONTENEDOR DETALLES*/
+
+.detallesVacio {
+    width: 98%;
+    height: 25vh;
+    border-radius: 10px;
+    margin: 0 auto;
+    color: white;
+    background-color: var(--bs-darkfl);
+    text-align: center;
+    animation: scaleInUp 1s ease-out;
+}
+
+
+
+/*BORDER DEL PRIMER Y ULTIMO HIJO DE LAS FILAS DE DETALLES*/
+.detalles > .row > .celda-d:first-child > div:first-child {
+    border-top-left-radius: 10px;
+}
+
+.detalles > .row > .celda-d:first-child > div:nth-child(2){
+    border-bottom-left-radius: 10px;
+}
+
+.detalles > .row > .celda-d:last-child > div:first-child{
+    border-top-right-radius: 10px;
+}
+
+.detalles > .row > .celda-d:last-child > div:nth-child(2){
+   border-bottom-right-radius: 10px;
+}
+/*<END BORDER DEL PRIMER Y ULTIMO HIJO DE LAS FILAS DE DETALLES*/
+
+
+.celda-d {
+    /*width: auto;*/
+    border: solid 2px var(--whitef);
+    background-color: var(--bs-bgwhitef);
+    padding: 0;
+    margin: 0;
+}
+
+.celda-d > div:first-child {
+    background-color: var(--bs-darkfl);
+    color: var(--whitef);
+    width: 100%;
+    padding: 0 8px;
+    padding-top: 5px;
+}
+
+.celda-d > div {
+    text-align:center;
+}
+
+
+/*ANIMACIONES*/
+@keyframes scaleInUp {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.subtable {
+    display: block;
+    width: 100%;
+    overflow-x:visible;
+    z-index:10;
+
+}
+
+    .subtable thead tr > th {
+        color: #ffffff !important;
+        background: #1e76bd !important;
+        font-weight: bold;
+        text-align: center;
+    }
+
+
+    .subtable tbody tr > td {
+        background-color: #8d8b8b8f !important;
+        color: white !important;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+.fila-en-paro td {
+    background-color: #f8d7da !important; /* rojo clarito */
+}

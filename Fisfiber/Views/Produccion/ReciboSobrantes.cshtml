@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewBag.Title = "Recibo de Sobrantes, Recortes, Rellenos";
+}
+<link rel="stylesheet" href="~/Styles/Produccion/ReciboSobrantes.css">
+<div class="pt-5 ps-2 pe-2">
+    <!--SELECCION DE LINEA-->
+    <div class="row">
+        <div class="d-flex flex-row align-content-center justify-content-center" style="width: 70%">
+            <div class="input-group">
+                <span class="input-group-text bg-pr" id="basic-addon3">LINEAS EN PAUSA</span>
+                <select class="form-select form-select-sm">
+                    <option selected value="1">16</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="input-group ms-5">
+                <span class="input-group-text bg-pr" id="basic-addon3">TIPO RESIDUO</span>
+                <select class="form-select form-select-sm">
+                    <option selected value="1">Sobrantes</option>
+                    <option value="2">Recortes</option>
+                    <option value="3">Rellenos</option>
+                    <option value="3">No Conformes</option>
+                </select>
+            </div>
+
+
+
+        </div>
+
+
+
+
+    </div>
+    <!--CONTENIDO PRINCIPAL-->
+    <div class="row mt-3">
+        <!--ESPECIFICACIONES/COMENTARIOS-->
+        <div class="col-4">
+            <!--TABLA ESPECIFICACIONES-->
+            <div class="container">
+                <div class="row">
+                    <div class="col celda-h rounded-top">
+                        ESPECIFICACIONES
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col celda-h">
+                        Fibras
+                    </div>
+                    <div class="col celda-h">
+                        Porcentaje
+                    </div>
+                </div>
+                <!--CONTENIDO DINAMICO-->
+                <!--FIBRAS   PORCENTAJE-->
+                <div class="row">
+
+                    <div class="col celda-d">
+                        <div>
+                            xwlo
+                        </div>
+                        <div>
+                            203
+                        </div>
+                    </div>
+                    <div class="col celda-d">
+                        <div>
+                            10%
+                        </div>
+                        <div>
+                            30%
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col celda-h">
+                        Lorem
+                    </div>
+                    <div class="col celda-h">
+                        Amet
+                    </div>
+                </div>
+                <!--CONTENIDO DINAMICO-->
+                <!--LOREM   AMET-->
+                <div class="row">
+
+                    <div class="col celda-d">
+                        <div>
+                            risus
+                        </div>
+                    </div>
+                    <div class="col celda-d">
+                        <div>
+                            80%
+                        </div>
+                    </div>
+                </div>
+                <!--END TABLA ESPECIFICACIONES-->
+
+            </div>
+            <!--TABLA COMENTARIOS-->
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col celda-h rounded-top">
+                        COMENTARIOS
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col celda-d" style="height: 200px;">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                    </div>
+                </div>
+            </div>
+            <!---->
+        </div>
+        <!-- < END ESPECIFICACIONES/COMENTARIOS-->
+        <!--PLAN PRODUCCIÓN Y PESO-->
+        <div class="col-7">
+            <!--TABLA ESPECIFICACIONES-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-2 celda-h rounded-top">
+                        PLAN DE PRODUCCIÓN
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col celda-h">
+                        Eficiencia
+                    </div>
+                    <div class="col celda-h">
+                        Cantidad
+                    </div>
+                    <div class="col celda-h">
+                        Prioridad
+                    </div>
+                    <div class="col celda-h">
+                        Gravida
+                    </div>
+                </div>
+                <!--CONTENIDO DINAMICO PLAN PRODUCCION-->
+                <div class="row">
+                    <div class="col celda-d">
+                        80%
+                    </div>
+                    <div class="col celda-d">
+                        ----
+                    </div>
+                    <div class="col celda-d">
+                        3
+                    </div>
+                    <div class="col celda-d">
+                        123
+                    </div>
+                </div>
+            </div>
+
+            <div class="container text-center mt-4">
+                <p style="font-size: 2.5rem; font-weight: 400;">PESO PT</p>
+                <div class="input-group mt-3" style="height:25vh;">
+                    <input type="number" class="form-control text-center" style="font-size: 5rem;" value="25.013" disabled>
+                    <span class="input-group-text" style="font-size: 4rem;">KG</span>
+                </div>
+                <button type="button"
+                        class="mt-3 btn btn-pr btn-lg">
+                    Generar Etiqueta
+                </button>
+            </div>
+
+
+        </div>
+        <!-- < END PLAN PRODUCCIÓN Y PESO-->
+
+    </div>
+
+</div>
+

@@ -1,0 +1,717 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<!--CDN DE CHARTJS PARA EL USO DE LAS GRAFICAS-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="~/Styles/Dashboard/dashboard.css">
+
+<div class="row pt-4 pb-2"
+     id="mainDash"
+     InfoPro="@Url.Action("GetInfoProLine","Dashboard")"
+     InfoLDT="@Url.Action("GetInfoLDT","Dashboard")"
+     InfoLT="@Url.Action("GetInfoLT","Dashboard")"
+     InfoLTMolido="@Url.Action("GetInfoMolido","Dashboard")"
+     InfoParos="@Url.Action("GetInfoParos","Dashboard")"
+     InfoInspec="@Url.Action("GetInfoInspecc","Dashboard")"
+     GetAlmacenes="@Url.Action("GetAlmacenes","Dashboard")"
+     GetFamilias="@Url.Action("GetFamiliaArt","Dashboard")"
+     InfoNoConforme="@Url.Action("GetStockByArt","Dashboard")"
+     InfoConsumido="@Url.Action("GetInfoConsumido","Dashboard")">
+    <!-- Header -->
+    <div class="dashboard-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="mb-0"><i class="fas fa-chart-line me-3"></i>Dashboard de Producción</h1>
+                    <p class="mb-0 opacity-75">Monitoreo en tiempo real de líneas de producción</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn btn-export no-print" onclick="exportToPDF()">
+                        <i class="fas fa-file-pdf me-2"></i>Exportar PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid container-pdf">
+        <!-- Filtros -->
+        <div class="filter-section no-print">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="form-label"><strong>Línea:</strong></label>
+                    <select class="form-select" id="filtroLinea">
+                        <option value="todas">Todas las líneas</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label"><strong>Fecha Inicio:</strong></label>
+                    <input type="date" class="form-control" id="fechaInicio">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label"><strong>Fecha Fin:</strong></label>
+                    <input type="date" class="form-control" id="fechaFin">
+                </div>
+                @*<div class="col-md-2">
+                        <label class="form-label"><strong>Turno:</strong></label>
+                        <select class="form-select" id="filtroTurno">
+                            <option value="">Todos</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>*@
+                <div class="col-md-2">
+                    <label class="form-label"><strong>Turno:</strong></label>
+                    <select class="form-select" id="filtroTurno">
+                        <option value="">Todos</option>
+                        <option value="1">1ero</option>
+                        <option value="2">2do</option>
+                        <option value="3">3ero</option>
+                        <option value="4">Mixto</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label"><strong>Almacen:</strong></label>
+                    <select class="form-select" id="filtroAlmacen">
+                        <option value="todas">Todas las líneas</option>
+                        <optgroup label="LINEAS FIELTRO">
+                            <option value="fieltro1">Línea Fieltro 1</option>
+                            <option value="fieltro2">Línea Fieltro 2</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <button class="btn btn-primary d-block w-100" id="btnAplicarFiltros">
+                        <i class="fas fa-filter me-2"></i>Filtrar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Métricas principales -->
+        <div class="row mb-4 d-none">
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <div class="metric-value" id="totalProduccion">15,432</div>
+                    <div class="metric-label">Total Producción (kg)</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <div class="metric-value" id="eficiencia">87%</div>
+                    <div class="metric-label">Eficiencia Global</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <div class="metric-value" id="horasOperacion">168</div>
+                    <div class="metric-label">Horas Operación</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card">
+                    <div class="metric-value" id="parosTotal">24</div>
+                    <div class="metric-label">Total Paros</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-start mx-3">
+            <!-- Gráfica 1: En Proceso -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-cogs me-2"></i>En Proceso</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Campo</th>
+                                        <th>Valor</th>
+                                        <th>Campo</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaEnProceso">
+                                    <tr>
+                                        <td><strong>PEDIDO</strong></td>
+                                        <td notNumber="true" id="EP_Pedido"></td>
+                                        <td><strong>PESO MINIMO</strong></td>
+                                        <td id="EP_PesoMin"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>ARTICULO</strong></td>
+                                        <td notNumber="true" id="EP_Articulo"></td>
+                                        <td><strong>PESO MAXIMO</strong></td>
+                                        <td id="EP_PesoMax"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>NO. ROLLOS</strong></td>
+                                        <td notNumber="true" id="EP_RoVsPP" class="celda-texto"></td>
+                                        <td id="Ep_DescTuboConsumido"><strong>TUBO</strong></td>
+                                        <td id="EP_CantidadTuboConsumido" class="celda-texto"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>CONFORMES</strong></td>
+                                        <td id="EP_Conformes" class="celda-texto"></td>
+                                        <td id="EP_DescPoliConsumido"><strong>POLIETILENO</strong></td>
+                                        <td id="EP_CantidadPoliConsumido" class="celda-texto"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>NO CONFORMES</strong></td>
+                                        <td>
+                                            <select class="form-select form-select-sm"
+                                                    aria-label="Almacenes Pedido"
+                                                    id="AlmPedido">
+                                                <option value="-1" selected>Selecciona Almacén</option>
+                                            </select>
+                                        </td>
+                                        <td id="EP_NoConformes">
+                                            <strong id="NoConfEP">0</strong>
+                                        </td>
+                                        @*<td id="EP_NoConformes">
+                                                <div class="row">
+
+                                                    <div class="col-7">
+                                                        <select class="form-select form-select-sm"
+                                                                aria-label="Almacenes Pedido"
+                                                                id="AlmPedido">
+                                                            <option value="-1" selected>S/A</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <strong id="NoConfEP">0</strong>
+                                                    </div>
+
+
+                                                </div>
+                                            </td>*@
+                                    </tr>
+                                    @*NOTA: SpPdxFF_GetInfoProduc*@
+                                    <tr>
+                                        <td><strong>TIPO DE NO CONFORMIDAD</strong></td>
+                                        <td notNumber="true"
+                                            id="EP_LoteList"
+                                            class="celda-texto"></td>
+                                    </tr>
+                                    <tr id="filaFibras">
+                                        <td><strong>MEZCLA FIBRAS</strong></td>
+                                        <td notNumber="true"
+                                            id="EP_MezclaF"
+                                            colspan="3"
+                                            class="celda-texto"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>TOTAL KILOS</strong></td>
+                                        <td id="EP_TotalKilos" class="celda-texto"></td>
+                                        <td><strong>KILOS PENDIENTES</strong></td>
+                                        <td class="celda-texto" id="EP_KilosPen"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>KILOS PRODUCIDOS</strong></td>
+                                        <td class="celda-texto" id="EP_SumaKG"></td>
+                                        <td>
+                                            <strong>KILOS NO CONFORME</strong>
+                                        </td>
+                                        <td class="celda-texto" id="EP_SumaKGNo"></td>
+                                    </tr>
+                                    @*<tr>
+                                            <td>
+                                                <strong>KILOS NO CONFORME</strong>
+                                            </td>
+                                            <td id="EP_SumaKGNo"></td>
+                                        </tr>*@
+                                    @*<tr>
+                                            <td><strong>KILOS PENDIENTES</strong></td>
+                                            <td id="EP_KilosPen"></td>
+                                        </tr>*@
+                                    @*<tr>
+                                            <td><strong>% KILOS PRODUCIDO</strong></td>
+                                            <td id="EP_KiosPro">producidos/total kilos</td>
+                                        </tr>*@
+                                </tbody>
+
+                                <tbody id="tablaEnProcesoEmpty" class="d-none">
+                                    <tr><td colspan="2" class="text-center text-muted">Sin información ....</td></tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                        <div class="chart-container">
+                            <div id="chartEnProceso"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Gráfica 2: Soportes (Paros) -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-exclamation-triangle me-2"></i>Soportes (Paros) <span id="LineaParo"></span></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" style="max-height:210px !important;">
+                            <table class="table table-striped table-hover CustomTableResponsive">
+                                <thead>
+                                    <tr>
+                                        <th>Hora exacta del paro</th>
+                                        <th>Minutos en paro</th>
+                                        <th>Tipo de falla</th>
+                                        <th>Rubro</th>
+                                        <th>Descripción</th>
+                                        <th>Orden de trabajo</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaSoportes">
+                                    <tr><td colspan="6" class="text-center text-muted">Sin información ....</td></tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <div class="table-responsive mt-3" style="max-height:210px !important;">
+                            <table class="table table-striped table-hover CustomTableResponsive table-preview">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Pedido</th>
+                                        <th>Producto</th>
+                                        <th>Conforme</th>
+                                        <th>Lote</th>
+                                        <th>Estatus</th>
+                                        <th>Etapa</th>
+                                        <th>Ancho</th>
+                                        <th>Peso</th>
+                                        <th>g/m2</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaInspeccion">
+                                    <tr><td colspan="7" class="text-center text-muted">Sin información ....</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="chart-container">
+                            <div id="chartSoportes"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mx-3">
+                <!-- Gráfica 3: Línea Día Turno -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Línea Día Turno</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-3">
+                                    <div class="col-md-12 mx-auto">
+                                        <div class="metric-card">
+                                            <div class="metric-value cls-ldt" id="LDT_HP">00</div>
+                                            <div class="metric-label">HORAS PROGRAMADAS</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mx-auto">
+                                        <div class="metric-card">
+                                            <div class="metric-value cls-ldt" id="LDT_HEP">00</div>
+                                            <div class="methrsric-label">HORAS EFECTIVAS</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mx-auto">
+                                        <div class="metric-card">
+                                            <div class="metric-value cls-ldt" id="LDT_Efi">00</div>
+                                            <div class="metric-label">ALCANZADO</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mx-auto">
+                                    <div class="card">
+                                        <div class="card-header " style="background-color: #dc362e;">
+                                            PRODUCCION
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item itemCardRow">
+                                                <strong>TOTAL PRODUCCION (kg)</strong>
+                                                <label id="LDT_TotalProSum" class="cls-ldt"></label>
+                                            </li>
+                                            <li class="list-group-item itemCardRow">
+                                                <strong>METROS: </strong>
+                                                <label id="LDT_TotalMetrosSum" class="cls-ldt"></label>
+                                            </li>
+                                            <li class="list-group-item itemCardRow">
+                                                <strong>META: </strong>
+                                                <label id="LDT_Meta" class="cls-ldt"></label>
+                                            </li>
+                                            <li class="list-group-item itemCardRow">
+                                                <strong>TOLERANCIA: </strong>
+                                                <label id="LDT_Tolerancia" class="cls-ldt"></label>
+                                            </li>
+                                            <li class="list-group-item itemCardRow">
+                                                <strong>HORAS EN PARO: </strong>
+                                                <label id="LDT_HorasP" class="cls-ldt"></label>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mx-auto">
+                                    <div class="card">
+                                        <div class="card-header" style="background-color: #dc362e;">
+                                            NO CONFORME
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item itemCardRow">
+                                                <strong>KILOS: </strong>
+                                                <label id="LDT_NCKilos" class="cls-ldt"></label>
+                                            </li>
+                                            <li class="list-group-item itemCardRow">
+                                                <strong>%: </strong>
+                                                <label id="LDT_NCPor" class="cls-ldt"></label>
+                                            </li>
+                                            <li class="list-group-item itemCardRow">
+                                                <strong>META: </strong>
+                                                <label id="LDT_NCMeta" class="cls-ldt"></label>
+                                            </li>
+                                            <li class="list-group-item itemCardRow">
+                                                <strong>TOLERANCIA: </strong>
+                                                <label id="LDT_NCTolerancia" class="cls-ldt"></label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+
+
+                        <div class="table-responsive mb-3 mx-auto" style="max-width: 1300px;">
+                            <table class="table table-bordered">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>POR TURNO</th>
+                                        <th>KILOS</th>
+                                        <th>METROS</th>
+                                        <th 
+                                            data-bs-toggle="tooltip"
+                                            data-bs-html="true"
+                                            data-bs-placement="top"
+                                            data-bs-custom-class="custom-tooltip"
+                                            data-bs-title="<b>KgProducidos/KgProgramados</b> </br> <em>Nota: KgProgramados = (EficienciaProg * HrsEfectivas) </em>">
+                                            ALCANZADO</th>
+                                        <th>HRS PROG</th>
+                                        <th>HRS PARO</th>
+                                        <th>NO CONFORME</th>
+                                        <th>%</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="LDT_InfoTurnos">
+                                    <tr>
+                                        <td><strong></strong></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="chart-container">
+                            <div id="chartLineaDiaTurno"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mx-3">
+            <!-- Gráfica 4: Línea Total -->
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Línea Total</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <h6 class="text-primary">Resumen del Mes</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <tr class="infoData"><td><strong>MES</strong></td><td id="mesActual">MM - YYYY</td></tr>
+                                        <tr class="infoData"><td><strong>DIAS LABORADOS</strong></td><td id="TL_DiasLab"></td></tr>
+                                        <tr class="infoData"><td><strong>Scrap Maximo</strong></td><td id="TL_MaxScrap"></td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-sm">
+                                        <thead class="table-info">
+                                            <tr>
+                                                <th rowspan="2">PRODUCCION POR TURNO</th>
+                                                <th colspan="2">1</th>
+                                                <th colspan="2">2</th>
+                                                <th colspan="2">3</th>
+                                            </tr>
+                                            <tr>
+                                                <th>kilos</th>
+                                                <th>metros</th>
+                                                <th>kilos</th>
+                                                <th>metros</th>
+                                                <th>kilos</th>
+                                                <th>metros</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="infoData">
+                                                <td><strong>TOTAL</strong></td>
+                                                <td id="TL_T1Kilos"></td>
+                                                <td id="TL_T1Metros"></td> @*Turno 1*@
+                                                <td id="TL_T2Kilos"></td>
+                                                <td id="TL_T2Metros"></td> @*Turno 2*@
+                                                <td id="TL_T3Kilos"></td>
+                                                <td id="TL_T3Metros"></td> @*Turno 3*@
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>DIAS LABORADOS</strong></td>
+                                                <td colspan="2" id="TL_T1DiasLab"></td>
+                                                <td colspan="2" id="TL_T2DiasLab"></td>
+                                                <td colspan="2" id="TL_T3DiasLab"></td>
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>PROMEDIO DIA</strong></td>
+                                                <td id="TL_T1KilosProD"></td>
+                                                <td id="TL_T1MetrosProD"></td>
+                                                <td id="TL_T2KilosProD"></td>
+                                                <td id="TL_T2MetrosProD"></td>
+                                                <td id="TL_T3KilosProD"></td>
+                                                <td id="TL_T3MetrosProD"></td>
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>NO CONFORME</strong></td>
+                                                <td id="TL_T1NCH"></td>
+                                                <td id="TL_T1NCP"></td>
+                                                <td id="TL_T2NCH"></td>
+                                                <td id="TL_T2NCP"></td>
+                                                <td id="TL_T3NCH"></td>
+                                                <td id="TL_T3NCP"></td>
+                                            </tr>
+                                            <tr class="head-row">
+                                                <th> ------- </th>
+                                                <th>hrs</th>
+                                                <th>%</th>
+                                                <th>hrs</th>
+                                                <th>%</th>
+                                                <th>hrs</th>
+                                                <th>%</th>
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>HORAS PROGRAMADAS</strong></td>
+                                                <td id="TL_T1HP"></td>
+                                                <td id="TL_T1H"></td>
+                                                <td id="TL_T2HP"></td>
+                                                <td id="TL_T2H"></td>
+                                                <td id="TL_T3HP"></td>
+                                                <td id="TL_T3H"></td>
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>HORAS EFECTIVAS</strong></td>
+                                                <td id="TL_T1HH"></td>
+                                                <td id="TL_T1HE"></td>
+                                                <td id="TL_T2HH"></td>
+                                                <td id="TL_T2HE"></td>
+                                                <td id="TL_T3HH"></td>
+                                                <td id="TL_T3HE"></td>
+                                            </tr>
+
+                                            <tr class="infoData">
+                                                <td><strong>EFICIENCIA PROGRAMADA</strong></td>
+                                                <td id="TL_T1EPH"></td>
+                                                <td id="TL_T1EPP"></td>
+                                                <td id="TL_T2EPH"></td>
+                                                <td id="TL_T2EPP"></td>
+                                                <td id="TL_T3EPH"></td>
+                                                <td id="TL_T3EPP"></td>
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>EFICIENCIA EFECTIVA</strong></td>
+                                                <td id="TL_T1EEH"></td>
+                                                <td id="TL_T1EEP"></td>
+                                                <td id="TL_T2EEH"></td>
+                                                <td id="TL_T2EEP"></td>
+                                                <td id="TL_T3EEH"></td>
+                                                <td id="TL_T3EEP"></td>
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>MOLIDO CONSUMIDO FB</strong></td>
+                                                <td id="TL_T1MCFBH"></td>
+                                                <td id="TL_T1MCFBP"></td>
+                                                <td id="TL_T2MCFBH"></td>
+                                                <td id="TL_T2MCFBP"></td>
+                                                <td id="TL_T3MCFBH"></td>
+                                                <td id="TL_T3MCFBP"></td>
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>MOLIDO CONSUMIDO MC</strong></td>
+                                                <td id="TL_T1MCMCH"></td>
+                                                <td id="TL_T1MCMCP"></td>
+                                                <td id="TL_T2MCMCH"></td>
+                                                <td id="TL_T2MCMCP"></td>
+                                                <td id="TL_T3MCMCH"></td>
+                                                <td id="TL_T3MCMCP"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead class="table-warning">
+                                            <tr>
+                                                <th rowspan="2">DETALLE</th>
+                                                <th colspan="2">CONFORME</th>
+                                                <th colspan="2">NO CONFORME</th>
+                                            </tr>
+                                            <tr>
+                                                <th>kilos</th>
+                                                <th>metros</th>
+                                                <th>kilos</th>
+                                                <th>%</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="infoData">
+                                                <td><strong>TOTAL</strong></td>
+                                                <td id="TL_TotalKilos"></td>
+                                                <td id="TL_TotalMetros"></td>
+
+                                                <td id="TL_TotalNCK"></td>
+                                                <td id="TL_TotalNCPer"></td>
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>PROMEDIO DIA</strong></td>
+                                                <td id="TL_KProDia"></td>
+                                                <td id="TL_MProDia"></td>
+
+                                                <td>kilos</td>
+                                                <td>%</td>
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>HORAS PROGRAMADAS</strong></td>
+                                                <td id="TL_TotalHrsProg"></td>
+                                                <td id="TL_TotalPerHrs"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="% de Hrs Paro respecto a  Hrs Programadas"></td>
+
+                                                <td id="TL_TotalNCHrsProg"></td>
+                                                <td id="TL_TotalNCPerHrs"></td>
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>HORAS EFECTIVAS</strong></td>
+                                                <td id="TL_TotalHrsEfect"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="Hrs Programadas - Hrs en Paro"></td>
+                                                <td id="TL_TotalPerHrsEfect"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="% de Horas Efectivas respecto a Horas Programadas"></td>
+
+                                                <td>---</td>
+                                                <td>---</td>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="2"><strong>EFICIENCIA</strong></td>
+                                                <td colspan="2"
+                                                    style="background-color: #dc362e; color: #ffffff;">
+                                                    PROGRAMADA
+                                                </td>
+                                                <td style="background-color: #dc362e; color: #ffffff;">
+                                                    EFECTIVA
+                                                </td>
+                                                <td style="background-color: #dc362e; color: #ffffff;">
+                                                    % ALCANZADO
+                                                </td>
+
+                                            <tr class="infoData">
+                                                <td colspan="2" id="TL_TotalEfiProg">kilos</td>
+                                                <td id="TL_TotalEfiEfec"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="Total Producción / Horas Efectivas">
+                                                    kilos
+                                                </td>
+                                                <td id="TL_TotalEfiEfecPer">metros</td>
+                                            </tr>
+                                            <tr class="head-row">
+                                                <th> ------- </th>
+                                                <th colspan="2">CONSUMIDO</th>
+                                                <th colspan="2">GENERADO</th>
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>MOLIDO FB</strong></td>
+                                                <td colspan="2" id="TL_TotakMoliFB"></td>
+                                                <td colspan="2" id="TL_TotakMoliFBGenerado"></td>
+
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>MOLIDO MODACRYL</strong></td>
+                                                <td colspan="2" id="TL_TotakMoliMC"></td>
+                                                <td colspan="2" id="TL_TotakMoliMCGenerado"></td>
+
+                                            </tr>
+                                            <tr class="infoData">
+                                                <td><strong>RECORTE </strong></td>
+                                                <td colspan="2">---</td>
+                                                <td colspan="2" id="TL_TotakRecorteGenerado"></td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <div id="chartLineaTotal"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>*@
+    @*<script src="https://code.highcharts.com/highcharts.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        const MAX_EFI = parseInt('@ViewBag.MAX_EFI');
+        const MAX_PRO = parseInt('@ViewBag.MAX_PRO');
+    </script>
+    <script src="~/Scripts/Dashboard/dashboard.js?v=1.1.4"></script>

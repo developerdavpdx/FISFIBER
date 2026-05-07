@@ -1,0 +1,3 @@
+# Ignorar conflictos de merge en archivos binarios y usar siempre la versión actual (ours)
+Fisfiber/obj/Debug/* binary merge=ours
+Fisfiber/bin/* binary merge=ours

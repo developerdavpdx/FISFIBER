@@ -1,0 +1,443 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--General Icons-->
+    @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">*@
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Styles/BootstrapIcons/bootstrap-icons.min.css">
+
+
+    <!--General Layout CSS-->
+    <link rel="stylesheet" href="~/Styles/Layout/Layout.css">
+    <link href="~/Styles/Bootstrap/custom-colors.css" rel="stylesheet">
+    <link href="~/Styles/Layout/TextHooverEfects.css" rel="stylesheet" />
+    <link href="~/Styles/Bootstrap/ionicons.min.css" rel="stylesheet" />
+    <link href="~/Styles/Bootstrap/style.css" rel="stylesheet" />
+
+
+    <!--Cell Editor-->
+    <script src="~/Scripts/CellEditor/SimpleTableCellEditor.es6.min.js"></script>
+
+    <!--Font Awesome CSS-->
+    <link href="~/fontawesome/Icons/css/fontawesome.css" rel="stylesheet" />
+    <link href="~/fontawesome/Icons/css/brands.css" rel="stylesheet" />
+    <link href="~/fontawesome/Icons/css/solid.css" rel="stylesheet" />
+
+    <!--Bootstrap CSS-->
+    <link href="~/Styles/Bootstrap/bootstrap.min.css" rel="stylesheet">
+
+    <!--Datatables CSS-->
+    <link href="~/Styles/Datatables/datatables.min.css" rel="stylesheet">
+    <link href="~/Content/TopScrollTable.css" rel="stylesheet">
+
+    <!--JQUERY-->
+    <script src="~/Scripts/Jquery/jquery-3.7.1.min.js?v=1.0.0"></script>
+    <script src="~/Scripts/Jquery/jquery-ui.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js?v=1.0.0"></script>
+    <script src="~/signalr/hubs"></script>
+
+
+    @*NOTIFICACIONES WEB PUSH*@
+    <!--General Layout JS-->
+    <script src="~/Scripts/Layout/service-worker.js"></script>
+    <script src="~/Scripts/Layout/Layout.js?v=1.0.7"></script>
+
+    <!--Bootstrap JS-->
+    <script src="~/Scripts/Bootstrap/bootstrap.bundle.min.js"></script>
+
+    <!--Datatables JS-->
+    <script src="~/Scripts/Datatables/datatables.min.js"></script>
+
+
+    <!--Highcharts-> Graficas de Dashboard-->
+    <script src="~/Scripts/Highcharts/highcharts.js"></script>
+    <script src="~/Scripts/Highcharts/highcharts-more.js"></script>
+    <script src="~/Scripts/Highcharts/solid-gauge.js"></script>
+    <script src="~/Scripts/Highcharts/heatmap.js"></script>
+
+    <!--Preloaders JS-->
+    <script src="~/Scripts/Loading/jquery.preloaders.js"></script>
+    <script src="~/Scripts/Loading/Loading.js"></script>
+    <script src="~/Scripts/TopScroll/TopScrollManager.js"></script>
+
+
+    <!--Excel JS-->
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>*@
+    <script src="~/Scripts/Excel/exceljs.min.js"></script>
+    <title>FFISA - @ViewBag.Title</title>
+
+
+</head>
+
+
+<body login="@Url.Action("Index","Login")"
+      dashboard="@Url.Action("Index","Dashboard")"
+      UpdateOrderRows="@Url.Action("UpdateOrderRowsDetails","PlanProduccion")"
+      UpdateOrderRowsVentas="@Url.Action("UpdateOrderRowsDetailsV","PlanVentas")"
+      updateconfigOCAPC="@Url.Action("UpdateConfigOCAPC","PlanProduccion")"
+      configPP="@Url.Action("CreateConfigPP","Global")"
+      estatusproduccion="@Url.Action("GetEstatusProduccion","Global")"
+      estatuscarga="@Url.Action("GetEstatusCarga","Global")"
+      leernotificacion="@Url.Action("NotifiLeidas","Global")"
+      consultarnotificacion="@Url.Action("NotifiPend","Global")"
+      enviarnotificacion="http://100.111.180.26:8082/api/notification/create"
+      seriesnumeracion="@Url.Action("GetSeriesNumeracionDocs","Global")"
+      nombrelineas="@Url.Action("GetNameLineas","Global")"
+      nombrelineasprod="@Url.Action("GetNameLineasProduccion","Global")"
+      nombrelineasall="@Url.Action("GetNameAllLineas","Global")"
+      nombrelineasT="@Url.Action("GetNameLineasTerminadas","Global")"
+      infoFamilias="@Url.Action("GetInfoFamilias","Global")"
+      notificacionespush="@Url.Action("SuscribUser","Global")"
+      capacidadlinea="@Url.Action("GetCapLinea","Global")"
+      tiempoParoProduccion="@Url.Action("GetTiempoParoPorDia","Global")"
+      updateHeaderISO="@Url.Action("UpdateHeaderISO","Global")">
+    <div class="wrapper">
+        <aside id="sidebar">
+            <div class="d-flex">
+                <button class="toggle-btn" type="button">
+                    <i class="lni lni-grid-alt"></i>
+                </button>
+                <div class="sidebar-logo">
+                    <a href="#">
+                        <img src="~/Images/logoFisfiber.png" style="width: 80%;" />
+                    </a>
+                </div>
+            </div>
+
+            <ul class="sidebar-nav">
+                <li class="sidebar-item" id="MenuDashboard">
+                    <a href="@Url.Action("Index","Dashboard")" class="sidebar-link">
+                        <i class="bi bi-bar-chart-line-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                @*<li class="sidebar-item">
+                        <a href="#" class="sidebar-link" data-bs-toggle="collapse"
+                           data-bs-target="#compras" aria-expanded="false" aria-controls="compras">
+                            <i class="bi bi-clipboard2-data-fill"></i>
+                            <span>Compras</span>
+                        </a>
+                        <ul id="compras" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="@Url.Action("ChecklistDoc","Compras")" class="sidebar-link">Checklist Documentación</a>
+                            </li>
+
+                        </ul>
+                    </li>*@
+                <li class="sidebar-item menuHide" id="MenuCompras">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#compras" aria-expanded="false" aria-controls="compras">
+                        <i class="bi bi-clipboard2-data-fill"></i>
+                        <span>Compras</span>
+                    </a>
+                    <ul id="compras" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("ChecklistDoc","Compras")" class="sidebar-link">Checklist Documentación</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item menuHide" id="MenuCyC">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#cyc" aria-expanded="false" aria-controls="cyc">
+                        <i class="bi bi-filter-square-fill"></i>
+                        <span>Planes Ventas CyC</span>
+                    </a>
+                    <ul id="cyc" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("PlanVentasCC","CreditoCobranza")" class="sidebar-link">Planes Ventas CyC</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item menuHide" id="MenuPlaneacion">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#planp" aria-expanded="false" aria-controls="planp">
+                        <i class="bi bi-signpost-2-fill"></i>
+                        <span>Planeación</span>
+                    </a>
+                    <ul id="planp" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li id="creacionPP" class="sidebar-item">
+                            <a href="@Url.Action("Index","PlanProduccion")" class="sidebar-link">Creación</a>
+                        </li>
+                        <li id="consultaPP" class="sidebar-item">
+                            <a href="@Url.Action("ConsultaEdicion", "PlanProduccion")" class="sidebar-link">Edición y Consulta</a>
+                        </li>
+                        <li id="reportesPP" class="sidebar-item has-dropdown">
+                            <a href="#" class="sidebar-link">Reportes</a>
+                            <ul id="submenuReportes" class="sidebar-dropdown list-unstyled">
+                                <li class="sidebar-item">
+                                    <a href="@Url.Action("Reportes", "PlanProduccion")" class="sidebar-link">Reporte Produccion</a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a href="@Url.Action("ReporteOFconOV", "PlanProduccion")" class="sidebar-link">Reporte OF vs OV</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                </li>
+                <li class="sidebar-item menuHide" id="MenuLogistica">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#logistica" aria-expanded="false" aria-controls="logistica">
+                        <i class="bi bi-ui-checks"></i>
+                        <span>Logistica</span>
+                    </a>
+                    <ul id="logistica" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("Unidades","Unidad")" class="sidebar-link">
+                                Administrar Unidades
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("PlanEmbarques","PlanEmb")" class="sidebar-link">
+                                Plan Embarques
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("MascPlanEmb","PlanEmb")" class="sidebar-link">
+                                Seguimiento Plan Embarques
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("PlanesGenerados","PlanEmb")" class="sidebar-link">
+                                Planes Embarques Cerrados
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("MonitorLog","MonitorLog")" class="sidebar-link">
+                                Monitor
+                            </a>
+                        </li>
+                        @*<li class="sidebar-item">
+                                <a href="@Url.Action("Monitor","Logistica")" class="sidebar-link">Monitor de Entregas</a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="@Url.Action("ConsultaEdicion", "Logistica")" class="sidebar-link">Edición y Consulta</a>
+                            </li>*@
+                    </ul>
+                </li>
+                <li class="sidebar-item menuHide" id="MenuVentas">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#ventas" aria-expanded="false" aria-controls="ventas">
+                        <i class="bi bi-clipboard2-pulse"></i>
+                        <span>Ventas</span>
+                    </a>
+                    <ul id="ventas" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("PlanVentas","PlanVentas")" class="sidebar-link">Plan Ventas</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("ConsultaEdicionPV", "PlanVentas")" class="sidebar-link">Consulta y edición</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("MascPlanEmb","PlanEmb")" class="sidebar-link">
+                                Seguimiento Plan Embarques
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("PlanesFinales", "PlanVentas")" class="sidebar-link">Planes Finales</a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("PlanEmbarques","PlanEmb")" class="sidebar-link">Plan Embarques</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item menuHide" id="MenuAlmacen">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#ventas" aria-expanded="false" aria-controls="almacen">
+                        <i class="bi bi-journal-bookmark-fill"></i>
+                        <span>Almacén</span>
+                    </a>
+                    <ul id="almacen" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("PlanEmbarques","PlanEmb")" class="sidebar-link">
+                                Plan Embarques
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item menuHide" id="MenuProduccion">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#pro" aria-expanded="false" aria-controls="pro">
+                        <i class="bi bi-bar-chart-steps"></i>
+                        <span>Producción</span>
+                    </a>
+                    <ul id="pro" class="sidebar-dropdown list-unstyled collapse"
+                        data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("ConsultaPlanProduccion","Produccion")" class="sidebar-link">
+                                Consulta Plan Producción
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("ConsumoMateriaPrima","Produccion")" class="sidebar-link">
+                                Consumo Materia Prima
+                            </a>
+                            @*<a href="#" class="sidebar-link">
+                                    Consumo Materia Prima
+                                </a>*@
+                        </li>
+                        <!--<li class="sidebar-item">-->
+                        @*<a href="@Url.Action("ReciboSobrantes","Produccion")" class="sidebar-link">
+                                Recibo de sobrantes
+                            </a>*@
+                        <!--<a href="#" class="sidebar-link">
+                                Recibo de sobrantes
+                            </a>
+                        </li>-->
+                        <!--<li class="sidebar-item">-->
+                        @*<a href="@Url.Action("Index","Produccion")" class="sidebar-link">
+                                Registro de produccion
+                            </a>*@
+                        <!--<a href="#" class="sidebar-link">
+                                Registro de produccion
+                            </a>
+                        </li>-->
+                        <li class="sidebar-item">
+                            @*<a href="@Url.Action("ReporteProduccion","Produccion")" class="sidebar-link">
+                                    Reporte de Producción
+                                </a>*@
+                            <a href="#" class="sidebar-link">
+                                Reporte de Producción
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item menuHide" id="MenuMantenimiento">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#pro" aria-expanded="false" aria-controls="pro">
+                        <i class="bi bi-tools"></i>
+                        <span>Mantenimiento</span>
+                    </a>
+                    <ul id="man" class="sidebar-dropdown list-unstyled collapse"
+                        data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("ParosProduccion","Produccion")" class="sidebar-link">
+                                Paros de producción
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("ReporteParosProduccion","Produccion")" class="sidebar-link">
+                                Reporte Paros de producción
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Avatar -->
+            <div class="dropdown me-3 showMovil avatarMovil">
+                <a class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                   href="#"
+                   data-bs-toggle="dropdown"
+                   role="button"
+                   aria-expanded="false">
+                    <img src="~/Images/Avatar.webp"
+                         class="rounded-circle"
+                         height="25"
+                         alt="Black and White Portrait of a Man"
+                         loading="lazy" />
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    @*<li>
+                            <a class="dropdown-item" href="#">Mi Perfil</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Ajustes Test</a>
+                        </li>*@
+                    <li>
+                        <a id="CerrarSesion" redirect="@Url.Action("CerrarSesion","Login")" class="dropdown-item" href="#">Cerrar Session</a>
+                    </li>
+                </ul>
+            </div>
+            <p class="ocultar-texto showMovil email"></p>
+            <p style="text-orientation: upright; color: white; writing-mode: vertical-rl; font-size: 0.7rem;"> V1.5 </p>
+
+            <div class="sidebar-footer" style="position: relative;">
+
+                <a href="#" class="sidebar-link">
+                    <i id="LogOut" class="lni lni-exit"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        <div class="main">
+
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+                <!-- Container wrapper -->
+                <div class="container-fluid">
+                    <h5 class="text-left">@ViewBag.Title</h5>
+                    <!-- Right elements -->
+                    <div id="cfh" class="d-flex align-items-center">
+                        <!--Fecha y Hora-->
+                        <div class="fs-5 me-5" id="FechaYHora" style="width: 420px;">
+                            <span class="fw-semibold me-1" id="fecha"></span>
+                            <span class="fw-semibold" id="hora"></span>
+                        </div>
+                        <!--Notificaciones-->
+                        @*<div class="dropstart me-3">
+                                <i id="notification-box-read" class="dropstart-toggle bi bi-bell-fill fs-5 me-2 position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span id="notifi" class="position-absolute top-0 start-100 translate-middle badge border border-light rounded-circle bg-danger p-1"><span class="visually-hidden">unread messages</span></span>
+                                </i>
+                                <ul style="width: 400px; padding: 10px;" class="dropdown-menu" id="notification-box">
+                                </ul>
+                            </div>*@
+                        <!--Session-->
+                        <div style="font-size: 1rem;white-space: nowrap;overflow: hidden;text-overflow: ellipsis; display:flex; flex-direction:column; align-items:center; justify-content:center;" class="pe-2 hideMovil">
+                            <span id="UserSesion" class="email" style="display:block;"></span>
+
+                            <span id="UserPerfil" class="perfil" style="
+                            display: block;
+                            color: #1e76bd;
+                            font-size: 0.8rem;
+                            font-weight: bold;
+                        ">( Perfil )</span>
+                        </div>
+                        <!-- Avatar -->
+                        <div class="dropdown me-3 mb-2 hideMovil">
+                            <a class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                               href="#"
+                               data-bs-toggle="dropdown"
+                               role="button"
+                               aria-expanded="false">
+                                <img src="~/Images/iconUser.jpg"
+                                     class="rounded-circle"
+                                     id="ImageAvatar"
+                                     height="25"
+                                     alt="Black and White Portrait of a Man"
+                                     loading="lazy" />
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                @*<li>
+                                        <a class="dropdown-item" href="#">Mi Perfil</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Ajustes</a>
+                                    </li>*@
+                                <li>
+                                    <a id="CerrarSesion" action="@Url.Action("Index","Login")" class="dropdown-item" href="#">Cerrar Session</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- Right elements -->
+                </div>
+                <!-- Container wrapper -->
+            </nav>
+            <!-- Navbar -->
+            <div style="max-height: 88vh;" class="w-100 overflow-x-hidden overflow-y-auto main-body">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</body>
+
+
+</html>

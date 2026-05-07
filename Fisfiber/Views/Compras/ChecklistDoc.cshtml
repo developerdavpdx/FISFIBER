@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Checklist OC";
+}
+
+<link href="~/Styles/Compras/Compras.css" rel="stylesheet" />
+
+<div class="pt-4 ps-2 pe-4 w-100">
+    <div class="row">
+        <div class="col-md-6 col-auto mb-3">
+            <h6 class="font-weight-bold">
+                Rangos de fecha
+            </h6>
+            <form metodo="FiltroFecha" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-6 d-flex align-items-end justify-content-start">
+                        <div class="pe-3 position-relative">
+                            <label for="FI" class="form-label">Fecha Inicio</label>
+                            <input type="date" class="form-control" id="FI" aria-describedby="FIHelp">
+                            <div class="invalid-feedback position-absolute">
+                                Seleccione la fecha de inicio.
+                            </div>
+                        </div>
+                        <div class="pe-3 position-relative">
+                            <label for="FF" class="form-label">Fecha Fin</label>
+                            <input type="date" class="form-control" id="FF">
+                            <div class="invalid-feedback position-absolute">
+                                Seleccione la fecha de fin.
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-outline-secondary">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 col-auto">
+            <h6 class="font-weight-bold">
+                Series de numeración
+            </h6>
+            <form metodo="FiltroSeriesNum" class="needs-validation" novalidate>
+                <div class="row">
+                    <div id="SerNumC" class="col-12 series-container">
+                        <div class="form-check series-check">
+                            <input type="checkbox" class="form-check-input anycheck" id="178948">
+                            <label class="form-check-label" for="178948">Check me out</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <!--Tabla de ordenes compras-->
+        <div class="col-md-12 body-table position-relative">
+            <form metodo="filtroNPA" class="needs-validation busquedaOC" novalidate>
+                <div class="row">
+                    <div class="col-12 d-flex align-items-end justify-content-end">
+                        <div>
+                            @*<label for="busqueda" class="form-label">Búsqueda</label>*@
+                            <input type="text" class="form-control" id="busqueda" aria-describedby="busqueda">
+                            @*<div class="invalid-feedback position-absolute">
+                                    Escriba su filtro: Numeración, Proveedor, Artículo.
+                                </div>*@
+                        </div>
+                        <div class="ps-2">
+                            <button type="submit" name="busqueda" class="btn btn-outline-secondary">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <table id="OC" urldestino="@Url.Action("GetOrdenesCompra","Compras")" ocdetails="@Url.Action("GetOrdenesCompraDetails","Compras")" class="table table-striped table-bordered table-fixed">
+                <thead>
+                    <tr>
+                        <th>DocEntry</th>
+                        <th>Series</th>
+                        <th>No. de documento</th>
+                        <th>Proveedor</th>
+                        <th>Num. Proveedor</th>
+                        <th>Artículo</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color:lightgray">
+                        <td style="text-align:center" colspan="6">SIN DATOS</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Compras/OCChecklist.js?v=1.0.1"></script>
+

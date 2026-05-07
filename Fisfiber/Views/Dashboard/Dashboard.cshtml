@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!--CDN DE CHARTJS PARA EL USO DE LAS GRAFICAS-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="row pt-4 pb-2">
+    <div class="col-md-6">
+        <div id="avancePorLinea" class="pe-3 ps-3">
+            <!-- Aquí va la primera gráfica -->
+            @*<div id="avancePorLinea" style="width:100%; height:400px;"></div>*@
+        </div>
+        <div id="fabricacionPorDia" class="pt-3 pe-3 ps-3">
+            <!-- Aquí va la segunda gráfica -->
+            @*<div id="fabricacionPorDia" style="width:100%; height:400px;"></div>*@
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div id="tiempoUsoMaquina" class="pe-3 ps-3">
+            <!-- Aquí va la primera gráfica -->
+            @*<div id="avancePorLinea" style="width:100%; height:400px;"></div>*@
+        </div>
+        <div id="scrapPorLinea" class="pt-3 pe-3 ps-3">
+            <!-- Aquí va la segunda gráfica -->
+            @*<div id="fabricacionPorDia" style="width:100%; height:400px;"></div>*@
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="newNotifications" tabindex="-1" aria-labelledby="newNotifications" aria-hidden="true" data-bs-backdrop="static" @*data-bs-keyboard="false"*@>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content-transparent">
+            <div class="modal-header-transparent" style="display:block !important">
+
+            </div>
+
+            <div class="modal-body text-center">
+                <form metodo="" class="pt-1 ps-3 pe-3 needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="container">
+                                <div class="row pt-1 m-auto">
+                                    <div class="col-md-12 col-lg-12 pb-3">
+                                        <div class="card card-custom bg-white border-white border-0">
+                                            <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);">
+                                                <div class="card-header text-center" style="border:none !important">
+                                                    <span class="text-white text-center font-weight-bold fs-6">*ACTIVIDAD RECIENTE*</span>
+                                                </div>
+                                            </div>
+                                            <div class="card-custom-avatar">
+                                                <img class="img-fluid" src="~/Images/FFISA.png" alt="Avatar">
+                                            </div>
+                                            <div id="newNotificationsBox" class="card-body d-flex justify-content-start flex-column" style="overflow-y: auto;max-height:380px">
+
+                                            </div>
+                                            <div class="card-footer" style="background: inherit; border-color: inherit;text-align:end">
+                                                <a href="#" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/Layout/dashboard.js"></script>
+
+

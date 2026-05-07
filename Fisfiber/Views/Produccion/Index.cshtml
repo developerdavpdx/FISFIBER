@@ -1,0 +1,250 @@
+﻿
+@{
+    ViewBag.Title = "Registro de Producción";
+}
+<link rel="stylesheet" href="~/Styles/Produccion/ConEdiPlanPro.css">
+<div class="pt-5 ps-2 pe-2">
+    <div class="row">
+        <!--SELECCION DE LINEA-->
+        <div class="row">
+            <div class="d-flex flex-row align-content-center justify-content-center" style="width: 30%">
+                <div class="input-group">
+                    <span class="input-group-text bg-pr" id="basic-addon3">SELECCIONA UNA LÍNEA</span>
+                    <select class="form-select form-select-sm">
+                        <option selected value="1">16</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+            </div>
+            <!--CAMBIO DE ESTATUS-->
+            <div class="col align-content-center">
+                <button type="button"
+                        id="btnEditEstatus"
+                        class="btn btn-pr btn-lg"
+                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+                        data-bs-toggle="modal" data-bs-target="#editEstatus">
+                    <i class="bi bi-pencil-square me-2"></i>
+                    Editar Estatus
+                </button>
+            </div>
+
+
+
+        </div>
+        <!--CONTENIDO PRINCIPAL-->
+        <div class="row mt-3">
+            <!--ESPECIFICACIONES/COMENTARIOS-->
+            <div class="col-3">
+                <!--TABLA ESPECIFICACIONES-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col celda-h rounded-top">
+                            ESPECIFICACIONES
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col celda-h">
+                            Fibras
+                        </div>
+                        <div class="col celda-h">
+                            Porcentaje
+                        </div>
+                    </div>
+                    <!--CONTENIDO DINAMICO-->
+                    <!--FIBRAS   PORCENTAJE-->
+                    <div class="row">
+
+                        <div class="col celda-d">
+                            <div>
+                                xwlo
+                            </div>
+                            <div>
+                                203
+                            </div>
+                        </div>
+                        <div class="col celda-d">
+                            <div>
+                                10%
+                            </div>
+                            <div>
+                                30%
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col celda-h">
+                            Lorem
+                        </div>
+                        <div class="col celda-h">
+                            Amet
+                        </div>
+                    </div>
+                    <!--CONTENIDO DINAMICO-->
+                    <!--LOREM   AMET-->
+                    <div class="row">
+
+                        <div class="col celda-d">
+                            <div>
+                                risus
+                            </div>
+                        </div>
+                        <div class="col celda-d">
+                            <div>
+                                80%
+                            </div>
+                        </div>
+                    </div>
+                    <!--END TABLA ESPECIFICACIONES-->
+
+                </div>
+                <!--TABLA COMENTARIOS-->
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="col celda-h rounded-top">
+                            COMENTARIOS
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col celda-d" style="height: 200px;">
+                            lorem dasdsam,n ff n fafdfdn
+                            nasfadf ffff afadfdafn fafdfdsfds
+                            sdfsdfsdfsdf fdsfsfds ffff
+                        </div>
+                    </div>
+                </div>
+                <!---->
+            </div>
+            <!-- < END ESPECIFICACIONES/COMENTARIOS-->
+            <!--PLAN PRODUCCIÓN Y PESO-->
+            <div class="col-6">
+                <div class="container text-center">
+                    <h2 class="d-block">
+                        INICIADO
+                    </h2>
+                </div>
+                <!--TABLA ESPECIFICACIONES-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2 celda-h rounded-top">
+                            PLAN DE PRODUCCIÓN
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col celda-h">
+                            Eficiencia
+                        </div>
+                        <div class="col celda-h">
+                            Cantidad
+                        </div>
+                        <div class="col celda-h">
+                            Prioridad
+                        </div>
+                        <div class="col celda-h">
+                            Gravida
+                        </div>
+                    </div>
+                    <!--CONTENIDO DINAMICO PLAN PRODUCCION-->
+                    <div class="row">
+                        <div class="col celda-d">
+                            80%
+                        </div>
+                        <div class="col celda-d">
+                            ----
+                        </div>
+                        <div class="col celda-d">
+                            3
+                        </div>
+                        <div class="col celda-d">
+                            123
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container text-center mt-4">
+                    <p style="font-size: 2.5rem; font-weight: 400;">PESO PT</p>
+                    <div class="input-group mt-3" style="height:25vh;">
+                        <input type="number" class="form-control text-center" style="font-size: 5rem;" value="25.013" disabled>
+                        <span class="input-group-text" style="font-size: 4rem;">KG</span>
+                    </div>
+                    <button type="button"
+                            class="mt-3 btn btn-pr btn-lg">
+                        Generar Etiqueta
+                    </button>
+                </div>
+
+
+            </div>
+            <!-- < END PLAN PRODUCCIÓN Y PESO-->
+
+            <div class="col-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col celda-h rounded-top">
+                            SOLICITUD MP
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col celda-h">
+                            Fibras
+                        </div>
+                        <div class="col celda-h">
+                            Cantidad
+                        </div>
+                    </div>
+                    <!--INPUTS DE SOLICITUD-->
+                    <div class="row">
+                        <div class="col celda-d">
+                            <input type="number" style="width:90%;" />
+                        </div>
+                        <div class="col celda-d">
+                            <input type="number" style="width:90%;" />
+                        </div>
+                    </div>
+                </div>
+                <!--BOTON DE SOLICITAR-->
+                <button type="button"
+                        class="mt-2 btn btn-pr btn-lg"
+                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                    Solicitar
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--MODALES-->
+
+<!-- MODAL CAMBIAR ESTATUS -->
+<div class="modal fade" id="editEstatus" tabindex="-1" aria-labelledby="editEstatus" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modalH" data-bs-theme="dark">
+                <h5 class="modal-title" id="exampleModalLabel">Cambiar Estatus</h5>
+                <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3" style="width: 60%;">
+                    <span class="input-group-text bg-pr" id="basic-addon3">NUEVO ESTATUS</span>
+                    <select class="form-select form-select-sm">
+                        <option selected value="1">INICIADA</option>
+                        <option value="2">PAUSADA</option>
+                        <option value="3">CANCELADA</option>
+                        <option value="3">TERMINADA</option>
+                    </select>
+                </div>
+                <label class="form-label">Comentario</label>
+                <div class="input-group">
+                    <textarea class="form-control" aria-label="pausa y cancelado requieren comentario..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-prcancel" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-prsuccess">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Layout/ConEdiPlanPro.js?v=1.0.1"></script>

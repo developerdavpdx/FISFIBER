@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Web FFISA</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="~/Styles/Bootstrap/style.css" rel="stylesheet">
+    <link href="~/Styles/Bootstrap/custom-colors.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/Styles/Login/Login.css">
+</head>
+<body>
+    <div class="wrapper">
+        <section class="vh-100">
+            <div class="container-fluid h-custom">
+                <div class="row d-flex justify-content-center align-items-center mx-auto pt-3" style="width:100%; height:85%;">
+                    <div id="imgdash" class="col-md-8 col-lg-6 col-xl-4 ">
+                        <img src="~/Images/dashboard.svg"
+                             class="img-fluid" alt="Sample image">
+                    </div>
+                    <div class="col-md-9 col-lg-6 col-xl-5 offset-xl-1 form-login">
+                        <form action="@Url.Action("validarUsuario","Login")" redirect="@Url.Action("MonitorLog","MonitorLog")" class="needs-validation" novalidate>
+                            <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+                                <img src="~/Images/logoFisfiber.png"
+                                     class="img-fluid mx-auto"
+                                     alt="Logo Fisgiber" />
+                            </div>
+
+                            <div class="divider d-flex align-items-center my-4">
+                                <p class="text-center fw-bold mx-3 mb-0">Bienvenido</p>
+                            </div>
+
+                            <!-- Email input -->
+                            <div data-mdb-input-init class="form-outline mb-4 px-4">
+                                <label class="form-label ms-2" for="email">Correo</label>
+                                <input type="email" id="email" class="form-control form-control-lg"
+                                       placeholder="Correo Electronico" required />
+                                <div class="invalid-feedback">
+                                    Escriba su correo electrónico.
+                                </div>
+                            </div>
+
+                            <!-- Password input -->
+                            <div data-mdb-input-init class="form-outline mb-3 px-4">
+                                <label class="form-label ms-2" for="password">Contraseña</label>
+                                <input type="password" id="password" class="form-control form-control-lg"
+                                       placeholder="Contraseña" required />
+                                <div class="invalid-feedback">
+                                    Escriba su contraseña.
+                                </div>
+                            </div>
+
+                            <!--<div class="d-flex justify-content-between align-items-center px-4">-->
+                            <!-- Checkbox -->
+                            <!--<div class="form-check mb-0">
+                                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                                    <label class="form-check-label" for="form2Example3">
+                                        Recordarme
+                                    </label>
+                                </div>
+                                <a href="#!" class="text-body">Olvide mi contraseña</a>
+                            </div>-->
+
+                            <div class="text-center mt-4 pt-2">
+                                <button type="submit" id="IniciarSesion" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-login"
+                                        style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                                    Login
+                                </button>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 footer">
+                <div class="text-white mb-3 mb-md-0">
+                    Copyright © @DateTime.Now.Year All rights reserved.
+                </div>
+                <div class="text-white mb-3 mb-md-0">
+                    Versión 1.5
+                </div>
+            </div>
+        </section>
+    </div>
+  
+    <script src="~/Scripts/Jquery/jquery-3.7.1.min.js"></script>
+    <script src="~/Scripts/Loading/jquery.preloaders.js"></script>
+    @*Loading*@
+    <script src="~/Scripts/Login/Login.js?v=1.0.0"></script>
+    <script src="~/Scripts/Loading/Loading.js"></script>
+</body>
+</html>
+
+
+
