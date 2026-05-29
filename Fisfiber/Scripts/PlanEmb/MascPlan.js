@@ -240,7 +240,7 @@
             `<div class="mx-2 mb-2">
                         <h5 class="titulo-seccion">{{TUNIDAD}}</h5>
                         <div class="table-responsive">
-                            <table id="{{IDTABLA}}" codeUni = "${codeUnidad}" numViaje="${numViaje}" class="table table-bordered table-sm" style="min-width: 1200px !important;">
+                            <table id="{{IDTABLA}}" codeUni = "${codeUnidad}" numViaje="${numViaje}" class="table table-sm" style="min-width: 1200px !important;">
                                 <thead>
                                     <tr>
                                         <th width="134px">Unidad</th>

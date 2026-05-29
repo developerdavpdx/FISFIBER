@@ -76,7 +76,7 @@
                                             </div>`;
         this.subtablelinedetailsbody = `<div class="row m-0 pb-4">
                                 <div class="col-md-12 p-0 body-table">
-                                <table class="table table-preview table-striped table-bordered m-0" style="table-layout:fixed">
+                                <table class="table table-preview table-striped m-0" style="table-layout:fixed">
                                 <thead>
                                 <th class="d-none" width="200">Generar</th>
                                 <th width="240">Línea</th>
@@ -111,7 +111,7 @@
                                 </div>`;
         this.subtablelinedetailsbodyOF = `<div class="row m-0 pb-4">
                                 <div class="col-md-12 p-0 body-table">
-                                <table class="table table-preview table-striped table-bordered m-0" style="table-layout:fixed">
+                                <table class="table table-preview table-striped m-0" style="table-layout:fixed">
                                 <thead>
                                 <th class="d-none" width="200">Generar</th>
                                 <th width="240">Orden Fabricacion</th>
@@ -147,7 +147,7 @@
                                 </div>`;
         this.subtablelinedetailsbodyfinal = `<div class="row m-0 pb-4">
                                 <div class="col-md-12 p-0 body-table">
-                                <table class="table table-preview table-striped table-bordered m-0" style="table-layout:fixed">
+                                <table class="table table-preview table-striped m-0" style="table-layout:fixed">
                                 <thead>
                                 <th width="200">Folio</th>
                                 <th width="200">Ubicación Propuesta</th>
@@ -188,7 +188,7 @@
 
         this.subtablelinedetailsbodyfinalOF = `<div class="row m-0 pb-4">
                                 <div class="col-md-12 p-0 body-table">
-                                <table class="table table-preview table-striped table-bordered m-0" style="table-layout:fixed">
+                                <table class="table table-preview table-striped m-0" style="table-layout:fixed">
                                 <thead>
                                 <th width="200">Folio</th>
                                 <th width="200">Ubicación Propuesta</th>

@@ -1844,17 +1844,17 @@ pre {
     padding: 0.3rem;
 }
 
-.table-bordered {
+.{
     border: 1px solid #dee2e6;
 }
 
-    .table-bordered th,
-    .table-bordered td {
+    .th,
+    .td {
         border: 1px solid #dee2e6;
     }
 
-    .table-bordered thead th,
-    .table-bordered thead td {
+    .thead th,
+    .thead td {
         border-bottom-width: 2px;
     }
 
@@ -2088,7 +2088,7 @@ pre {
         border-color: #454d55;
     }
 
-    .table-dark.table-bordered {
+    .table-dark.{
         border: 0;
     }
 
@@ -2109,7 +2109,7 @@ pre {
         -webkit-overflow-scrolling: touch;
     }
 
-        .table-responsive-sm > .table-bordered {
+        .table-responsive-sm > .{
             border: 0;
         }
 }
@@ -2122,7 +2122,7 @@ pre {
         -webkit-overflow-scrolling: touch;
     }
 
-        .table-responsive-md > .table-bordered {
+        .table-responsive-md > .{
             border: 0;
         }
 }
@@ -2135,7 +2135,7 @@ pre {
         -webkit-overflow-scrolling: touch;
     }
 
-        .table-responsive-lg > .table-bordered {
+        .table-responsive-lg > .{
             border: 0;
         }
 }
@@ -2148,7 +2148,7 @@ pre {
         -webkit-overflow-scrolling: touch;
     }
 
-        .table-responsive-xl > .table-bordered {
+        .table-responsive-xl > .{
             border: 0;
         }
 }
@@ -2160,7 +2160,7 @@ pre {
     -webkit-overflow-scrolling: touch;
 }
 
-    .table-responsive > .table-bordered {
+    .table-responsive > .{
         border: 0;
     }
 
@@ -11369,8 +11369,8 @@ a.text-dark:hover, a.text-dark:focus {
             background-color: #fff !important;
         }
 
-    .table-bordered th,
-    .table-bordered td {
+    .th,
+    .td {
         border: 1px solid #dee2e6 !important;
     }
 

@@ -16,7 +16,7 @@
                                             </div>
                                             <div class="row m-0 pb-4">
                                 <div class="col-md-12 p-0 body-table">
-                                <table id="{id}" class="table table-preview table-striped table-bordered m-0" style="table-layout:fixed">
+                                <table id="{id}" class="table table-preview table-striped m-0" style="table-layout:fixed">
                                 <thead>
                                 <tr>
                                 <th width="200"></th>
@@ -79,7 +79,7 @@
                                             </div>`;
         this.subtablelinedetailsbody = `<div class="row m-0 pb-4">
                                 <div class="col-md-12 p-0 body-table">
-                                <table id="{monitorvp}" class="table table-preview table-striped table-bordered m-0 tblmonitorlogistica" style="table-layout:fixed">
+                                <table id="{monitorvp}" class="table table-preview table-striped m-0 tblmonitorlogistica" style="table-layout:fixed">
                                 <thead>{headers}</thead>
                                 <tbody>{rows}</tbody>
                                 </table>
@@ -87,7 +87,7 @@
                                 </div>`;
         this.subtablelinedetailsbodyPP = `<div class="row m-0 pb-4">
                                 <div class="col-md-12 p-0 body-table">
-                                <table id="{monitorvp}" class="table table-preview table-striped table-bordered m-0 tblmonitorlogistica" style="table-layout:fixed">
+                                <table id="{monitorvp}" class="table table-preview table-striped m-0 tblmonitorlogistica" style="table-layout:fixed">
                                 <thead>{headers}</thead>
                                 <tbody>{rows}</tbody>
                                 </table>
@@ -540,7 +540,7 @@
                         </th>
                     `
 
-                this.subtabledetails = `<table class="table table-preview table-striped table-bordered subtable w-75 m-2 ovdetails">
+                this.subtabledetails = `<table class="table table-preview table-striped subtable w-75 m-2 ovdetails">
                                 <thead>
                                 ${headPP}
                                 <th>

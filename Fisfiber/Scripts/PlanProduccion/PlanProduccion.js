@@ -72,7 +72,7 @@
                                             </div>`;
         this.subtablelinedetailsbody = `<div class="row m-0 pb-4">
                                             <div class="col-md-12 p-0 body-table">
-                                            <table class="table table-preview table-striped table-bordered m-0" style="table-layout:fixed">
+                                            <table class="table table-preview table-striped m-0" style="table-layout:fixed">
                                             <thead>
                                             <th class="d-none" width="200">Generar</th>
                                             <th width="240">Línea</th>
@@ -107,7 +107,7 @@
                                             </div>`;
         this.subtablelinedetailsbodyVP = `<div class="row m-0 pb-4">
                                             <div class="col-md-12 p-0 body-table">
-                                            <table class="table table-preview table-striped table-bordered m-0" style="table-layout:fixed">
+                                            <table class="table table-preview table-striped m-0" style="table-layout:fixed">
                                             <thead>
                                             <th class="d-none" width="200">Generar</th>
                                                 {header}
@@ -118,7 +118,7 @@
                                             </div>`;
         this.subtablelinedetailsbodyfinal = `<div class="row m-0 pb-4">
                                 <div class="col-md-12 p-0 body-table">
-                                <table class="table table-preview table-striped table-bordered m-0" style="table-layout:fixed">
+                                <table class="table table-preview table-striped m-0" style="table-layout:fixed">
                                 <thead>
                                     {header}
                                 </thead>

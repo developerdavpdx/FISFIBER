@@ -1901,10 +1901,10 @@ progress {
   padding: 0.25rem 0.25rem;
 }
 
-.table-bordered > :not(caption) > * {
+.> :not(caption) > * {
   border-width: var(--bs-border-width) 0;
 }
-.table-bordered > :not(caption) > * > * {
+.> :not(caption) > * > * {
   border-width: 0 var(--bs-border-width);
 }
 

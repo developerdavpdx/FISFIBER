@@ -263,7 +263,7 @@
                         </th>
                     `
 
-                this.subtabledetails = `<table class="table table-preview table-striped table-bordered subtable w-75 m-2 ovdetails">
+                this.subtabledetails = `<table class="table table-preview table-striped subtable w-75 m-2 ovdetails">
                                 <thead>
                                 ${headPP}
                                 <th>

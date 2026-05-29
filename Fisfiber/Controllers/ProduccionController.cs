@@ -18,6 +18,8 @@ namespace Fisfiber.Controllers
         Logica Logic = new Logica();
         AccesoDatos AD = new AccesoDatos();
         private static readonly ILog log = LogManager.GetLogger(typeof(ProduccionController));
+
+        #region VIEWS
         // GET: Produccion
         public ActionResult Index()
         {
@@ -48,6 +50,12 @@ namespace Fisfiber.Controllers
             return View();
         }
 
+        //Obtenemos la vista de consulta recetas
+        public ActionResult GestionRecetas()
+        {
+            return View();
+        }
+
         public ActionResult ReporteProduccion()
         {
             return View();
@@ -66,6 +74,33 @@ namespace Fisfiber.Controllers
         {
             return View();
         }
+
+        public ActionResult HojaEspecificaciones()
+        {
+            return View();
+        }
+
+        // GET: Produccion/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+
+        // GET: Produccion/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        #endregion
+
+        #region GestionRecetas
+
+
+
+        #endregion
+
+        #region ParosProduccion
         public JsonResult GetParosProduccion(string Inicio, string Fin)
         {
             try
@@ -306,26 +341,7 @@ namespace Fisfiber.Controllers
                     Data = "[]"
                 });
             }
-        }
-
-        public ActionResult HojaEspecificaciones()
-        {
-            return View();
-        }
-
-        // GET: Produccion/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Produccion/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-       
+        }     
 
         public JsonResult GetDatosExtras()
         {
@@ -493,6 +509,6 @@ namespace Fisfiber.Controllers
             }
         }
 
-
+        #endregion
     }
 }

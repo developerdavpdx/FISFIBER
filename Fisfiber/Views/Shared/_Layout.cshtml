@@ -275,33 +275,38 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
+                            <a href="@Url.Action("GestionRecetas","Produccion")" class="sidebar-link">
+                                Gestión de Recetas
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
                             <a href="@Url.Action("ConsumoMateriaPrima","Produccion")" class="sidebar-link">
                                 Consumo Materia Prima
                             </a>
                             @*<a href="#" class="sidebar-link">
-                                    Consumo Materia Prima
-                                </a>*@
+                Consumo Materia Prima
+            </a>*@
                         </li>
                         <!--<li class="sidebar-item">-->
                         @*<a href="@Url.Action("ReciboSobrantes","Produccion")" class="sidebar-link">
-                                Recibo de sobrantes
-                            </a>*@
+            Recibo de sobrantes
+        </a>*@
                         <!--<a href="#" class="sidebar-link">
-                                Recibo de sobrantes
-                            </a>
-                        </li>-->
+            Recibo de sobrantes
+        </a>
+    </li>-->
                         <!--<li class="sidebar-item">-->
                         @*<a href="@Url.Action("Index","Produccion")" class="sidebar-link">
-                                Registro de produccion
-                            </a>*@
+            Registro de produccion
+        </a>*@
                         <!--<a href="#" class="sidebar-link">
-                                Registro de produccion
-                            </a>
-                        </li>-->
+            Registro de produccion
+        </a>
+    </li>-->
                         <li class="sidebar-item">
                             @*<a href="@Url.Action("ReporteProduccion","Produccion")" class="sidebar-link">
-                                    Reporte de Producción
-                                </a>*@
+                Reporte de Producción
+            </a>*@
                             <a href="#" class="sidebar-link">
                                 Reporte de Producción
                             </a>
@@ -432,7 +437,7 @@
                 <!-- Container wrapper -->
             </nav>
             <!-- Navbar -->
-            <div style="max-height: 88vh;" class="w-100 overflow-x-hidden overflow-y-auto main-body">
+            <div class="w-100 overflow-x-hidden overflow-y-auto main-body">
                 @RenderBody()
             </div>
         </div>

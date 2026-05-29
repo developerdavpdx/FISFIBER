@@ -59,7 +59,7 @@
                                             </div>`;
         this.subtablelinedetailsbody = `<div class="row m-0 pb-4">
                                 <div class="col-md-12 p-0 body-table">
-                                <table id="{monitorvp}" class="table table-preview table-striped table-bordered m-0 tblmonitorlogistica" style="table-layout:fixed">
+                                <table id="{monitorvp}" class="table table-preview table-striped m-0 tblmonitorlogistica" style="table-layout:fixed">
                                 <thead>
                                     <th class='EstatusReparto' id='EstatusReparto'  width='250' >Estatus Reparto </th>
                                     {headers}

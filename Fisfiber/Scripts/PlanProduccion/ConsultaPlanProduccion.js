@@ -26,7 +26,7 @@
                                             </div>
                                             <div class="row m-0 pb-4">
                                 <div class="col-md-12 p-0 body-table table-scroll">
-                                <table id="{id}" class="table table-preview table-striped table-bordered m-0 tableReport" style="table-layout:fixed">
+                                <table id="{id}" class="table table-preview table-striped m-0 tableReport" style="table-layout:fixed">
                                 <thead>
                                 <tr>
                                 <th class="d-none" width="200">Generar</th>

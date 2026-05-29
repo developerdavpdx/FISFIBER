@@ -15,7 +15,7 @@
                                                 </div>
                                             </div>
                                 <div class="col-md-12 p-0 body-table">
-                                <table id="{id}" class="table table-preview table-striped table-bordered m-0 tableReport" style="table-layout:fixed">
+                                <table id="{id}" class="table table-preview table-striped m-0 tableReport" style="table-layout:fixed">
                                 <thead>
                                 <tr>
                                  {restheaders}
@@ -425,7 +425,7 @@
                         </th>
                     `
 
-                this.subtabledetails = `<table class="table table-preview table-striped table-bordered subtable w-75 m-2 ovdetails">
+                this.subtabledetails = `<table class="table table-preview table-striped subtable w-75 m-2 ovdetails">
                                 <thead>
                                 ${headPP}
                                 <th>
