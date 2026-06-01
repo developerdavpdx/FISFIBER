@@ -37,15 +37,34 @@
 
 .tabla-lineas th:nth-child(1),
 .tabla-lineas td:nth-child(1) {
-    width: 50%;
+    width: 40%;
     text-align: left;
 }
 
 .tabla-lineas th:nth-child(2),
 .tabla-lineas td:nth-child(2) {
-    width: 50%;
+    width: 30%;
     text-align: center;
 }
+
+.tabla-lineas tbody td:nth-child(1) {
+    width: 40%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.tabla-lineas tbody td:nth-child(2) {
+    width: 30%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tabla-lineas th:nth-child(3),
+.tabla-lineas td:nth-child(3) {
+    width: 30%;
+    text-align: center;
+}
+
 
 .btn-CrearReceta {
     background-color: #dc362e;
@@ -116,6 +135,70 @@
 }
 
 /*Estilos de modales forms*/
+
+/*Seccion de imagen evidencia de recetas al editar alguna*/
+.content-evidencia {
+    width: 100%;
+    max-width: 760px;
+    height: 150px;
+    background-color: #f7f7f7;
+    border: 2px dashed #d9d9d9;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-default {
+    max-width: 60px;
+    max-height: 60px;
+    object-fit: contain;
+}
+
+.img-evidencia-cargada {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*.upload-area {
+    border: 3px dashed #667eea;
+    border-radius: 15px;
+    padding: 60px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f8f9ff;
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-icon {
+    font-size: 60px;
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.upload-text {
+    color: #666;
+    font-size: 18px;
+    margin-bottom: 10px;
+}*/
+
+.btn-evidencia {
+    border-radius: 50px;
+    border: 1.5px solid #c0392b;
+    color: #dc3545;
+    background: transparent;
+    transition: all .2s ease;
+}
+
+.btn-evidencia:hover {
+    background: #dc3545;
+    color: #fff;
+}
+
 .icons-forms-sections {
     color: #dc362e;
     padding-right: 12px;

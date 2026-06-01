@@ -61,6 +61,16 @@ namespace Fisfiber.Controllers
             return View();
         }
 
+        public ActionResult ReporteOrdenesTrabajo()
+        {
+            return View();
+        }
+
+        public ActionResult ReporteOTTerminados()
+        {
+            return View();
+        }
+
         public ActionResult ConsumoMateriaPrima()
         {
             return View();

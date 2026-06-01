@@ -1,0 +1,274 @@
+﻿@{
+    ViewBag.Title = "Ordenes de trabajo";
+}
+
+<link rel="stylesheet" href="~/Styles/Produccion/ReporteOrdenesTrabajo.css" />
+
+<!-- Navbar -->
+
+<div class="ps-4 pe-4 pb-4">
+
+    <div class="container-fluid px-4 py-4">
+        <!-- Header + toolbar -->
+        <div class="d-flex flex-wrap align-items-start justify-content-between gap-3 mb-4">
+            <div>
+                <h1 class="h4 fw-semibold text-dark mb-1">Reportes - Ordenes de trabajo</h1>
+                <p class="text-secondary small mb-0">Módulo de Ordenes de trabajo</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Seccion de filtros para ordenes de trabajo -->
+    <div class="bg-light border rounded-3 p-3 mb-4 shadow-sm">
+        <div class="row g-2">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <input type="text" class="form-control form-control-sm" id="filtroLinea" placeholder="Línea de Producción" />
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <input type="text" class="form-control form-control-sm" id="filtroTipo" placeholder="Tipo de Producto" />
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <input type="text" class="form-control form-control-sm" id="filtroArticulo" placeholder="Artículo" />
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <input type="date" class="form-control form-control-sm" id="filtroFechaInicio" placeholder="Fecha Inicio" />
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <input type="date" class="form-control form-control-sm" id="filtroFechaFin" placeholder="Fecha Fin" />
+            </div>
+            <div class="col-12 col-sm-6 col-lg-4">
+                <input type="text" class="form-control form-control-sm" id="filtroPedido" placeholder="Pedido" />
+            </div>
+            <!-- Botones -->
+            <div class="col-12 d-flex flex-wrap justify-content-end gap-2 mt-3">
+                <button class="btn btn-danger btn-sm fw-semibold px-4" id="btnBuscar">
+                    <i class="bi bi-search me-1"></i>Buscar
+                </button>
+                <button class="btn btn-success btn-sm fw-semibold px-4" id="btnExportar">
+                    <i class="bi bi-file-earmark-excel me-1"></i>Exportar a Excel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive rounded shadow-sm">
+        <table class="table tabla-custom table-hover align-middle mb-0" id="tablaOT">
+            <thead>
+                <tr>
+                    <th style="width:30px;"></th>
+                    <th class="fw-medium">Folio OT</th>
+                    <th class="fw-medium">Orden Fabricación</th>
+                    <th class="fw-medium">Línea</th>
+                    <th class="fw-medium">Tipo Producto</th>
+                    <th class="fw-medium">Artículo</th>
+                    <th class="fw-medium">Tamaño Bolsa</th>
+                    <th class="fw-medium">Piezas</th>
+                    <th class="fw-medium">Kilos</th>
+                    <th class="fw-medium">Pedido</th>
+                    <th class="fw-medium">Fecha Inicio</th>
+                    <th class="fw-medium">Estatus</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="fila-ot" style="cursor:pointer;"
+                    data-folio="OT-001" data-of="OF-2024-001" data-linea="Línea 1"
+                    data-tipo="Bolsa" data-articulo="Bolsa HD 60x90" data-tamano="60x90"
+                    data-piezas="2,000" data-kilos="150 kg" data-pedido="PED-2024-101"
+                    data-fecha="20/05/2026" data-estatus="proceso" data-estatus-txt="En Proceso"
+                    data-cant="5,000 pzas" data-producido="3,000 pzas" data-restante="2,000 pzas" data-pct="60">
+                    <td class="text-center">
+                        <i class="bi bi-chevron-right icono-expand text-secondary" style="transition:transform .2s;"></i>
+                    </td>
+                    <td class="fw-medium">OT-001</td>
+                    <td>OF-2024-001</td>
+                    <td>Línea 1</td>
+                    <td>Bolsa</td>
+                    <td>Bolsa HD 60x90</td>
+                    <td>60x90</td>
+                    <td>2,000</td>
+                    <td>150 kg</td>
+                    <td>PED-2024-101</td>
+                    <td>20/05/2026</td>
+                    <td><span class="badge-estatus proceso">En Proceso</span></td>
+                </tr>
+                <tr class="fila-ot" style="cursor:pointer;"
+                    data-folio="OT-002" data-of="OF-2024-002" data-linea="Línea 2"
+                    data-tipo="Bolsa" data-articulo="Bolsa BD 40x60" data-tamano="40x60"
+                    data-piezas="3,500" data-kilos="210 kg" data-pedido="PED-2024-102"
+                    data-fecha="19/05/2026" data-estatus="proceso" data-estatus-txt="En Proceso"
+                    data-cant="6,000 pzas" data-producido="2,000 pzas" data-restante="4,000 pzas" data-pct="33">
+                    <td class="text-center">
+                        <i class="bi bi-chevron-right icono-expand text-secondary" style="transition:transform .2s;"></i>
+                    </td>
+                    <td class="fw-medium">OT-002</td>
+                    <td>OF-2024-002</td>
+                    <td>Línea 2</td>
+                    <td>Bolsa</td>
+                    <td>Bolsa BD 40x60</td>
+                    <td>40x60</td>
+                    <td>3,500</td>
+                    <td>210 kg</td>
+                    <td>PED-2024-102</td>
+                    <td>19/05/2026</td>
+                    <td><span class="badge-estatus proceso">En Proceso</span></td>
+                </tr>
+                <tr class="fila-ot" style="cursor:pointer;"
+                    data-folio="OT-003" data-of="OF-2024-003" data-linea="Línea 1"
+                    data-tipo="Resina" data-articulo="Resina PP 500kg" data-tamano="—"
+                    data-piezas="—" data-kilos="500 kg" data-pedido="PED-2024-103"
+                    data-fecha="18/05/2026" data-estatus="pendiente" data-estatus-txt="Pendiente"
+                    data-cant="500 kg" data-producido="0 kg" data-restante="500 kg" data-pct="0">
+                    <td class="text-center">
+                        <i class="bi bi-chevron-right icono-expand text-secondary" style="transition:transform .2s;"></i>
+                    </td>
+                    <td class="fw-medium">OT-003</td>
+                    <td>OF-2024-003</td>
+                    <td>Línea 1</td>
+                    <td>Resina</td>
+                    <td>Resina PP 500kg</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>500 kg</td>
+                    <td>PED-2024-103</td>
+                    <td>18/05/2026</td>
+                    <td><span class="badge-estatus pendiente">Pendiente</span></td>
+                </tr>
+                <tr class="fila-ot" style="cursor:pointer;"
+                    data-folio="OT-004" data-of="OF-2024-004" data-linea="Línea 3"
+                    data-tipo="Bolsa" data-articulo="Bolsa HD 30x40" data-tamano="30x40"
+                    data-piezas="2,500" data-kilos="180 kg" data-pedido="PED-2024-104"
+                    data-fecha="17/05/2026" data-estatus="terminada" data-estatus-txt="Terminada"
+                    data-cant="2,500 pzas" data-producido="2,500 pzas" data-restante="0 pzas" data-pct="100">
+                    <td class="text-center">
+                        <i class="bi bi-chevron-right icono-expand text-secondary" style="transition:transform .2s;"></i>
+                    </td>
+                    <td class="fw-medium">OT-004</td>
+                    <td>OF-2024-004</td>
+                    <td>Línea 3</td>
+                    <td>Bolsa</td>
+                    <td>Bolsa HD 30x40</td>
+                    <td>30x40</td>
+                    <td>2,500</td>
+                    <td>180 kg</td>
+                    <td>PED-2024-104</td>
+                    <td>17/05/2026</td>
+                    <td><span class="badge-estatus terminada">Terminada</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ── Panel detalle (fuera de la tabla) ── -->
+    <div id="panelDetalleOT" style="display:none;">
+        <div class="border rounded-3 shadow-sm mt-2 p-4" style="background:#fafafa;">
+
+            <!-- Header del panel -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="fw-semibold text-dark mb-0">
+                    Detalle: <span id="detFolio"></span>
+                </h6>
+                <button type="button" id="btnCerrarDetalle" class="btn btn-sm btn-outline-secondary px-3">
+                    <i class="bi bi-x-lg me-1"></i>Cerrar
+                </button>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <!-- Info General OT -->
+                <div class="col-12 col-md-6 mb-2 pt-3 ps-4 pb-3 tarjet-infoGen">
+                    <p class="fw-semibold text-dark mb-2">Información General</p>
+                    <div class="row g-2">
+                        <div class="col-6"><small class="infoGenTitle-OT">Folio</small><p class="mb-0 infoGenCont-OT" id="detFolioVal"></p></div>
+                        <div class="col-6"><small class="infoGenTitle-OT">Pedido</small><p class="mb-0 infoGenCont-OT" id="detPedido"></p></div>
+                        <div class="col-6"><small class="infoGenTitle-OT">Línea</small><p class="mb-0 infoGenCont-OT" id="detLinea"></p></div>
+                        <div class="col-6"><small class="infoGenTitle-OT">Cant. Solicitada</small><p class="mb-0 infoGenCont-OT" id="detCant"></p></div>
+                        <div class="col-6"><small class="infoGenTitle-OT">Tipo Producto</small><p class="mb-0 infoGenCont-OT" id="detTipo"></p></div>
+                        <div class="col-6"><small class="infoGenTitle-OT">Fecha Inicio</small><p class="mb-0 infoGenCont-OT" id="detFecha"></p></div>
+                        <div class="col-6"><small class="infoGenTitle-OT">Artículo</small><p class="mb-0 infoGenCont-OT" id="detArticulo"></p></div>
+                        <div class="col-6"><small class="infoGenTitle-OT">Estatus</small><p class="mb-0" id="detEstatus"></p></div>
+                    </div>
+                </div>
+
+                <!--Bascula -->
+                <div class="col-12 col-md-6 pt-3 ps-4">
+                    <p class="fw-semibold text-dark mb-2">Báscula Conectada</p>
+                    <div class="d-inline-flex flex-column align-items-center border rounded-3 p-3 text-center mb-3"
+                         style="min-width:130px; background:#fff;">
+                        <span class="badge bg-success mb-1" style="font-size:.7rem;">● Conectada</span>
+                        <span class="fw-bold text-success" style="font-size:1.8rem;">25.4 kg</span>
+                        <small class="text-secondary">Peso actual en báscula</small>
+                    </div>
+                    <div class="cont-numConteo"><small class="infoGenTitle-OT">Num. Bolsas: </small><p class="mb-0 infoGenCont-OT">25</p></div>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="btn btn-danger btn-sm fw-semibold px-3">
+                            <i class="bi bi-tag me-1"></i>Generar Etiqueta
+                        </button>
+                        <button class="btn btn-outline-secondary btn-sm fw-semibold px-3">
+                            <i class="bi bi-check2 me-1"></i>Confirmar Peso
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Registro de Producción -->
+            <p class="fw-semibold text-dark mb-2">Registro de Producción</p>
+            <div class="table-responsive rounded">
+                <table class="table table-sm tabla-custom align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th class="fw-medium">#</th>
+                            <th class="fw-medium">Peso (kg)</th>
+                            <th class="fw-medium">Fecha/Hora</th>
+                            <th class="fw-medium">Etiqueta</th>
+                            <th class="fw-medium">Operador</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyRegistro">
+                        @*<tr><td colspan="5" class="text-center text-secondary fst-italic py-3">Sin registros</td></tr>*@
+                        <tr>
+                            <td>1</td>
+                            <td>25.4</td>
+                            <td>20/05/2026 08:15</td>
+                            <td>ETQ-001-001</td>
+                            <td>Laura</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>24.8</td>
+                            <td>20/05/2026 08:32</td>
+                            <td>ETQ-001-002</td>
+                            <td>Laura</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>25.1</td>
+                            <td>20/05/2026 08:50</td>
+                            <td>ETQ-001-003</td>
+                            <td>Laura</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>25.0</td>
+                            <td>20/05/2026 09:05</td>
+                            <td>ETQ-001-004</td>
+                            <td>Laura</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</div><!-- /.ps-2.pe-2 -->
+
+
+<!-- Scripts externos -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>*@
+
+<!-- Scripts de la vista -->
+<script src="~/Scripts/Produccion/ReporteOrdenesTrabajo.js"></script>

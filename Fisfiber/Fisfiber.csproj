@@ -395,6 +395,8 @@
     <Compile Include="Models\UnidadViewModel.cs" />
     <Compile Include="Models\UpdateDataRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Images\load-files.png" />
+    <Content Include="Scripts\Produccion\ReporteOrdenesTrabajo.js" />
     <Content Include="Scripts\Produccion\ConsultaGestionRecetas.js" />
   </ItemGroup>
   <ItemGroup>
@@ -2574,6 +2576,7 @@
     <Content Include="Images\logoFisfiber.png" />
     <Content Include="Styles\MonitorLog\monitorLog.css" />
     <Content Include="Styles\PlanEmb\MascPlan.css" />
+    <Content Include="Styles\Produccion\ReporteOrdenesTrabajo.css" />
     <Content Include="Styles\Produccion\GestionRecetas.css" />
     <Content Include="Styles\PlanProduccion\HojaEspecificaciones.css" />
     <Content Include="Styles\Layout\TextHooverEfects.css" />
@@ -2778,6 +2781,8 @@
     <Content Include="Views\Produccion\ReporteParosProduccion.cshtml" />
     <Content Include="Views\PlanVentas\AutorizacionDeletePedidos.cshtml" />
     <Content Include="Views\Produccion\GestionRecetas.cshtml" />
+    <Content Include="Views\Produccion\ReporteOrdenesTrabajo.cshtml" />
+    <Content Include="Views\Produccion\ReporteOTTerminados.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />

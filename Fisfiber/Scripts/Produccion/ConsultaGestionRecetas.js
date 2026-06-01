@@ -5,12 +5,21 @@
 
     init() {
         this.eventoFilaLinea();
+        this.eventoEvidencia();
     }
 
     eventoFilaLinea() {
-        $('.fila-linea').on('click', function () {
+        $('.fila-linea').on('click', function (e) {
+
+            //Bloquea el despliegue de la data de lineas de fibra
+            if ($(e.target).closest('.celda-evidencia').length) {
+                return;
+            }
+
             const nombre = $(this).find('td:first').text();
             const linea = $(this).data('linea');
+
+
 
             // Resaltar fila seleccionada
             $('.fila-linea').removeClass('table-danger');
@@ -30,6 +39,33 @@
             }
 
             // this.cargarRecetas(linea);
+        });
+    }
+
+    eventoEvidencia() {
+
+        $('#btnActualizarEvidencia').on('click', function () {
+            $('#inputEvidencia').click();
+        });
+
+        $('#inputEvidencia').on('change', function () {
+
+            const archivo = this.files[0];
+
+            if (!archivo) return;
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                $('#imgEvidencia')
+                    .attr('src', e.target.result)
+                    .removeClass('img-default')
+                    .addClass('img-evidencia');
+
+            };
+
+            reader.readAsDataURL(archivo);
         });
     }
 
