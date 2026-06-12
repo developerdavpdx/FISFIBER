@@ -15,6 +15,75 @@
     color: #1e76bd;
 }
 
+/*Estilos de Plan produccion Linea*/
+.btn-opcionesPP {
+    font-size: 19px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-weight: bold;
+    background-color: #1e76bd;
+    color: #f0f0f0;
+    border: 1px solid #c0c0c0;
+}
+
+.btn-opcionesPP:hover {
+    background-color: #acacac;
+    border: 1px solid #000;
+    color: #000;
+}
+
+.btn-opcionesPPlus {
+    font-size: 19px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-weight: bold;
+    background-color: #c9b656;
+    color: #f0f0f0;
+    border: 1px solid #c9b656;
+}
+
+.btn-opcionesPPlus:hover {
+    background-color: #c0b992;
+    border: 1px solid #a88d00;
+    color: #a88d00;
+}
+
+.btn-paroLinea {
+    font-size: 19px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-weight: bold;
+    background-color: #dc362e;
+    color: #dbdbdb;
+    border: 1px solid #dc362e;
+}
+
+.btn-paroLinea:hover {
+    background-color: #e0adad;
+    color: #d86363;
+    border: 1px solid #d86363;
+}
+
+.btn-contraer {
+    color: #252525 !important;
+    background-color: #efefef;
+    border-color: #cbcbcb;
+    border-radius: 20px;
+    padding: 3px 6px !important;
+    font-size: 12px !important;
+    font-weight: bolder;
+}
+
+.btn-contraer:hover {
+    background-color: #d8d8d8;
+    border-color: #c2c2c2;
+}
 
 /*CONTENEDOR DE DETALLES*/
 .detalles {
@@ -105,21 +174,521 @@
 
 }
 
-    .subtable thead tr > th {
-        color: #ffffff !important;
-        background: #1e76bd !important;
-        font-weight: bold;
-        text-align: center;
-    }
+.subtable thead tr > th {
+    color: #ffffff !important;
+    background: #1e76bd !important;
+    font-weight: bold;
+    text-align: center;
+}
 
 
-    .subtable tbody tr > td {
-        background-color: #8d8b8b8f !important;
-        color: white !important;
-        font-weight: bold;
-        cursor: pointer;
-    }
+.subtable tbody tr > td {
+    background-color: #8d8b8b8f !important;
+    color: white !important;
+    font-weight: bold;
+    cursor: pointer;
+}
 
 .fila-en-paro td {
     background-color: #f8d7da !important; /* rojo clarito */
+}
+
+
+/* Texto de los tabs */
+.nav-tabs .nav-link {
+    color: #dc362e;
+}
+
+/* Tab activo */
+.nav-tabs .nav-link.active {
+    color: #ffffff !important;
+    background-color: #dc362ede !important;
+    border-color: #dc362e !important;
+}
+
+
+
+
+/*Pantalla del navbar de OT Polietileno*/
+/* ── Estatus badges ── */
+.badge-estatus {
+    font-size: .75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 50px;
+}
+
+.badge-estatus.terminada {
+    color: #1a8a1a;
+    font-size: 15px;
+}
+
+.badge-estatus.proceso {
+    color: #b87a00;
+    font-size: 15px;
+}
+
+.badge-estatus.pendiente {
+    color: #c0392b;
+    font-size: 15px;
+}
+
+/*Estilos de tabla*/
+#tablaOT.dataTable tbody tr.fila-ot:hover td {
+    background-color: #f2f2f2 !important;
+    color: #000000;
+    font-weight: normal !important;
+}
+
+/*Seccion informacion General OT*/
+.infoGenTitle-OT {
+    color: #8f8f8f;
+    font-weight: 500;
+}
+
+.infoGenCont-OT {
+    color: #000000;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+.tarjet-infoGen {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    border: 1px solid #d5d5d5;
+}
+
+.si-agregar-producto {
+    color: #dc362e !important;
+    font-size: .78rem;
+    text-decoration: none;
+}
+
+.si-agregar-producto:hover {
+    color: #848484 !important
+}
+
+.seccion-folioOT {
+    background-color: #ffedd8ab;
+    border-radius: 5px;
+    border: 1px solid #fdead4;
+}
+
+.estilo-seccionFolio {
+    font-size: 19px;
+}
+
+.icons-form-OTResina {
+    color: #7a7a7a;
+}
+
+
+/*Seccion de bascula*/
+.cuadro-pesaje {
+    min-width: 130px;
+    background: #fff;
+}
+
+.indicador-conectada {
+    font-size: 19px;
+}
+
+.pesaje-medida {
+    font-size: 53px;
+}
+
+.indicador-PActual {
+    font-size: 17px;
+}
+
+.cont-numConteo {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.seccion-tarjet-infoGen {
+    border: 1px solid #d5d5d5;
+    background: #f8f9fa;
+    box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.075);
+}
+
+/*Seccion OT Polietileno*/
+#tblRegistroProduccion td:nth-child(1) {
+    width: 50px;
+}
+
+#tblRegistroProduccion th:nth-child(2),
+#tblRegistroProduccion td:nth-child(2) {
+    width: 65px;
+}
+
+#tblRegistroProduccion th:nth-child(3),
+#tblRegistroProduccion td:nth-child(3) {
+    width: 100px;
+}
+
+#tblRegistroProduccion th:nth-child(4),
+#tblRegistroProduccion td:nth-child(4) {
+    width: 125px;
+}
+
+#tblRegistroProduccion th:nth-child(5),
+#tblRegistroProduccion td:nth-child(5) {
+    width: 120px;
+}
+
+/* Tabla de molino */
+.tabla-molido th:nth-child(1),
+.tabla-molido td:nth-child(1) {
+    width: 105px;
+}
+
+.tabla-molido th:nth-child(2),
+.tabla-molido td:nth-child(2) {
+    width: 160px;
+}
+
+.tabla-molido th:nth-child(3),
+.tabla-molido td:nth-child(3) {
+    width: 160px;
+}
+
+.tabla-molido th:nth-child(4),
+.tabla-molido td:nth-child(4) {
+    width: 160px;
+}
+
+.tabla-molido th:nth-child(5),
+.tabla-molido td:nth-child(5) {
+    width: 160px;
+}
+
+.input-molido {
+    width: 95px;
+}
+
+
+/*Seccion de Consumo de material escaneado*/
+.tipo-material {
+    background-color: #00000091;
+    color: white;
+    border: 1px solid #000;
+    border-radius: 12px;
+    width: 85px;
+    font-weight: 600;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.denier-material {
+    background-color: #dc362e4a;
+    border: 2px solid #dc362e;
+    border-radius: 12px;
+    width: 85px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 12px;
+}
+
+.contenedor-datos-RB {
+    display: inline-block;
+    align-items: center;
+}
+
+.porcentaje-material {
+    background-color: #dc362e4a;
+    border: 2px solid #dc362e;
+    border-radius: 12px;
+    width: 85px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 12px;
+}
+
+.btn-eliminarME {
+    font-size: 19px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-weight: bold;
+}
+
+.subtitulos-seccion {
+    background-color: #fff3e5;
+    border-radius: 7px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 1px solid #fdead4;
+}
+
+#alertaReceta {
+    text-align:justify;
+}
+
+.tabla-materiales th:nth-child(1),
+.tabla-materiales td:nth-child(1) {
+    min-width: 140px;
+}
+
+.tabla-materiales th:nth-child(2),
+.tabla-materiales td:nth-child(2) {
+    min-width: 370px;
+}
+
+.tabla-materiales th:nth-child(3),
+.tabla-materiales td:nth-child(3) {
+    min-width: 850px;
+}
+
+.tabla-materiales th:nth-child(4),
+.tabla-materiales td:nth-child(4) {
+    min-width: 150px;
+}
+
+.tabla-materiales th:nth-child(5),
+.tabla-materiales td:nth-child(5) {
+    min-width: 190px;
+}
+
+.tabla-materiales th:nth-child(6),
+.tabla-materiales td:nth-child(6) {
+    min-width: 180px;
+}
+
+.tabla-materiales th:nth-child(7),
+.tabla-materiales td:nth-child(7) {
+    min-width: 160px;
+}
+
+.cards-principal {
+    border-radius: 9px;
+    overflow: hidden;
+}
+
+.cards-encabezado {
+    background: #dc362e;
+}
+
+.cards-medidasMaterial {
+    background: #6e6e6e;
+    border: 1px solid #323232;
+    font-size: 13px;
+}
+
+.cards-proveedores {
+    font-size: 16px;
+    text-align: justify;
+}
+
+.seccion-btns-CDM {
+    justify-content: space-between;
+}
+
+.seccion-btns-Dev {
+    justify-content: space-between;
+}
+
+
+/*Seccion de devoluciones*/
+/*Seccion botones*/
+.btn-genEtiquetaProduccion {
+    background: #0d6efd;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+}
+
+.btn-genEtiquetaProduccion:hover {
+    color: #fff;
+    background-color: #0d6efdbd;
+}
+
+.btn-guardarProduccion {
+    color: #0d6efd;
+    border: 1px solid #0d6efd;
+    border-radius: 8px;
+}
+
+.btn-guardarProduccion:hover {
+    color: #fff;
+    background-color: #0d6efdbd;
+}
+
+.col-devolver {
+    width: 110px;
+}
+
+.input-cantDevolver {
+    width: 100px;
+    text-align: center;
+}
+
+#modalEliminarMaterialE {
+    background-color: #000000a1;
+}
+
+.key-estilo-icon {
+    font-size: 15px;
+}
+
+/*Seccion Recibo de produccion*/
+/*Lectura de bascula por pieza individual*/
+.contenedor-bascula-indvidual {
+    background: #f0faf4;
+    border: 1px solid #d4edda;
+    box-shadow: 3px 2px 6px #d5d5d5;
+}
+
+.text-lect-pz-ind {
+    font-size: 17px;
+}
+
+.cant-pz-ind {
+    font-size: 50px;
+    color: #1a8a1a;
+}
+
+.conexion-bascula-cant-pz-ind {
+    font-size: 19px
+}
+
+
+.text-color-bajo-MPconsumido {
+    color: #dc362e;
+}
+.text-color-proceso-MPconsumido {
+    color: #b87a00;
+}
+.text-color-completo-MPconsumido {
+    color: #198754;
+}
+
+/* progress bar cantidad producida */
+.contenedor-progreso {
+    height: 15px;
+    border-radius: 50px;
+    box-shadow: inset 6px 4px 4px 2px #d5d5d5;
+}
+
+.barra-progreso {
+    width: 71%;
+    border-radius: 50px;
+    background: #dc362e;
+    box-shadow: 8px 0px 4px 0px #d5d5d5;
+}
+
+#contenedorTipoEtiqueta input[type="radio"] {
+    position: static !important;
+    opacity: 1 !important;
+    left: auto !important;
+}
+
+#contenedorTipoEtiqueta .form-check-label::before,
+#contenedorTipoEtiqueta .form-check-label::after {
+    display: none !important;
+}
+
+.check-tipo-etiqueta:checked {
+    background-color: #dc362e;
+    border-color: #dc362e;
+}
+
+.check-tipo-etiqueta:focus {
+    box-shadow: 0 0 0 .25rem #dc362e40;
+    border-color: #dc362e;
+}
+
+/*Contenedor ultima etiqueta generada*/
+.contenedor-ult-etiq {
+    background: #f8f9fa;
+    border: 1px solid #939393;
+    box-shadow: inset 0px 0px 4px 2px #d5d5d5;
+}
+
+.titulo-ult-etq {
+    font-size: 16px;
+}
+
+.info-ult-etiqueta {
+    font-size: 15px;
+}
+
+
+
+
+/* Media querys de la pagina*/
+@media (max-width: 389px) {
+    .seccion-btns-resinas {
+        justify-content: center;
+    }
+
+    .seccion-btns-polietileno {
+        display: grid !important;
+        justify-content: center;
+    }
+
+    .btn-sol-GC {
+        display: grid !important;
+    }
+
+    .btn-sol-GG {
+        display: grid !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .seccion-btns-CDM {
+        display: grid !important;
+        justify-content: center;
+        gap: 18px !important;
+    }
+
+    .btn-sol-aut {
+        justify-content: center !important;
+        padding: 0px !important;
+    }
+    .btn-sol-GG {
+        justify-content: center !important;
+        padding: 0px !important;
+    }
+
+    .seccion-btns-Dev {
+        display: grid !important;
+        justify-content: center;
+        gap: 18px !important;
+    }
+
+    .btn-sol-dev {
+        justify-content: center !important;
+        padding: 0px !important;
+    }
+
+    .btn-sol-GC {
+        justify-content: center !important;
+        padding: 0px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    #modalOpcionesPP .modal-dialog {
+        max-width: 90vw;
+    }
+}
+
+@media (max-width: 1199px) {
+    #nav-RP .btn-generar-etiqueta {
+        margin-top: 1rem;
+    }
+
+    .tabla-molido {
+        min-width: 750px !important;
+    }
+}
+
+@media (min-width: 1199px) {
+    .tabla-molido {
+        min-width: auto !important;
+    }
 }

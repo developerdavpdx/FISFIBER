@@ -1,5 +1,8 @@
 ﻿class ConsPlaPro {
+
+
     constructor() {
+
         // * Atributos para guardar los datos de la lista de las ordenes de venta agrupados por linea
         this.subtablelinedetailsbody = `<div class="card">
                                                 <div class="card-body ReportHeader">
@@ -28,7 +31,7 @@
                                 <thead>
                                 <tr>
                                <th class="d-none" width="200"></th>
-                                <th width="150"></th>
+                                <th width="200"></th>
                                 <th class="d-none" width="240">Línea</th>
                                 <th class="d-none" width="200">Folio</th>
                                 <th class="d-none" width="200">Generada</th>
@@ -76,7 +79,7 @@
             "RollosSAP", "CantidadMetrosSAP", "CantidadKilosSAP", "Folio1", "OrdenFabricacion1", "EstatusProduccion",
             "Especificacion", "Linea", "FlagOrdenFabricacion",
             "Orden", "IdPPD", "Folio", "fecha", "DocEntry",
-            "GenerarOF", "OrdenFabricacion", "EstatusSapOF", "Especificacion", "EsDiaAnterior", "ParoEstatus","ParoFechaFin"
+            "GenerarOF", "OrdenFabricacion", "EstatusSapOF", "Especificacion", "EsDiaAnterior", "ParoEstatus", "ParoFechaFin"
         ];
         this.ColumnsWithEdit = ["UbicacionFinal"];
         this.ColumnsWithEditNumber = ["PiezasProducidas"];
@@ -97,6 +100,11 @@
         this.rowselectedparo;
         this.TiempoParoDiaActual = "";
         this.LineasParo = [];
+
+        //tooltip alertas
+        this.tooltipMolido = null;
+
+
     }
     //Listado de planes de produccion
     PlanesProduccion(terminados, showLoading = 1, CurrentFolio = '') {
@@ -116,7 +124,7 @@
                         "lineas": this.NombresLineas
                     },
                     beforeSend: function () {
-                        if (showLoading !=  0) {
+                        if (showLoading != 0) {
                             Loading();
                         }
                     },
@@ -213,7 +221,7 @@
                 this.previewdataPP = JSON.parse(this.anydata.Data);
                 this.extradata = JSON.parse(this.anydata.ExtraData);
                 this.otherdata = JSON.parse(this.anydata.Other);
-                
+
                 //Datos de OV agrupados por linea
                 this.grouppreviewdataPP = LayoutCs.agruparPorLinea(this.previewdataPP);
 
@@ -262,41 +270,52 @@
                         let grayColor = "", position = "", clock = "";
                         //Se coloca el reloj para los que estan retrasados, solo al primer elemento de la celda.
                         if (item.EsDiaAnterior == 1) {
-                            clock = "<i class='bi bi-alarm-fill icontimerow' style='left:13px; top:35px;'></i>";
+                            clock = `<span class="indicador-retrasome"><i class="bi bi-alarm fs-5 text-danger"></i></span>`;
+
                             grayColor = "background-color: lightgray; box-shadow: none;";
                         }
                         let ParoEstatus = item.ParoEstatus;
                         let IconParoEstatus = "";
+                        let IconOpciones = "";
+                        let HojaEspecificaciones = "";
                         //if (ParoEstatus == "Terminado" || ParoEstatus == "Sin Paro") {
-                            IconParoEstatus = `<i
-                                value="${item.Folio}"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                data-linea="${item.Linea}"
-                                data-pedido="${item.Pedido}"
-                                title="Paro de línea ${item.Linea}"
-                                class="fs-4 fa-solid fa-circle-stop ParoLineaPP icon-updateparo me-3"></i>`;
+                        IconParoEstatus = `<button class="btn btn-paroLinea ParoLineaPP" 
+                                                   value="${item.Folio}" 
+                                                   data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   data-linea="${item.Linea}"
+                                                   data-pedido="${item.Pedido}"
+                                                   title="Paro de línea ${item.Linea}">
+                                                <i class="bi bi-stop-circle"></i>
+                                            </button>`;
+
                         //}
+                        IconOpciones = `<button class="btn btn-opcionesPPlus" 
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalOpcionesPP">
+                                            <i class="bi bi-plus-square"></i>
+                                        </button>`;
+
+                        HojaEspecificaciones = `<button class="btn btn-opcionesPP hojaEsp" itemcode = "${item.Articulo}" linea = "${item.Linea}">
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                </button>`;
                         ConsultaPlanProduccionCs.anyvar = `<div class="form-check"><input value="${item.DocEntry}" data-linea="${item.Linea}" type="checkbox" ${shouldbechecked} class="form-check-input anycheck "></div>`;
                         ConsultaPlanProduccionCs.anydata += `<tr id="rowppd${item.IdPPD}" sumcap="${item.SumCap}" >`;
                         //Columnas principales
                         ConsultaPlanProduccionCs.anydata += `<td class="d-none">${ConsultaPlanProduccionCs.anyvar}</td>
                                                              <td class="position-relative" style="${grayColor}">
-                                                                    ${clock}
-                                                                    ${IconParoEstatus}
-                                                                     <i
-                                                                     itemcode = "${item.Articulo}"
-                                                                     linea = "${item.Linea}"
-                                                                     class="hojaEsp bi bi-card-heading fs-4"
-                                                                     style="cursor:pointer;"
-                                                                     ></i>
+                                                                  <div class="d-flex align-items-center justify-content-center gap-2">
+                                                                       ${clock}
+                                                                       ${IconParoEstatus}                                                                       
+                                                                       ${HojaEspecificaciones}
+                                                                       ${IconOpciones}
+                                                                  </div>
                                                              </td>
                                                              <td class="d-none" data-name="Linea">${item.Linea}</td>
                                                             <td class="d-none" data-name="Folio">${item.Folio}</td>
                                                             <td class="d-none">${GenerarOF}</td>
                                                             <td class="d-none">${item.OrdenFabricacion}</td>
-                                                            <td class="d-none">${item.EstatusSapOF}</td>
-                                                            `;
+                                                            <td class="d-none">${item.EstatusSapOF}</td>                                               `;
 
                         //Resto de datos
                         //Saber si requiere edicion y de que tipo
@@ -1096,6 +1115,324 @@
     ReordenarConfigPP() {
 
     }
+
+    //Actualizar los porcentajes de la receta
+    ActualizarPorcentajeMolido(input) {
+
+        //Obtencion de valores
+        let cargadora = $(input).data('cargadora');
+
+        let porcentajeMolido = parseFloat($(input).val()) || 0;
+
+        let porcentajeReceta = $(
+            `.porcentaje-material[data-cargadora="${cargadora}"]`
+        );
+
+        let porcentajeOriginal = parseFloat(
+            porcentajeReceta.data('original')
+        );
+
+        // Validar negativos
+        if (porcentajeMolido < 0) {
+
+            $(input).val('');
+
+            porcentajeReceta.text(porcentajeOriginal + "%");
+
+            this.MostrarTooltipMolido(
+                input,
+                "El porcentaje no puede ser negativo."
+            );
+
+            return;
+        }
+
+        //Validar que no exceda la receta
+        if (porcentajeMolido > porcentajeOriginal) {
+
+            $(input).val('');
+
+            porcentajeReceta.text(porcentajeOriginal + "%");
+
+            this.MostrarTooltipMolido(
+                input,
+                "El porcentaje de molido no puede ser mayor al de la receta."
+            );
+
+            return;
+        }
+
+        //Nueva cantidad de porcentaje
+        let nuevoPorcentaje = porcentajeOriginal - porcentajeMolido;
+
+        // Evitar negativos
+        if (nuevoPorcentaje < 0)
+            nuevoPorcentaje = 0;
+
+        porcentajeReceta.text(nuevoPorcentaje + "%");
+
+    }
+
+    //Confirmacion impresion de materiales
+    ConfirmarPrintEtiqueta() {
+        $.confirm({
+
+            theme: 'modern',
+            type: 'red',
+            columnClass: 'confirm-ffisa',
+            animation: 'scale',
+            closeAnimation: 'scale',
+            title: `
+            <div class="text-center">
+                <div class="pt-3 pb-5">
+                    <i class="bi bi-tag text-primary fs-1 icon-etiqueta"></i>
+                </div>                
+                <div class="mt-2 fw-semibold text-dark accion-confirm-realizar">
+                    Generar Etiqueta
+                </div>
+            </div>`,
+            content: `
+            <div class="text-center text-secondary accion-confirm">
+                ¿Desea generar la etiqueta? Esta accion no se puede deshacer</div>`,
+
+            buttons: {
+
+                eliminar: {
+                    text: 'Generar',
+                    btnClass: 'btn-genEtiquetaProduccion',
+
+                    action: function () {
+
+                        // lógica
+
+                    }
+                },
+
+                cancelar: function () { },
+
+            },
+            onOpenBefore: function () {
+                this.$jconfirmBox[0].style.setProperty('border-top', '5px solid #737474', 'important');
+            }
+        });
+    }
+
+    //Confirmacion de eliminacion de items
+    ConfirmarEliminar() {
+
+        $.confirm({
+            theme: 'modern',
+            type: 'red',
+            columnClass: 'confirm-ffisa',
+            animation: 'scale',
+            closeAnimation: 'scale',
+
+            title: `
+            <div class="text-center">
+                <div class="pt-3 pb-5">
+                    <i class="bi bi-trash3 text-danger fs-1 icon-tipo-trash"></i>
+                </div>                
+                <div class="mt-2 fw-semibold text-dark accion-confirm-realizar">
+                    Eliminar Material
+                </div>
+            </div>`,
+            content: `
+            <div class="text-center text-secondary accion-confirm">
+                ¿Desea eliminar este material? Esta accion no se puede deshacer</div>`,
+            type: 'red',
+
+            buttons: {
+
+                eliminar: {
+                    text: 'Eliminar',
+                    btnClass: 'btn-danger',
+
+                    action: function () {
+
+                        // lógica
+
+                    }
+                },
+
+                cancelar: function () { },
+
+            },
+            onOpenBefore: function () {
+
+                this.$jconfirmBox.css({
+                    'border-top': '5px solid #dc362e',
+                    'border-radius': '12px'
+                });
+
+            }
+        });
+
+    }
+
+    //Confirmacion de Guardar
+    ConfirmarGuardado() {
+        $.confirm({
+
+            theme: 'modern',
+            type: 'red',
+            columnClass: 'confirm-ffisa',
+            animation: 'scale',
+            closeAnimation: 'scale',
+            title: `
+            <div class="text-center">
+                <div class="pt-3 pb-5">
+                    <i class="bi bi-floppy text-primary fs-1 icon-etiqueta"></i>
+                </div>                
+                <div class="mt-2 fw-semibold text-dark accion-confirm-realizar">
+                    Guardar
+                </div>
+            </div>`,
+            content: `
+            <div class="text-center text-secondary accion-confirm">
+                ¿Desea guardar la información? Esta accion no se puede deshacer</div>`,
+
+            buttons: {
+
+                eliminar: {
+                    text: 'Guardar',
+                    btnClass: 'btn-genEtiquetaProduccion',
+
+                    action: function () {
+
+                        // lógica
+
+                    }
+                },
+
+                cancelar: function () { },
+
+            },
+            onOpenBefore: function () {
+                this.$jconfirmBox[0].style.setProperty('border-top', '5px solid #737474', 'important');
+            }
+        });
+    }
+
+    //Confirmacion de Autorizacion
+    ConfirmarAutorizacion() {
+        $.confirm({
+
+            theme: 'modern',
+            type: 'red',
+            columnClass: 'confirm-ffisa',
+            animation: 'scale',
+            closeAnimation: 'scale',
+            title: `
+            <div class="text-center">
+                <div class="pt-3 pb-5">
+                    <i class="bi bi-floppy text-black fs-1 icon-etiqueta-autorizacion"></i>
+                </div>                
+                <div class="mt-2 fw-semibold text-dark accion-confirm-realizar">
+                    Solicitar Autorización
+                </div>
+            </div>`,
+            content: `
+            <div class="text-center text-secondary accion-confirm">
+                Se detectó un material fuera de receta ¿Desea solicitar autorización del supervisor para continuar con el consumo de materia prima?</div>`,
+
+            buttons: {
+
+                eliminar: {
+                    text: 'Solicitar',
+                    btnClass: 'btn-warning',
+
+                    action: function () {
+
+                        // lógica
+
+                    }
+                },
+
+                cancelar: function () { },
+
+            },
+            onOpenBefore: function () {
+                this.$jconfirmBox[0].style.setProperty('border-top', '5px solid #737474', 'important');
+            }
+        });
+
+    }
+
+    //Confirmar generar devolucion
+    ConfirmarDevolucion() {
+        $.confirm({
+            theme: 'modern',
+            type: 'red',
+            columnClass: 'confirm-ffisa',
+            animation: 'scale',
+            closeAnimation: 'scale',
+
+            title: `
+            <div class="text-center">
+                <div class="pt-3 pb-5">
+                    <i class="bi bi-arrow-return-left text-danger fs-1 icon-tipo-trash"></i>
+                </div>                
+                <div class="mt-2 fw-semibold text-dark accion-confirm-realizar">
+                    Devolución
+                </div>
+            </div>`,
+            content: `
+            <div class="text-center text-secondary accion-confirm">
+                ¿Desea devolver este material? Esta accion no se puede deshacer</div>`,
+            type: 'red',
+
+            buttons: {
+
+                eliminar: {
+                    text: 'Devolver',
+                    btnClass: 'btn-danger',
+
+                    action: function () {
+
+                        // lógica
+
+                    }
+                },
+
+                cancelar: function () { },
+
+            },
+            onOpenBefore: function () {
+
+                this.$jconfirmBox.css({
+                    'border-top': '5px solid #dc362e',
+                    'border-radius': '12px'
+                });
+
+            }
+        });
+    }
+
+    //Toolip Mensajes
+    MostrarTooltipMolido(input, mensaje) {
+
+        // Si ya existe uno anterior lo destruimos
+        if (this.tooltipMolido) {
+            this.tooltipMolido.dispose();
+        }
+
+        this.tooltipMolido = new bootstrap.Tooltip(input, {
+            title: mensaje,
+            placement: 'top',
+            trigger: 'manual'
+        });
+
+        this.tooltipMolido.show();
+
+        setTimeout(() => {
+
+            this.tooltipMolido.hide();
+
+        }, 3000);
+
+    }
+
+
     //Trae los nombres de las lineas
     async GetNameLineas() {
         try {
@@ -1299,6 +1636,7 @@
             return false;
         }
     }
+
 }
 
 LayoutCs.validarUsuario("Producci\u00F3n");
@@ -1781,6 +2119,12 @@ $(function () {
         }
     });
 
+
+    $(document).on('click', '.btn-eliminarME', function () {
+        $('#modalEliminarMaterialE').modal('show');
+    });
+
+
     // Paro de linea
     $(document).on("click", ".ParoLineaPP", function (e) {
         e.stopPropagation();
@@ -1797,4 +2141,60 @@ $(function () {
         $('#ParoModal').modal('show');
     });
 
+    $(document).on("click", "#btnOrdenTrabajo", function (e) {    
+        const $sub = $('#subOT');
+        const $icon = $('#iconOT');
+        const abierto = $sub.is(':visible');
+
+        $sub.slideToggle(200);
+        $icon.css('transform', abierto ? 'rotate(0deg)' : 'rotate(180deg)');
+    });
+
+    //Modales de confirmacion
+    //Impresion de materiales
+    $(document).on("click", "#btn-generaEtiqueta", function () {
+        ConsultaPlanProduccionCs.ConfirmarPrintEtiqueta();
+
+    });
+
+    //Guardado de información
+    $(document).on("click", "#btn-guardarInfo", function () {
+        ConsultaPlanProduccionCs.ConfirmarGuardado();
+
+    });
+
+    //Eliminacion de materiales
+    $(document).on("click", ".btn-eliminarME", function () {
+        ConsultaPlanProduccionCs.ConfirmarEliminar();       
+    });
+
+    //Solicitar autorizacion
+    $(document).on("click", "#btn-solicitarAut", function () {
+        ConsultaPlanProduccionCs.ConfirmarAutorizacion();
+    });
+
+    //Generar la devolucion
+    $(document).on("click", "#btn-generaDevolucion", function () {
+        ConsultaPlanProduccionCs.ConfirmarDevolucion();
+    });
+
+    $(document).on('input', '.input-molido', function () {
+
+        ConsultaPlanProduccionCs.ActualizarPorcentajeMolido(this);
+
+    });
+
+
+    //Contracciones de Area
+    $('.btnToggleSeccion').on('click', function () {
+
+        var target = $(this).data('target');
+        var icono = $(this).find('i');
+
+        $(target).slideToggle(1000);
+
+        icono.toggleClass('bi-chevron-up bi-chevron-down');
+    });
 });
+
+

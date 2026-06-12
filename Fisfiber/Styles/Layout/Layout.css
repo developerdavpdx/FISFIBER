@@ -773,3 +773,46 @@ input[readonly],
 textarea[readonly] {
     cursor: not-allowed;
 }
+
+
+/*Estilos confirm*/
+/*Confirm eliminacion*/
+.icon-tipo-trash {
+    background-color: #ff00002e;
+    border-radius: 47px;
+    padding: 26px;
+}
+
+.accion-confirm-realizar {
+    font-size: 32px;
+}
+
+.accion-confirm {
+    font-size: 20px;
+}
+
+/*Confirm genera etiqueta*/
+.icon-etiqueta {
+    background-color: #0d6efd29;
+    border-radius: 47px;
+    padding: 26px;
+}
+
+
+/*Confirm genera solicitar autorizacion*/
+.icon-etiqueta-autorizacion {
+    background-color: #ffc10766;
+    border-radius: 47px;
+    padding: 26px;
+}
+
+@media (max-width: 1999px) and (min-width: 576px) {
+
+    .confirm-ffisa {
+        width: 472px !important;
+    }
+}
+
+
+
+

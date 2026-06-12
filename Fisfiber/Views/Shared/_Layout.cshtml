@@ -65,6 +65,9 @@
     <script src="~/Scripts/Loading/Loading.js"></script>
     <script src="~/Scripts/TopScroll/TopScrollManager.js"></script>
 
+    <!-- Jquery confirm -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-confirm@3.3.4/css/jquery-confirm.min.css">
+
 
     <!--Excel JS-->
     @*<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>*@
@@ -279,14 +282,10 @@
                                 Gestión de Recetas
                             </a>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="@Url.Action("ReporteOrdenesTrabajo","Produccion")" class="sidebar-link">
-                                Reportes Ordenes de Trabajo
-                            </a>
-                        </li>
+                        
                         <li class="sidebar-item">
                             <a href="@Url.Action("ReporteOTTerminados","Produccion")" class="sidebar-link">
-                                Reportes OT Terminadas
+                                OT Terminadas
                             </a>
                         </li>
                         <li class="sidebar-item">

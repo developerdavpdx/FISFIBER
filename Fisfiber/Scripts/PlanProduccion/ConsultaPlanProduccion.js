@@ -93,6 +93,8 @@
         this.whitelinealreadysaved = false;
         this.TiempoParoDiaActual = "";
 
+
+
     }
     //Listado de planes de produccion
     PlanesProduccion(terminados) {
@@ -1928,6 +1930,7 @@ $(function () {
     $("#configuracionPPContainer .form-check").on("mousedown", function (e) {
         e.stopPropagation(); // Evita conflictos con sortable
     });
+    
 
     // Ocultar menú contextual al hacer clic en cualquier lugar
     $(document).on("click", function () {
@@ -2139,5 +2142,16 @@ $(function () {
         else {
             ConsultaPlanProduccionCs.hideCapLineaPlan()
         }
+    });
+
+    //Contracciones de Area
+    $('.btnToggleSeccion').on('click', function () {
+
+        var target = $(this).data('target');
+        var icono = $(this).find('i');
+
+        $(target).slideToggle(200);
+
+        icono.toggleClass('bi bi-chevron-up');
     });
 });

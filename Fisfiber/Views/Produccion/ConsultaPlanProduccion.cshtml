@@ -60,21 +60,20 @@
                    update="@Url.Action("ActualizarOF","PlanProduccion")"
                    configuracion="@Url.Action("GetConfigxUsuarioPP","PlanProduccion")"
                    updateconfiguracion="@Url.Action("InsertaConfigxUsuarioPP","PlanProduccion")"
-                   ParoMannto="@Url.Action("InsertaParoMannto","PlanProduccion")" 
+                   ParoMannto="@Url.Action("InsertaParoMannto","PlanProduccion")"
                    class="table table-striped table-fixed"
-                   style="min-width: 800px !important;"
-                   >
+                   style="min-width: 800px !important;">
                 <thead>
                     <tr>
                         <th>Folio</th>
                         <th>Linea</th>
                         @*<th>Cantidad Kilos</th>
-                        <th>Artículo</th>
-                        <th>Descripción Artículo</th>
-                        <th>Generar</th>
-                        <th>No Orden Fabricación</th>
-                        <th>Estatus</th>
-                        <th>Acciones</th>*@
+                            <th>Artículo</th>
+                            <th>Descripción Artículo</th>
+                            <th>Generar</th>
+                            <th>No Orden Fabricación</th>
+                            <th>Estatus</th>
+                            <th>Acciones</th>*@
                     </tr>
                 </thead>
                 <tbody>
@@ -326,6 +325,7 @@
             </div>
         </div>
     </div>
+
     <!-- Modal moderno para registrar nuevo paro -->
     <div class="modal fade" id="ParoModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
@@ -395,8 +395,1079 @@
             </div>
         </div>
     </div>
+
+    <!-- ══════════════════════════════════════════════════
+         Modal: Opciones plan de produccion
+    ════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="modalOpcionesPP" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <div class="modal-header bg-pr text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-plus-circle me-2"></i>Producción
+                    </h5>
+                    <button type="button" class="btn btn-link text-white p-0" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- Info general -->
+                    <p class="fw-semibold text-dark ms-2 mb-2">Información General:</p>
+                    <div class="rounded-3 p-3 mb-4 seccion-tarjet-infoGen">
+                        <div class="row g-2">
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Plan Producción: </small>
+                                <p class="fw-semibold mb-0">P001:006</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="infoGenTitle-OT">Orden Fabricación: </small>
+                                <p class="mb-0 infoGenCont-OT">OF-2024-001</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Pedido: </small>
+                                <p class="fw-semibold mb-0 d-flex align-items-center gap-2">
+                                    PED-2024-101
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Línea: </small>
+                                <p class="fw-semibold mb-0">Línea 1</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Cantidad Solicitada: </small>
+                                <p class="fw-semibold mb-0">5,000 pzas</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Fecha Inicio: </small>
+                                <p class="fw-semibold mb-0">20/05/2026</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Tipo Producto: </small>
+                                <p class="fw-semibold mb-0">Resina</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Artículo: </small>
+                                <p class="fw-semibold mb-0">Bolsa HD 60x90</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Estatus: </small>
+                                <p class="fw-semibold mb-0">
+                                    <span class="badge-estatus proceso">En Proceso</span>
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <button class="btn btn-link p-0 fw-semibold pt-2 pb-2 ps-0 pe-2 si-agregar-producto">
+                                    <i class="bi bi-plus-circle me-1"></i>Agregar más pedidos
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row g-4 mb-3">
+                        <!-- Seccion: menus de producción -->
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-OTResina-tab" data-bs-toggle="tab" href="#nav-OTResina" role="tab">
+                                    <i class="bi bi-droplet-fill me-2"></i> OT - Resina
+                                </a>
+                                <a class="nav-item nav-link" id="nav-OTPolietileno-tab" data-bs-toggle="tab" href="#nav-OTPolietileno" role="tab">
+                                    <i class="bi bi-box-seam me-2"></i> OT - Polietileno
+                                </a>
+                                <a class="nav-item nav-link" id="nav-CMP-tab" data-bs-toggle="tab" href="#nav-CMP" role="tab">
+                                    <i class="bi bi-boxes me-2"></i> Consumo Materia Prima
+                                </a>
+                                <a class="nav-item nav-link" id="nav-Dev-tab" data-bs-toggle="tab" href="#nav-Dev" role="tab">
+                                    <i class="bi bi-arrow-return-left me-2"></i> Devolución
+                                </a>
+                                <a class="nav-item nav-link" id="nav-RP-tab" data-bs-toggle="tab" href="#nav-RP" role="tab">
+                                    <i class="bi bi-clipboard2-check me-2"></i> Recibo de Producción
+                                </a>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content" id="nav-tabContent">
+
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-end align-items-center shadow-sm pt-2 pb-2 pe-3 mb-2 gap-2 seccion-folioOT">
+                                        <span class="text-secondary estilo-seccionFolio">Folio: </span>
+                                        <p class="fw-semibold mb-0 estilo-seccionFolio"> OT-001</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sección: Orden de trabajo - Resinas -->
+                            <div class="tab-pane fade show active" id="nav-OTResina" role="tabpanel" aria-labelledby="nav-OTResina-tab">
+                                <div class="border rounded-3 shadow-sm mt-2 p-4">
+                                    <!-- Formulario de variables -->
+                                    <div class="row g-3 mb-4">
+                                        <p class="fw-semibold text-dark mb-3">
+                                            <i class="bi bi-percent me-2"></i>
+                                            Variables de Producción
+                                        </p>
+                                        <div class="col-12 col-sm-6 col-lg-4">
+                                            <label class="form-label fw-medium small d-flex align-items-center gap-2">
+                                                <i class="bi bi-droplet-fill icons-form-OTResina me-2"></i>
+                                                Resina Virgen
+                                            </label>
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" class="form-control" placeholder="0" min="0" />
+                                                <span class="input-group-text text-secondary">kg</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-lg-4">
+                                            <label class="form-label fw-medium small d-flex align-items-center gap-2">
+                                                <i class="bi bi-droplet-half icons-form-OTResina me-2"></i>
+                                                Resina Recuperada
+                                            </label>
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" class="form-control" placeholder="0" min="0" />
+                                                <span class="input-group-text text-secondary">kg</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-lg-4">
+                                            <label class="form-label fw-medium small d-flex align-items-center gap-2">
+                                                <i class="bi bi-moisture icons-form-OTResina me-2"></i>
+                                                Agua
+                                            </label>
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" class="form-control" placeholder="0" min="0" />
+                                                <span class="input-group-text text-secondary">lt</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Botones -->
+                                    <div class="d-flex flex-wrap gap-2 mt-2 seccion-btns-resinas">
+                                        <button id="btn-generaEtiqueta" class="btn btn-genEtiquetaProduccion btn-sm fw-semibold px-4 py-2">
+                                            <i class="bi bi-tag me-2"></i>Generar Etiqueta
+                                        </button>
+                                        <button id="btn-guardarInfo" class="btn btn-guardarProduccion btn-sm fw-semibold px-4 py-2">
+                                            <i class="bi bi-floppy me-2"></i>Guardar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sección: Orden de trabajo - Polietileno -->
+                            <div class="tab-pane fade" id="nav-OTPolietileno" role="tabpanel" aria-labelledby="nav-OTPolietileno-tab">
+                                <div class="border rounded-3 mt-2 p-4">
+
+                                    <div class="row g-3 mb-3">
+                                        <!--Bascula -->
+                                        <div class="col-12 col-lg-3 ps-3">
+                                            <p class="fw-semibold text-dark mb-2">
+                                                <i class="bi bi-hdd me-2"></i>
+                                                Báscula Conectada
+                                            </p>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <div class="d-inline-flex flex-column align-items-center border rounded-3 p-3 text-center mb-3 cuadro-pesaje">
+                                                    <span class="badge bg-success mb-1 indicador-conectada">● Conectada</span>
+                                                    <span class="fw-bold text-success pesaje-medida">25.4 kg</span>
+                                                    <small class="text-secondary indicador-PActual">Peso actual en báscula</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="cont-numConteo ms-2 mb-3"><small class="infoGenTitle-OT">Num. Bolsas: </small><p class="mb-0 infoGenCont-OT">25</p></div>
+
+                                        </div>
+
+                                        <!-- Registro de Producción -->
+                                        <div class="col-12 col-lg-9">
+
+                                            <p class="fw-semibold text-dark mb-2">
+                                                <i class="bi bi-file-text me-2"></i>
+                                                Registro de Producción
+                                            </p>
+
+                                            <div class="table-responsive rounded">
+                                                <table id="tblRegistroProduccion" class="table table-sm mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Peso (kg)</th>
+                                                            <th>Fecha/Hora</th>
+                                                            <th>Etiqueta</th>
+                                                            <th>Operador</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @*<tr><td colspan="5" class="text-center text-secondary fst-italic py-3">Sin registros</td></tr>*@
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>25.4</td>
+                                                            <td>20/05/2026 08:15</td>
+                                                            <td>ETQ-001-001</td>
+                                                            <td>Laura</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2</td>
+                                                            <td>24.8</td>
+                                                            <td>20/05/2026 08:32</td>
+                                                            <td>ETQ-001-002</td>
+                                                            <td>Laura</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3</td>
+                                                            <td>25.1</td>
+                                                            <td>20/05/2026 08:50</td>
+                                                            <td>ETQ-001-003</td>
+                                                            <td>Laura</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>4</td>
+                                                            <td>25.0</td>
+                                                            <td>20/05/2026 09:05</td>
+                                                            <td>ETQ-001-004</td>
+                                                            <td>Laura</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                        <div class="d-flex gap-2 seccion-btns-polietileno">
+                                            <button id="btn-generaEtiqueta" class="btn btn-genEtiquetaProduccion btn-sm fw-semibold px-4 py-2">
+                                                <i class="bi bi-tag me-1"></i>Generar Etiqueta
+                                            </button>
+                                            <button id="btn-guardarInfo" class="btn btn-guardarProduccion btn-sm fw-semibold px-4 py-2">
+                                                <i class="bi bi-floppy me-2"></i>Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sección: Consumo de materia prima -->
+                            <div class="tab-pane fade" id="nav-CMP" role="tabpanel" aria-labelledby="nav-CMP-tab">
+
+                                <!-- ============================= -->
+                                <!-- Receta base -->
+                                <!-- ============================= -->
+                                <div class="border rounded-3 shadow-sm mt-2 p-4">
+                                    
+
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <div>
+                                            <p class="fw-semibold text-dark mb-2">
+                                                <i class="bi bi-card-checklist me-2"></i>
+                                                Receta
+                                            </p>
+                                        </div>
+
+                                        <button type="button"
+                                                class="btn btn-sm btn-contraer btnToggleSeccion me-1"
+                                                data-target="#divReceta">
+                                            <i class="bi bi-chevron-down"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="row g-3" id="divReceta">
+                                        <!-- TABLA RECETA -->
+                                        <div class="col-12">
+
+                                            <div class="table-responsive rounded shadow-sm mb-3">
+
+                                                <table class="table table-sm mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Receta</th>
+                                                            <th>C1</th>
+                                                            <th>C2</th>
+                                                            <th>C3</th>
+                                                            <th>C4</th>
+                                                            <th>Resina</th>
+                                                            <th>Observaciones</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+
+                                                        <tr>
+
+                                                            <td>
+                                                                <strong>11-1</strong>
+                                                            </td>
+
+                                                            <td class="celda-receta">
+                                                                <div class="contenedor-datos-RB">
+                                                                    <div class="contenedor-datos-RB">
+                                                                        <div class="tipo-material mb-2">Denier</div>
+                                                                        <div class="denier-material mb-2">15X64</div>
+                                                                        <div class="porcentaje-material mb-2" data-cargadora="C1" data-original="41">41%</div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="celda-receta">
+                                                                <div class="contenedor-datos-RB">
+                                                                    <div class="tipo-material mb-2">Denier</div>
+                                                                    <div class="denier-material mb-2">26X75</div>
+                                                                    <div class="porcentaje-material mb-2" data-cargadora="C2" data-original="41">41%</div>
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="celda-receta">
+                                                                <div class="contenedor-datos-RB">
+                                                                    <div class="tipo-material mb-2">Denier</div>
+                                                                    <div class="denier-material mb-2">20X77</div>
+                                                                    <div class="porcentaje-material mb-2" data-cargadora="C3" data-original="18">18%</div>
+                                                                </div>
+
+                                                            </td>
+                                                            <td class="celda-receta">
+                                                                <div class="contenedor-datos-RB">
+                                                                    <div class="tipo-material mb-2">Denier</div>
+                                                                    <div class="denier-material mb-2">6 o 15X42</div>
+                                                                    <div class="porcentaje-material mb-2" data-cargadora="C4" data-original="40">40%</div>
+                                                                </div>
+
+                                                            </td>
+
+                                                            <td>
+                                                                <div class="contenedor-datos-RB">
+                                                                    <div class="tipo-material mb-2">85%</div>
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                Colchones y salas de méxico (803895)
+                                                            </td>
+
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <p class="fw-semibold text-dark mb-2">
+                                            <i class="bi bi-recycle me-2"></i>
+                                            Molido
+                                        </p>
+                                        <!-- AREA DE REGISTRO DE MOLINOS -->
+                                        <div class="col-12">
+                                            <div class="table-responsive rounded shadow-sm mb-3">
+                                                <!-- TABLA MOLINO -->
+                                                <table class="table table-sm mb-0 tabla-molido">
+
+                                                    <thead>
+
+                                                        <tr>
+
+                                                            <th>
+                                                                Molido
+                                                            </th>
+
+                                                            <th class="text-center">
+                                                                C1
+                                                            </th>
+
+                                                            <th class="text-center">
+                                                                C2
+                                                            </th>
+
+                                                            <th class="text-center">
+                                                                C3
+                                                            </th>
+
+                                                            <th class="text-center">
+                                                                C4
+                                                            </th>
+
+                                                        </tr>
+
+                                                    </thead>
+
+                                                    <tbody>
+
+                                                        <tr>
+
+                                                            <td class="text-secondary fw-medium">
+                                                                Porcentajes
+                                                            </td>
+
+                                                            <td class="text-center">
+
+                                                                <div class="d-flex justify-content-center align-items-center gap-2">
+
+                                                                    <input type="number"
+                                                                           class="form-control form-control-sm text-center mt-2 mb-2 input-molido"
+                                                                           data-cargadora="C1"
+                                                                           value="">
+
+                                                                    <span class="text-secondary">%</span>
+
+                                                                </div>
+
+                                                            </td>
+
+                                                            <td class="text-center">
+
+                                                                <div class="d-flex justify-content-center align-items-center gap-2">
+
+                                                                    <input type="number"
+                                                                           class="form-control form-control-sm text-center mt-2 mb-2 input-molido"
+                                                                           data-cargadora="C2"
+                                                                           value="">
+
+                                                                    <span class="text-secondary">%</span>
+
+                                                                </div>
+
+                                                            </td>
+
+                                                            <td class="text-center">
+
+                                                                <div class="d-flex justify-content-center align-items-center gap-2">
+
+                                                                    <input type="number"
+                                                                           class="form-control form-control-sm text-center mt-2 mb-2 input-molido"
+                                                                           data-cargadora="C3"
+                                                                           value="">
+
+                                                                    <span class="text-secondary">%</span>
+
+                                                                </div>
+
+                                                            </td>
+
+                                                            <td class="text-center">
+
+                                                                <div class="d-flex justify-content-center align-items-center gap-2">
+
+                                                                    <input type="number"
+                                                                           class="form-control form-control-sm text-center mt-2 mb-2 input-molido"
+                                                                           data-cargadora="C4"
+                                                                           value="">
+
+                                                                    <span class="text-secondary">%</span>
+
+                                                                </div>
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <!-- TABLA DATOS DE SAP -->
+                                        <div class="col-12">
+                                            <p class="text-secondary ps-3 mb-3 subtitulos-seccion">
+                                                <i class="bi bi-boxes me-2"></i>
+                                                Materiales
+                                            </p>
+                                            <div class="table-responsive rounded shadow-sm mb-3">
+
+                                                <table class="table table-sm mb-0 tabla-materiales">
+
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tipo</th>
+                                                            <th>No.</th>
+                                                            <th>Descripción</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Cantidad Total</th>
+                                                            <th>Tipo medida</th>
+                                                            <th>Almacen</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>Receta</td>
+                                                            <td>RECETA 1</td>
+                                                            <td>RECETA L1</td>
+                                                            <td>1</td>
+                                                            <td>594</td>
+                                                            <td>-</td>
+                                                            <td>12</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Item</td>
+                                                            <td>TUBO 120/40 IMP SUR</td>
+                                                            <td>
+                                                                TUBO DE CARTON CON IMPRESION 120 CMS LARGO-50.50 MM Ø INT-1 MM PARED (40 PTS) CARTONES TUBOS SUR
+                                                            </td>
+                                                            <td>
+                                                                0.13458
+                                                            </td>
+                                                            <td>
+                                                                25.83
+                                                            </td>
+                                                            <td>
+                                                                PZ
+                                                            </td>
+                                                            <td>
+                                                                12
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Item</td>
+                                                            <td>POLI 120X120 POL</td>
+                                                            <td>
+                                                                POLIETILENO RECICLADO TUBULAR 120 CAL 120 POLA 26GRS X M2 ROLLO 45KG MAX
+                                                            </td>
+                                                            <td>
+                                                                0.0176
+                                                            </td>
+                                                            <td>
+                                                                20.96
+                                                            </td>
+                                                            <td>
+                                                                KG
+                                                            </td>
+                                                            <td>
+                                                                12
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+
+                                            </div>
+
+                                        </div>
+
+                                        <!-- LISTA DE MATERIALES -->
+                                        <div class="col-12">
+                                            <p class="text-secondary ps-3 mb-3 subtitulos-seccion">
+                                                <i class="bi bi-truck me-2"></i>
+                                                Proveedor lista de materiales
+                                            </p>
+
+                                            <div class="row g-3">
+
+                                                <!-- Cargadora 1 -->
+                                                <div class="col-12 col-md-6">
+                                                    <div class="card border-0 shadow-sm h-100 cards-principal">
+                                                        <div class="card-header text-white text-center fw-semibold py-2 border-0 cards-encabezado">
+                                                            <i class="bi bi-box-seam me-2"></i>Cargadora 1
+                                                        </div>
+                                                        <div class="card-body p-2">
+                                                            <div class="d-flex align-items-center gap-2 py-2 border-bottom">
+                                                                <span class="badge rounded-pill text-white fw-semibold flex-shrink-0 cards-medidasMaterial">15X64</span>
+                                                                <span class="text-secondary cards-proveedores">Viko, Fuda, Vietnam, F&amp;H, Shangai, Jiu long, Iwon, Nam, Daxin, Salsons, Hanbang</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Cargadora 2 -->
+                                                <div class="col-12 col-md-6">
+                                                    <div class="card border-0 shadow-sm h-100 cards-principal">
+                                                        <div class="card-header text-white text-center fw-semibold py-2 border-0 cards-encabezado">
+                                                            <i class="bi bi-box-seam me-2"></i>Cargadora 2
+                                                        </div>
+                                                        <div class="card-body p-2">
+                                                            <div class="d-flex align-items-center gap-2 py-2 border-bottom">
+                                                                <span class="badge rounded-pill text-white fw-semibold flex-shrink-0 cards-medidasMaterial">26X75</span>
+                                                                <span class="text-secondary cards-proveedores">Viko, Fuda, Vietnam, F&amp;H, Shangai, Jiu long, Iwon, Nam, Daxin, Salsons, Hanbang</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Cargadora 3 -->
+                                                <div class="col-12 col-md-6">
+                                                    <div class="card border-0 shadow-sm h-100 cards-principal">
+                                                        <div class="card-header text-white text-center fw-semibold py-2 border-0 cards-encabezado">
+                                                            <i class="bi bi-box-seam me-2"></i>Cargadora 3
+                                                        </div>
+                                                        <div class="card-body p-2">
+                                                            <div class="d-flex align-items-center gap-2 py-2">
+                                                                <span class="badge rounded-pill text-white fw-semibold flex-shrink-0 cards-medidasMaterial">20X77</span>
+                                                                <span class="text-secondary cards-proveedores">Yangzhou, Capitech, White, Quimialmel, Shangai, Xiangyu, Iwon, Yuyao, Dafa, Elite, Zhuhai</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Cargadora 4 -->
+                                                <div class="col-12 col-md-6">
+                                                    <div class="card border-0 shadow-sm h-100 cards-principal">
+                                                        <div class="card-header text-white text-center fw-semibold py-2 border-0 cards-encabezado">
+                                                            <i class="bi bi-box-seam me-2"></i>Cargadora 4
+                                                        </div>
+                                                        <div class="card-body p-2">
+                                                            <div class="d-flex align-items-center gap-2 py-2">
+                                                                <span class="badge rounded-pill text-white fw-semibold flex-shrink-0 cards-medidasMaterial">6 o 15X42</span>
+                                                                <span class="text-secondary cards-proveedores">Yangzhou, Capitech, White, Quimialmel, Shangai, Xiangyu, Iwon, Yuyao, Dafa, Elite, Zhuhai</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="border rounded-3 shadow-sm mt-3 p-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <div>
+                                            <p class="fw-semibold text-dark mb-2">
+                                                <i class="bi bi-upc-scan me-2"></i>
+                                                Escaneo de Materia Prima
+                                            </p>
+                                        </div>
+
+                                        <button type="button"
+                                                class="btn btn-sm btn-contraer btnToggleSeccion ms-2 me-1"
+                                                data-target="#divEscaneoM">
+                                            <i class="bi bi-chevron-up"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="row align-items-end mb-3 g-3" id="divEscaneoM" style="display:none;">
+                                        <!-- ============================= -->
+                                        <!-- Escaneo -->
+                                        <!-- ============================= -->
+                                        <div class="col-12 col-md-6 col-lg-5">                                           
+                                            <input type="text" class="form-control" placeholder="Escanear código de barras..." />
+                                        </div>
+
+                                        <div class="col-auto">
+                                            <button class="btn btn-danger px-4">
+                                                <i class="bi bi-plus-circle me-2"></i>
+                                                Agregar Material
+                                            </button>
+                                        </div>
+
+                                        <!-- ============================= -->
+                                        <!-- Registro de material Escaneado -->
+                                        <!-- ============================= -->
+                                        <div class="col-12 mt-4">
+                                            <p class="fw-semibold text-dark mb-2">
+                                                <i class="bi bi-file-text me-2"></i>
+                                                Materiales Escaneados
+                                            </p>
+                                            <div class="table-responsive rounded shadow-sm mt-3">
+                                                <table class="table table-sm align-middle mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Material</th>
+                                                            <th>Descripción</th>
+                                                            <th>Lote/SKU</th>
+                                                            <th>Unidad</th>
+                                                            <th>Cantidad</th>
+                                                            <th>Validación</th>
+                                                            <th class="text-center">Acción</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>MAT-001</td>
+                                                            <td>Resina PEBD</td>
+                                                            <td>LOT-2026-112</td>
+                                                            <td>Kg</td>
+                                                            <td>500.00</td>
+                                                            <td>
+                                                                <span class="text-success">
+                                                                    Correcto
+                                                                </span>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button class="btn btn-outline-danger btn-eliminarME">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>MAT-009</td>
+                                                            <td>Resina PEAD</td>
+                                                            <td>LOT-2026-410</td>
+                                                            <td>Kg</td>
+                                                            <td>25.00</td>
+                                                            <td>
+                                                                <span class="text-danger">
+                                                                    No en receta
+                                                                </span>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button class="btn btn-outline-danger btn-eliminarME">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- Alerta de materiales y recetas -->
+                                            <!-- ALERTA -->
+                                            <div id="alertaReceta" class="alert alert-danger mt-3 mb-0">
+                                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                                MAT-009 no pertenece a la receta REC-087.
+                                                Se requiere autorización del supervisor.
+                                            </div>
+
+                                            <!-- BOTONES -->
+                                            <!-- Acciones generales -->
+
+                                            <div class="d-flex gap-2 seccion-btns-CDM mt-3">
+                                                <div id="accionesSupervisor" class="d-flex align-items-center justify-content-start btn-sol-aut ps-4">
+                                                    <button id="btn-solicitarAut" class="btn btn-warning btn-sm fw-semibold d-felx align-items-center px-4 py-2">
+                                                        <i class="bi bi-key me-2 key-estilo-icon"></i>
+                                                        Solicitar Autorización
+                                                    </button>
+                                                </div>
+                                                <div class="d-flex align-items-center justify-content-end btn-sol-GG pe-4 gap-2">
+                                                    <button id="btn-guardarInfo" class="btn btn-genEtiquetaProduccion btn-sm fw-semibold px-4 py-2">
+                                                        <i class="bi bi-floppy me-2"></i>
+                                                        Guardar
+                                                    </button>
+
+                                                    <button class="btn btn-guardarProduccion btn-sm fw-semibold px-4 py-2" data-bs-dismiss="modal">
+                                                        Cancelar
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Sección: Devoluciones -->
+                            <div class="tab-pane fade" id="nav-Dev" role="tabpanel" aria-labelledby="nav-Dev-tab">
+                                <div class="border rounded-3 shadow-sm mt-2 p-4">
+                                    <div class="row align-items-end mb-3 g-3">
+                                        <!-- ============================= -->
+                                        <!-- Escaneo de materiales en linea de produccion -->
+                                        <!-- ============================= -->
+                                        <div class="col-12 col-md-6 col-lg-5">
+                                            <label class="form-label fw-semibold text-dark mb-2">
+                                                <i class="bi bi-upc-scan me-2"></i>
+                                                Escaneo de Materiales Línea De Producción
+                                            </label>
+
+                                            <input type="text" class="form-control" placeholder="Escanear código de barras..." />
+                                        </div>
+
+                                        <div class="col-auto">
+                                            <button class="btn btn-danger px-4">
+                                                <i class="bi bi-plus-circle me-2"></i>
+                                                Agregar Material
+                                            </button>
+                                        </div>
+
+                                        <!-- ============================= -->
+                                        <!-- Registro de material linea de produccion Escaneado -->
+                                        <!-- ============================= -->
+                                        <div class="col-12 mt-4">
+                                            <span class="fw-semibold text-dark mb-2">
+                                                <i class="bi bi-clipboard2-check me-2"></i>
+                                                Materiales Escaneados línea Producción
+                                            </span>
+
+                                            <div class="table-responsive rounded shadow-sm mt-3">
+                                                <table class="table table-sm mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acciones</th>
+                                                            <th>Material</th>
+                                                            <th>Descripción</th>
+                                                            <th>Lote/SKU</th>
+                                                            <th>Unidad</th>
+                                                            <th>Disponible</th>
+                                                            <th class="col-devolver">Devolver</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                <button class="btn btn-outline-danger btn-eliminarME">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                            <td>MAT-001</td>
+                                                            <td>Resina PEBD</td>
+                                                            <td>LOT-2026-112</td>
+                                                            <td>Kg</td>
+                                                            <td>20.00</td>
+                                                            <td>
+                                                                <input type="number" class="form-control form-control-sm input-cantDevolver" value="20.00">
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                <button class="btn btn-outline-danger btn-eliminarME">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                            <td>MAT-002</td>
+                                                            <td>Pigmento Azul</td>
+                                                            <td>LOT-2026-098</td>
+                                                            <td>Kg</td>
+                                                            <td>12.50</td>
+                                                            <td>
+                                                                <input type="number" class="form-control form-control-sm input-cantDevolver" value="12.50">
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                <button class="btn btn-outline-danger btn-eliminarME">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                            <td>MAT-003</td>
+                                                            <td>Aditivo UV</td>
+                                                            <td>LOT-2026-205</td>
+                                                            <td>Kg</td>
+                                                            <td>3.00</td>
+                                                            <td>
+                                                                <input type="number" class="form-control form-control-sm input-cantDevolver" value="3.00">
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                <button class="btn btn-outline-danger btn-eliminarME">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                            <td>MAT-004</td>
+                                                            <td>Film Stretch</td>
+                                                            <td>LOT-2026-310</td>
+                                                            <td>Rollo</td>
+                                                            <td>2.00</td>
+                                                            <td>
+                                                                <input type="number" class="form-control form-control-sm input-cantDevolver" value="2.00">
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                </table>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Acciones -->                                    
+                                    <div class="mt-4">
+
+                                        <div class="d-flex flex-wrap gap-2 seccion-btns-Dev">
+                                            <div id="accionesSupervisor" class="d-flex align-items-center justify-content-start btn-sol-dev ps-4">
+                                                <button id="btn-generaDevolucion" type="button" class="btn btn-danger btn-sm fw-semibold px-4 py-2">
+                                                    <i class="bi bi-arrow-return-left me-2"></i>
+                                                    Generar Devolución
+                                                </button>
+                                            </div>
+
+                                            <div class="d-flex align-items-center justify-content-end btn-sol-GC pe-4 gap-2">
+                                                <button id="btn-generaEtiqueta" type="button" class="btn btn-genEtiquetaProduccion btn-sm fw-semibold px-4 py-2">
+                                                    <i class="bi bi-tag me-2"></i>
+                                                    Generar Etiqueta
+                                                </button>
+                                                <button type="button" class="btn btn-guardarProduccion btn-sm fw-semibold px-4 py-2" data-bs-dismiss="modal">
+                                                    Cancelar
+                                                </button>
+                                            </div>                                           
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Seccion: Recibo de produccion-->
+                            <div class="tab-pane fade" id="nav-RP" role="tabpanel" aria-labelledby="nav-RP-tab">
+                                <div class="border rounded-3 shadow-sm mt-2 p-4">
+
+                                    <div class="row g-3 mb-3">
+                                        <label class="form-label fw-semibold text-dark mb-2">
+                                            <i class="bi bi-gear-wide-connected me-2"></i>
+                                            Proceso de Producción
+                                        </label>
+                                        <div class="pt-2 mb-3">
+                                            <p class="text-secondary subtitulos-seccion ps-3 mb-0">
+                                                <i class="bi bi-speedometer2 me-2"></i>
+                                                Producción por Peso (Pieza Individual)
+                                            </p>
+                                        </div>
+
+                                        <!-- IZQUIERDA: Báscula -->
+                                        <div class="col-12 col-md-6 mb-3">
+
+                                            <div class="rounded-3 text-center py-3 contenedor-bascula-indvidual">
+                                                <small class="text-secondary d-block mb-1 text-lect-pz-ind">Lectura Automática de Báscula</small>
+                                                <span class="fw-bold d-block cant-pz-ind">2.347 Kg</span>
+                                                <span class="badge bg-success conexion-bascula-cant-pz-ind">Estable</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- DERECHA: estatus conteos -->
+                                        <div class="col-12 col-md-6 d-flex flex-column justify-content-end align-self-stretch mb-3">
+                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                                <small class="text-secondary">Piezas Producidas:</small>
+                                                <span class="fw-semibold">142 / 200</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                                <small class="text-secondary">Peso Total Acumulado:</small>
+                                                <span class="fw-semibold">333.27 Kg</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                                <small class="text-secondary">Consumo MP Actualizado:</small>
+                                                <span class="fw-semibold text-color-proceso-MPconsumido">71% consumido</span>
+                                            </div>
+                                            <div class="progress mb-0 mt-2 contenedor-progreso">
+                                                <div class="progress-bar barra-progreso" role="progressbar"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Contenedor generar distintos tipos de etiqueta -->
+                                    <p class="text-secondary subtitulos-seccion ps-3 mb-2">
+                                        <i class="bi bi-tags me-1"></i> Selección tipo de etiqueta
+                                    </p>
+                                    <div class="row align-items-center mt-4 mb-4">
+                                        <!-- Izquierda: Tipos -->
+                                        <div class="col-12 col-md-5">
+                                            <div class="row align-items-center g-2 pt-2 pb-4">
+
+                                                <!-- Toggles seleccion tipo de receta -->
+                                                <div class="col-12 col-xl-7">
+                                                    <div id="contenedorTipoEtiqueta" class="d-flex flex-column gap-3 ps-2">
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input check-tipo-etiqueta"
+                                                                   type="radio"
+                                                                   name="tipoEtiqueta"
+                                                                   value="conforme"
+                                                                   id="radioConforme">
+
+                                                            <label class="form-check-label fw-medium"
+                                                                   for="radioConforme">
+                                                                Conforme
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input check-tipo-etiqueta"
+                                                                   type="radio"
+                                                                   name="tipoEtiqueta"
+                                                                   value="no_conforme"
+                                                                   id="radioNoConforme">
+
+                                                            <label class="form-check-label fw-medium"
+                                                                   for="radioNoConforme">
+                                                                No Conforme
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input check-tipo-etiqueta"
+                                                                   type="radio"
+                                                                   name="tipoEtiqueta"
+                                                                   value="recorte"
+                                                                   id="radioRecorte">
+
+                                                            <label class="form-check-label fw-medium"
+                                                                   for="radioRecorte">
+                                                                Recorte
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input check-tipo-etiqueta"
+                                                                   type="radio"
+                                                                   name="tipoEtiqueta"
+                                                                   value="relleno"
+                                                                   id="radioRelleno">
+
+                                                            <label class="form-check-label fw-medium"
+                                                                   for="radioRelleno">
+                                                                Relleno
+                                                            </label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <!-- Botón generar etiqueta -->
+                                                <div class="col-12 col-xl-5 d-flex justify-content-center align-items-center mt-3">
+                                                    <button id="btn-generaEtiqueta" class="btn btn-genEtiquetaProduccion btn-sm fw-semibold px-4 py-2">
+                                                        <i class="bi bi-tag me-2"></i>Generar Etiqueta
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- DERECHA: Botón + Última etiqueta -->
+                                        <div class="col-12 col-md-7 d-flex flex-column gap-3">
+
+                                            <div class="rounded-3 px-3 py-3 contenedor-ult-etiq">
+                                                <small class="text-secondary d-block mb-2 titulo-ult-etq">Última etiqueta generada:</small>
+                                                <div class="d-flex flex-wrap gap-2 info-ult-etiqueta" style="font-size:.82rem;">
+                                                    <span><strong>Pieza:</strong> #142</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Peso:</strong> 2.347 Kg</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Hora:</strong> 10:45:32</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Línea:</strong> 3</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Ubicación:</strong> ALM-P01</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-body -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <!-- /#modalOpcionesPlanProduccion -->
+
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 @*<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>*@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
 <script src="~/Scripts/Produccion/ConsultaPlanProduccion.js?v=1.4.4"></script>

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Ordenes de trabajo";
+    ViewBag.Title = "Ordenes de trabajo - Terminadas";
 }
 
 <link rel="stylesheet" href="~/Styles/Produccion/ReporteOrdenesTrabajo.css" />
@@ -12,7 +12,7 @@
         <!-- Header + toolbar -->
         <div class="d-flex flex-wrap align-items-start justify-content-between gap-3 mb-4">
             <div>
-                <h1 class="h4 fw-semibold text-dark mb-1">Reportes - Ordenes de trabajo</h1>
+                <h1 class="h4 fw-semibold text-dark mb-1">Ordenes de trabajo terminadas</h1>
                 <p class="text-secondary small mb-0">Módulo de Ordenes de trabajo</p>
             </div>
         </div>
@@ -53,7 +53,7 @@
     </div>
 
     <div class="table-responsive rounded shadow-sm">
-        <table class="table tabla-custom table-hover align-middle mb-0" id="tablaOT">
+        <table class="table tabla-custom table-hover align-middle mb-0" id="tablaOTTerminadas">
             <thead>
                 <tr>
                     <th style="width:30px;"></th>
@@ -175,7 +175,7 @@
 
             <div class="row g-3 mb-3">
                 <!-- Info General OT -->
-                <div class="col-12 col-md-6 mb-2 pt-3 ps-4 pb-3 tarjet-infoGen">
+                <div class="col-12 mb-2 pt-3 ps-4 pb-3 tarjet-infoGen">
                     <p class="fw-semibold text-dark mb-2">Información General</p>
                     <div class="row g-2">
                         <div class="col-6"><small class="infoGenTitle-OT">Folio</small><p class="mb-0 infoGenCont-OT" id="detFolioVal"></p></div>
@@ -188,26 +188,7 @@
                         <div class="col-6"><small class="infoGenTitle-OT">Estatus</small><p class="mb-0" id="detEstatus"></p></div>
                     </div>
                 </div>
-
-                <!--Bascula -->
-                <div class="col-12 col-md-6 pt-3 ps-4">
-                    <p class="fw-semibold text-dark mb-2">Báscula Conectada</p>
-                    <div class="d-inline-flex flex-column align-items-center border rounded-3 p-3 text-center mb-3"
-                         style="min-width:130px; background:#fff;">
-                        <span class="badge bg-success mb-1" style="font-size:.7rem;">● Conectada</span>
-                        <span class="fw-bold text-success" style="font-size:1.8rem;">25.4 kg</span>
-                        <small class="text-secondary">Peso actual en báscula</small>
-                    </div>
-                    <div class="cont-numConteo"><small class="infoGenTitle-OT">Num. Bolsas: </small><p class="mb-0 infoGenCont-OT">25</p></div>
-                    <div class="d-flex flex-wrap gap-2">
-                        <button class="btn btn-danger btn-sm fw-semibold px-3">
-                            <i class="bi bi-tag me-1"></i>Generar Etiqueta
-                        </button>
-                        <button class="btn btn-outline-secondary btn-sm fw-semibold px-3">
-                            <i class="bi bi-check2 me-1"></i>Confirmar Peso
-                        </button>
-                    </div>
-                </div>
+                
             </div>
 
             <!-- Registro de Producción -->
@@ -271,4 +252,4 @@
 @*<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>*@
 
 <!-- Scripts de la vista -->
-<script src="~/Scripts/Produccion/ReporteOrdenesTrabajo.js"></script>
+<script src="~/Scripts/Produccion/ReporteOrdenesTrabajo.js?v=1.4.4"></script>

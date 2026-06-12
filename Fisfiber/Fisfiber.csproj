@@ -396,6 +396,7 @@
     <Compile Include="Models\UpdateDataRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Images\load-files.png" />
+    <Content Include="ImgPruebas\pruebaEvidencia.png" />
     <Content Include="Scripts\Produccion\ReporteOrdenesTrabajo.js" />
     <Content Include="Scripts\Produccion\ConsultaGestionRecetas.js" />
   </ItemGroup>
@@ -2781,7 +2782,6 @@
     <Content Include="Views\Produccion\ReporteParosProduccion.cshtml" />
     <Content Include="Views\PlanVentas\AutorizacionDeletePedidos.cshtml" />
     <Content Include="Views\Produccion\GestionRecetas.cshtml" />
-    <Content Include="Views\Produccion\ReporteOrdenesTrabajo.cshtml" />
     <Content Include="Views\Produccion\ReporteOTTerminados.cshtml" />
   </ItemGroup>
   <ItemGroup>

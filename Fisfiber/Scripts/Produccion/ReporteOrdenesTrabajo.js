@@ -7,6 +7,7 @@
     init() {
         this.inicializarTabla();
         this.eventoFilaOT();
+        this.eventoFilaOTTerminadas();
         this.eventoCerrarDetalle();
     }
 
@@ -31,15 +32,24 @@
         });
     }
 
+    //Metodo para pantalla ordenes en proceso
     eventoFilaOT() {
-        // Delegado en document — funciona aunque DataTables recree el DOM
         $(document).on('click', '#tablaOT tbody tr.fila-ot', function () {
+            window.location.href = '/Produccion/OTProceso';           
+
+        });
+    }
+
+    //Metodo para Ordenes de Trabajo terminadas
+    eventoFilaOTTerminadas() {
+        // Delegado en document — funciona aunque DataTables recree el DOM
+        $(document).on('click', '#tablaOTTerminadas tbody tr.fila-ot', function () {
             const d = $(this).data();
             const abierto = $('#panelDetalleOT').is(':visible')
                 && $('#detFolioVal').text() === d.folio;
 
             // Rotar iconos
-            $('#tablaOT .icono-expand').css('transform', 'rotate(0deg)');
+            $('#tablaOTTerminadas .icono-expand').css('transform', 'rotate(0deg)');
 
             if (abierto) {
                 // Cerrar si es la misma fila
