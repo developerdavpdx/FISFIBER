@@ -374,6 +374,7 @@
     <Compile Include="Controllers\PlanEmbController.cs" />
     <Compile Include="Controllers\PlanProduccionController.cs" />
     <Compile Include="Controllers\PlanVentasController.cs" />
+    <Compile Include="Controllers\InspeccionProductoController.cs" />
     <Compile Include="Controllers\ProduccionController.cs" />
     <Compile Include="Controllers\UnidadController.cs" />
     <Compile Include="Global.asax.cs">
@@ -397,6 +398,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Images\load-files.png" />
     <Content Include="ImgPruebas\pruebaEvidencia.png" />
+    <Content Include="Scripts\Inspeccion\InspeccionProducto.js" />
     <Content Include="Scripts\Produccion\ReporteOrdenesTrabajo.js" />
     <Content Include="Scripts\Produccion\ConsultaGestionRecetas.js" />
   </ItemGroup>
@@ -2577,6 +2579,7 @@
     <Content Include="Images\logoFisfiber.png" />
     <Content Include="Styles\MonitorLog\monitorLog.css" />
     <Content Include="Styles\PlanEmb\MascPlan.css" />
+    <Content Include="Styles\Inspeccion\ReporteInspecciones.css" />
     <Content Include="Styles\Produccion\ReporteOrdenesTrabajo.css" />
     <Content Include="Styles\Produccion\GestionRecetas.css" />
     <Content Include="Styles\PlanProduccion\HojaEspecificaciones.css" />
@@ -2783,6 +2786,7 @@
     <Content Include="Views\PlanVentas\AutorizacionDeletePedidos.cshtml" />
     <Content Include="Views\Produccion\GestionRecetas.cshtml" />
     <Content Include="Views\Produccion\ReporteOTTerminados.cshtml" />
+    <Content Include="Views\InspeccionProd\InspeccionProducto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />

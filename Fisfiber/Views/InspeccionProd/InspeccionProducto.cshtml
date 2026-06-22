@@ -1,0 +1,454 @@
+﻿@{
+    ViewBag.Title = "Inspección de Producto";
+}
+
+<link rel="stylesheet" href="~/Styles/Inspeccion/ReporteInspecciones.css" />
+
+<!-- Navbar -->
+<nav class="navbar px-4 py-2 barra-sup">
+    <span class="navbar-brand mb-0 text-white h6">Reportes de Inspección</span>
+    <div class="d-flex align-items-center gap-2 text-white-50">
+        <small>Supervisor de Producción</small>
+        <div class="avatar">SP</div>
+    </div>
+</nav>
+
+<div class="ps-4 pe-4 pb-4">
+
+    <div class="container-fluid py-4">
+
+        <!-- FILTROS -->
+        <div class="card shadow-sm border-0 rounded-3 mb-4">
+
+            <div class="card-header bg-danger text-white fw-semibold">
+                <i class="bi bi-funnel me-2"></i>
+                Filtros de Búsqueda
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label class="form-label">Línea de producción</label>
+                        <select class="form-select">
+                            <option>Todas</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label class="form-label">Proceso</label>
+                        <select class="form-select">
+                            <option>Todos</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label class="form-label">Artículo</label>
+                        <input class="form-control"
+                               placeholder="Buscar artículo">
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label class="form-label">Estado</label>
+                        <select class="form-select">
+                            <option>Todos</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label class="form-label">Fecha Desde</label>
+                        <input type="date" class="form-control">
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <label class="form-label">Fecha Hasta</label>
+                        <input type="date" class="form-control">
+                    </div>
+
+                </div>
+
+                <div class="row ms-3 mt-4 me-3 g-2">
+
+                    <!-- Buscar y Limpiar -->
+                    <div class="col-12 col-md">
+                        <div class="d-flex flex-column flex-sm-row gap-2">
+
+                            <button class="btn btn-danger">
+                                <i class="bi bi-search"></i>
+                                Buscar
+                            </button>
+
+                            <button class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-clockwise"></i>
+                                Limpiar
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SECCIÓN REPORTES -->
+        <div class="card shadow-sm border-0 rounded-3">
+            <!-- Header -->
+            <div class="card-header d-flex justify-content-between align-items-center card-head-ReportesIns">
+                <div class="title-repotesProd">
+                    <i class="bi bi-file-earmark-ruled me-2"></i>
+                    Reportes
+                </div>
+            </div>
+
+            <!-- Body: Tabla con los reportes -->
+            <div class="card-body">
+
+                <div class="table-responsive rounded mb-4 shadow-sm">
+
+                    <table class="table tabla-custom table-hover table-striped align-middle mb-0">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>Línea</th>
+                                <th>Folio</th>
+                                <th>Pedido</th>
+                                <th>Artículo</th>
+                                <th>Fecha</th>
+                                <th>No. Inspecciones</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr class="fila-lineaR" data-folio="INS-001">
+                                <td>Línea 1</td>
+                                <td>INS-001</td>
+                                <td>PED-4521</td>
+                                <td>Guata 100g</td>
+                                <td>2026-06-15</td>
+                                <td>5</td>
+                                <td>
+                                    <span class="text-success fw-semibold">
+                                        Abierto
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr class="fila-lineaR" data-folio="INS-002">
+                                <td>Línea 2</td>
+                                <td>INS-002</td>
+                                <td>PED-4530</td>
+                                <td>Fieltro 3mm</td>
+                                <td>2026-06-14</td>
+                                <td>12</td>
+                                <td>
+                                    <span class="text-danger fw-semibold">
+                                        Cerrado
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <tr class="fila-lineaR" data-folio="INS-003">
+                                <td>Línea 3</td>
+                                <td>INS-003</td>
+                                <td>PED-4535</td>
+                                <td>Guata 200g</td>
+                                <td>2026-06-16</td>
+                                <td>3</td>
+                                <td>
+                                    <span class="text-success fw-semibold">
+                                        Abierto
+                                    </span>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- Botones -->
+                <div class="me-3 mt-4 d-flex flex-column flex-md-row gap-2 justify-content-end">
+
+                    <button id="btnCrearReporte" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalCrearReporte" disabled>
+                        <i class="bi bi-plus-lg me-1"></i>
+                        Crear Reporte
+                    </button>
+
+                    <button class="btn btn-outline-success">
+                        <i class="bi bi-file-earmark-excel me-1"></i>
+                        Exportar
+                    </button>
+
+                </div>
+
+                <!-- Seccion: Detalles del reporte de producto -->
+                <div id="seccionReporteEsp" class="mt-4 pt-3 px-3 seccion-det-reporte" style="display:none;">
+                    <div class="row mb-2 ms-1 title-det-reporte">
+                        <div class="col-12 col-md-6 mt-3 mb-3  title-det-report">
+                            <i class="bi bi-file-earmark-text me-2"></i>
+                            Reporte - INS-001
+                        </div>
+                        <div class="col-12 col-md-6 mb-2 des-det-report">
+                            <div class="row">
+                                <div class="col-12 border">
+                                    <span>RC-CALIDAD-01-11</span>
+                                </div>
+                                <div class="col-12 border">
+                                    <span>FECHA LIBERACION: ENERO 2017</span>
+                                </div>
+                                <div class="col-12 col-md-6 border">
+                                    <span>REV: 01</span>
+                                </div>
+                                <div class="col-12 col-md-6 border">
+                                    <span>NIVEL: 4</span>
+                                </div>
+                                <div class="col-12 border">
+                                    <span>FECHA DE REVISION: JUNIO 2022</span>
+                                </div>
+
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                    <div class="table-responsive rounded mb-5 shadow-sm">
+
+                        <table class="table table-bordered table-hover align-middle text-center mb-0">
+
+                            <thead class="table-light">
+
+                                <tr>
+                                    <th class="col-fecha">Fecha</th>
+                                    <th class="col-turno">Turno</th>
+                                    <th class="col-producto">Producto</th>
+                                    <th class="col-pedido">No. Pedido</th>
+                                    <th class="col-cliente">Cod. Cliente</th>
+
+                                    <th class="col-sku">SKU</th>
+                                    <th class="col-cod-barras">Código Barras</th>
+
+                                    <th class="col-ancho-min">Ancho Min</th>
+                                    <th class="col-ancho-max">Ancho Max</th>
+                                    <th class="col-ancho-rollo">Ancho Rollo</th>
+
+                                    <th class="col-peso-min">Peso Min</th>
+                                    <th class="col-peso-max">Peso Max</th>
+                                    <th class="col-peso-rollo">Peso Rollo</th>
+
+                                    <th class="col-m1">M1</th>
+                                    <th class="col-m2">M2</th>
+                                    <th class="col-m3">M3</th>
+
+                                    <th class="col-espesor">Espesor Ref.</th>
+
+                                    <th class="col-fibra">Fibra Mezcla</th>
+
+                                    <th class="col-inspeccion">Inspección</th>
+
+                                    <th class="col-observaciones">
+                                        Disposición / Observaciones
+                                    </th>
+
+                                    <th class="col-acciones">Acciones</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <!-- SOLO LECTURA -->
+                                    <td>18/06/2026</td>
+                                    <td>1</td>
+                                    <td>GUATA 200G</td>
+                                    <td>PED-4521</td>
+                                    <td>CLI-001</td>
+                                    <td>SKU00000001</td>
+                                    <td>013923120931029312</td>
+                                    <!-- EDITABLES -->
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm">
+                                    </td>
+
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm">
+                                    </td>
+
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm">
+                                    </td>
+
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm">
+                                    </td>
+
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm">
+                                    </td>
+
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm">
+                                    </td>
+
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm">
+                                    </td>
+
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm">
+                                    </td>
+
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm">
+                                    </td>
+
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm">
+                                    </td>
+
+                                    <td>
+                                        <input type="text" class="form-control form-control-sm">
+                                    </td>
+
+                                    <td>
+                                        <select class="form-select form-select-sm">
+                                            <option>Aprobado</option>
+                                            <option>Rechazado</option>
+                                        </select>
+                                    </td>
+
+                                    <td>
+                                        <textarea class="form-control form-control-sm"
+                                                  rows="2"></textarea>
+                                    </td>
+
+                                    <!-- ACCIONES -->
+                                    <td>
+
+                                        <div class="d-flex justify-content-center gap-2">
+
+                                            <button class="btn btn-light btn-lg py-0 px-2 border btn-save-inspecciones">
+                                                <i class="bi bi-floppy-fill"></i>
+                                            </button>
+
+                                            <button class="btn btn-light btn-lg py-0 px-2 border btn-check-inspecciones"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalFinalizarInspeccion">
+                                                <i class="bi bi-check2-circle"></i>
+                                            </button>
+
+                                            <button class="btn btn-light btn-lg py-0 px-2 border btn-delete-inspecciones">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </button>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div><!-- /.ps-2.pe-2 -->
+<!-- ══════════════════════════════════════════════════
+     Modal: Crear Reporte
+════════════════════════════════════════════════════ -->
+<div class="modal fade" id="modalCrearReporte" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header bg-pr text-white">
+                <h5 class="modal-title">
+                    <i class="bi bi-plus-circle me-2"></i>Crear Nuevo Reporte
+                </h5>
+                <button type="button" class="btn btn-link text-white p-0" data-bs-dismiss="modal">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row g-4 mb-3">
+                    <!-- DERECHA -->
+                    <div class="col-12">
+                        
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6 col-lg-5">
+                                <label class="form-label fw-semibold text-dark mb-2">
+                                    <i class="bi bi-upc-scan me-2"></i>
+                                    Escaneo de producto
+                                </label>
+
+                                <input type="text" class="form-control" placeholder="Escanear código de barras..." />
+                            </div>
+
+                            <div class="col-auto d-flex justify-content-center align-items-end">
+                                <button class="btn btn-danger px-4">
+                                    <i class="bi bi-plus-circle me-2"></i>
+                                    Agregar producto
+                                </button>
+                            </div>
+                            <div class="col-12">
+                                <div class="p-2">
+                                    <label class="form-label fw-medium mb-2">
+                                        Línea de Produccion:
+                                    </label>
+                                    <input type="text" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="p-2">
+                                    <label class="form-label fw-medium mb-2">
+                                        Proceso
+                                    </label>
+                                    <input type="text" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="p-2">
+                                    <label class="form-label fw-medium mb-2">
+                                        Producto
+                                    </label>
+                                    <input type="text" class="form-control" disabled />
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-prcancel" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="btnGuardarReceta">Crear</button>
+                </div>
+            </div><!-- /.modal-body -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /#modalCreaRecetas -->
+<!-- Scripts externos -->
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>*@
+
+<!-- Scripts de la vista -->
+<script src="~/Scripts/Inspeccion/InspeccionProducto.js"></script>

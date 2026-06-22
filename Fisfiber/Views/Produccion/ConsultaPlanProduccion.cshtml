@@ -458,6 +458,12 @@
                                 </p>
                             </div>
                             <div class="col-12 col-md-4">
+                                <small class="text-secondary">Piezas: </small>
+                                <p class="fw-semibold mb-0">
+                                    <span class="fw-semibold mb-0">142 / 200</span>
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-4 d-felx justify-content-start align-content-end">
                                 <button class="btn btn-link p-0 fw-semibold pt-2 pb-2 ps-0 pe-2 si-agregar-producto">
                                     <i class="bi bi-plus-circle me-1"></i>Agregar más pedidos
                                 </button>
@@ -470,20 +476,20 @@
                         <!-- Seccion: menus de producción -->
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <a class="nav-item nav-link active" id="nav-OTResina-tab" data-bs-toggle="tab" href="#nav-OTResina" role="tab">
-                                    <i class="bi bi-droplet-fill me-2"></i> OT - Resina
+                                <a class="nav-item nav-link active" id="nav-FResina-tab" data-bs-toggle="tab" href="#nav-FResina" role="tab">
+                                    <i class="bi bi-beaker me-2"></i> Formulación de resina
                                 </a>
-                                <a class="nav-item nav-link" id="nav-OTPolietileno-tab" data-bs-toggle="tab" href="#nav-OTPolietileno" role="tab">
-                                    <i class="bi bi-box-seam me-2"></i> OT - Polietileno
+                                <a class="nav-item nav-link" id="nav-RPolietileno-tab" data-bs-toggle="tab" href="#nav-RPolietileno" role="tab">
+                                    <i class="bi bi-box-seam me-2"></i> Reserva de polietileno
                                 </a>
-                                <a class="nav-item nav-link" id="nav-CMP-tab" data-bs-toggle="tab" href="#nav-CMP" role="tab">
-                                    <i class="bi bi-boxes me-2"></i> Consumo Materia Prima
+                                <a class="nav-item nav-link" id="nav-Rfibras-tab" data-bs-toggle="tab" href="#nav-Rfibras" role="tab">
+                                    <i class="bi bi-bounding-box-circles me-2"></i> Reserva de fibras
+                                </a>
+                                <a class="nav-item nav-link" id="nav-tag-tab" data-bs-toggle="tab" href="#nav-tag" role="tab">
+                                    <i class="bi bi-tag me-2"></i> Etiquetado
                                 </a>
                                 <a class="nav-item nav-link" id="nav-Dev-tab" data-bs-toggle="tab" href="#nav-Dev" role="tab">
                                     <i class="bi bi-arrow-return-left me-2"></i> Devolución
-                                </a>
-                                <a class="nav-item nav-link" id="nav-RP-tab" data-bs-toggle="tab" href="#nav-RP" role="tab">
-                                    <i class="bi bi-clipboard2-check me-2"></i> Recibo de Producción
                                 </a>
                             </div>
                         </nav>
@@ -501,7 +507,7 @@
                             </div>
 
                             <!-- Sección: Orden de trabajo - Resinas -->
-                            <div class="tab-pane fade show active" id="nav-OTResina" role="tabpanel" aria-labelledby="nav-OTResina-tab">
+                            <div class="tab-pane fade show active" id="nav-FResina" role="tabpanel" aria-labelledby="nav-FResina-tab">
                                 <div class="border rounded-3 shadow-sm mt-2 p-4">
                                     <!-- Formulario de variables -->
                                     <div class="row g-3 mb-4">
@@ -557,7 +563,7 @@
                             </div>
 
                             <!-- Sección: Orden de trabajo - Polietileno -->
-                            <div class="tab-pane fade" id="nav-OTPolietileno" role="tabpanel" aria-labelledby="nav-OTPolietileno-tab">
+                            <div class="tab-pane fade" id="nav-RPolietileno" role="tabpanel" aria-labelledby="nav-RPolietileno-tab">
                                 <div class="border rounded-3 mt-2 p-4">
 
                                     <div class="row g-3 mb-3">
@@ -645,14 +651,14 @@
                                 </div>
                             </div>
 
-                            <!-- Sección: Consumo de materia prima -->
-                            <div class="tab-pane fade" id="nav-CMP" role="tabpanel" aria-labelledby="nav-CMP-tab">
+                            <!-- Sección: Consumo de componentes -->
+                            <div class="tab-pane fade" id="nav-Rfibras" role="tabpanel" aria-labelledby="nav-Rfibras-tab">
 
                                 <!-- ============================= -->
                                 <!-- Receta base -->
                                 <!-- ============================= -->
                                 <div class="border rounded-3 shadow-sm mt-2 p-4">
-                                    
+
 
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <div>
@@ -879,10 +885,11 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Tipo</th>
+                                                            <th>Tipo Consumo</th>
                                                             <th>No.</th>
                                                             <th>Descripción</th>
-                                                            <th>Cantidad</th>
-                                                            <th>Cantidad Total</th>
+                                                            <th>Cantidad Base</th>
+                                                            <th>Cantidad Planificada</th>
                                                             <th>Tipo medida</th>
                                                             <th>Almacen</th>
                                                         </tr>
@@ -892,6 +899,7 @@
 
                                                         <tr>
                                                             <td>Receta</td>
+                                                            <td>-</td>
                                                             <td>RECETA 1</td>
                                                             <td>RECETA L1</td>
                                                             <td>1</td>
@@ -902,6 +910,7 @@
 
                                                         <tr>
                                                             <td>Item</td>
+                                                            <td>Escaneo</td>
                                                             <td>TUBO 120/40 IMP SUR</td>
                                                             <td>
                                                                 TUBO DE CARTON CON IMPRESION 120 CMS LARGO-50.50 MM Ø INT-1 MM PARED (40 PTS) CARTONES TUBOS SUR
@@ -922,6 +931,7 @@
 
                                                         <tr>
                                                             <td>Item</td>
+                                                            <td>Porcentaje</td>
                                                             <td>POLI 120X120 POL</td>
                                                             <td>
                                                                 POLIETILENO RECICLADO TUBULAR 120 CAL 120 POLA 26GRS X M2 ROLLO 45KG MAX
@@ -1042,7 +1052,7 @@
                                         <!-- ============================= -->
                                         <!-- Escaneo -->
                                         <!-- ============================= -->
-                                        <div class="col-12 col-md-6 col-lg-5">                                           
+                                        <div class="col-12 col-md-6 col-lg-5">
                                             <input type="text" class="form-control" placeholder="Escanear código de barras..." />
                                         </div>
 
@@ -1125,25 +1135,40 @@
                                             </div>
 
                                             <!-- BOTONES -->
-                                            <!-- Acciones generales -->
+                                           
+                                            <!-- Botón de autorización -->
+                                            <div id="accionesSupervisor" class="text-left mt-3 px-4 py-2">
+                                                <button id="btn-solicitarAut"
+                                                        class="btn btn-warning btn-sm fw-semibold px-4 py-2">
+                                                    <i class="bi bi-key me-2"></i>
+                                                    Solicitar Autorización
+                                                </button>
+                                            </div>
 
-                                            <div class="d-flex gap-2 seccion-btns-CDM mt-3">
-                                                <div id="accionesSupervisor" class="d-flex align-items-center justify-content-start btn-sol-aut ps-4">
-                                                    <button id="btn-solicitarAut" class="btn btn-warning btn-sm fw-semibold d-felx align-items-center px-4 py-2">
-                                                        <i class="bi bi-key me-2 key-estilo-icon"></i>
-                                                        Solicitar Autorización
+                                            <!-- Botones normales -->
+                                            <div class="d-flex justify-content-between align-items-center mt-3 seccion-btns-CDM">
+
+                                                <div class="d-flex gap-2 ps-4">
+                                                    <button id="btn-genEmision"
+                                                            class="btn btn-genEtiquetaProduccion btn-sm fw-semibold px-4 py-2">
+                                                        <i class="bi bi-file-earmark-check me-2"></i>
+                                                        Generar Emisión
                                                     </button>
                                                 </div>
-                                                <div class="d-flex align-items-center justify-content-end btn-sol-GG pe-4 gap-2">
-                                                    <button id="btn-guardarInfo" class="btn btn-genEtiquetaProduccion btn-sm fw-semibold px-4 py-2">
+
+                                                <div class="d-flex gap-2 ps-4 pe-4">
+                                                    <button id="btn-guardarInfo"
+                                                            class="btn btn-genEtiquetaProduccion btn-sm fw-semibold px-4 py-2">
                                                         <i class="bi bi-floppy me-2"></i>
                                                         Guardar
                                                     </button>
 
-                                                    <button class="btn btn-guardarProduccion btn-sm fw-semibold px-4 py-2" data-bs-dismiss="modal">
+                                                    <button class="btn btn-guardarProduccion btn-sm fw-semibold px-4 py-2"
+                                                            data-bs-dismiss="modal">
                                                         Cancelar
                                                     </button>
                                                 </div>
+
                                             </div>
 
                                         </div>
@@ -1152,6 +1177,173 @@
 
                                 </div>
 
+                            </div>
+
+                            <!-- Seccion: Ingreso de produccion-->
+                            <div class="tab-pane fade" id="nav-tag" role="tabpanel" aria-labelledby="nav-tag-tab">
+                                <div class="border rounded-3 shadow-sm mt-2 p-4">
+
+                                    <div class="row g-3 mb-3">
+                                        <label class="form-label fw-semibold text-dark mb-2">
+                                            <i class="bi bi-gear-wide-connected me-2"></i>
+                                            Proceso de Producción
+                                        </label>
+                                        <div class="pt-2 mb-3">
+                                            <p class="text-secondary subtitulos-seccion ps-3 mb-0">
+                                                <i class="bi bi-speedometer2 me-2"></i>
+                                                Producción por Peso (Pieza Individual)
+                                            </p>
+                                        </div>
+
+                                        <!-- IZQUIERDA: Báscula -->
+                                        <div class="col-12 col-md-6 mb-3">
+
+                                            <div class="rounded-3 text-center py-3 contenedor-bascula-indvidual">
+                                                <small class="text-secondary d-block mb-1 text-lect-pz-ind">Lectura Automática de Báscula</small>
+                                                <span class="fw-bold d-block cant-pz-ind">2.347 Kg</span>
+                                                <span class="badge bg-success conexion-bascula-cant-pz-ind">Estable</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- DERECHA: estatus conteos -->
+                                        <div class="col-12 col-md-6 d-flex flex-column justify-content-end align-self-stretch mb-3">
+                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                                <small class="text-secondary">Piezas Producidas:</small>
+                                                <span class="fw-semibold">142 / 200</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                                <small class="text-secondary">Peso Total Acumulado:</small>
+                                                <span class="fw-semibold">333.27 Kg</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                                <small class="text-secondary">Consumo MP Actualizado:</small>
+                                                <span class="fw-semibold text-color-proceso-MPconsumido">71% consumido</span>
+                                            </div>
+                                            <div class="progress mb-0 mt-2 contenedor-progreso">
+                                                <div class="progress-bar barra-progreso" role="progressbar"></div>
+                                            </div>
+                                        </div>
+                                        <!-- DERECHA: estatus conteos -->
+                                        <div class="col-12 d-flex flex-column justify-content-end align-self-stretch mb-3">                                            
+                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                                <small class="text-secondary">Consumo Total:</small>
+                                                <span class="fw-semibold text-color-proceso-MPconsumido">45% consumido</span>
+                                            </div>
+                                            <div class="progress mb-0 mt-2 contenedor-progreso">
+                                                <div class="progress-bar barra-progreso-total" role="progressbar"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Contenedor generar distintos tipos de etiqueta -->
+                                    <p class="text-secondary subtitulos-seccion ps-3 mb-2">
+                                        <i class="bi bi-tags me-1"></i> Selección tipo de etiqueta
+                                    </p>
+                                    <div class="row align-items-center mt-4 mb-4">
+                                        <!-- Izquierda: Tipos -->
+                                        <div class="col-12 col-md-5">
+                                            <div class="row align-items-center g-2 pt-2 pb-4">
+
+                                                <!-- Toggles seleccion tipo de receta -->
+                                                <div class="col-12 col-xl-7">
+                                                    <div id="contenedorTipoEtiqueta" class="d-flex flex-column gap-3 ps-2">
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input check-tipo-etiqueta"
+                                                                   type="radio"
+                                                                   name="tipoEtiqueta"
+                                                                   value="conforme"
+                                                                   id="radioConforme">
+
+                                                            <label class="form-check-label fw-medium"
+                                                                   for="radioConforme">
+                                                                Conforme
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input check-tipo-etiqueta"
+                                                                   type="radio"
+                                                                   name="tipoEtiqueta"
+                                                                   value="no_conforme"
+                                                                   id="radioNoConforme">
+
+                                                            <label class="form-check-label fw-medium"
+                                                                   for="radioNoConforme">
+                                                                No Conforme
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input check-tipo-etiqueta"
+                                                                   type="radio"
+                                                                   name="tipoEtiqueta"
+                                                                   value="recorte"
+                                                                   id="radioRecorte">
+
+                                                            <label class="form-check-label fw-medium"
+                                                                   for="radioRecorte">
+                                                                Recorte
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input check-tipo-etiqueta"
+                                                                   type="radio"
+                                                                   name="tipoEtiqueta"
+                                                                   value="relleno"
+                                                                   id="radioRelleno">
+
+                                                            <label class="form-check-label fw-medium"
+                                                                   for="radioRelleno">
+                                                                Relleno
+                                                            </label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <!-- Botón generar etiqueta -->
+                                                <div class="col-12 col-xl-5 d-grid justify-content-center align-items-center mt-3 gap-3">
+                                                    <button id="btn-generaEtiqueta" class="btn btn-genEtiquetaProduccion btn-sm fw-semibold px-4 py-2">
+                                                        <i class="bi bi-tag me-2"></i>Generar Etiqueta
+                                                    </button>
+                                                    <button type="button" class="btn btn-vistaPrevia">
+                                                        <i class="bi bi-zoom-in"></i> Preview
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- DERECHA: Botón + Última etiqueta -->
+                                        <div class="col-12 col-md-7 d-flex flex-column gap-3">
+
+                                            <div class="rounded-3 px-3 py-3 contenedor-ult-etiq">
+                                                <small class="text-secondary d-block mb-2 titulo-ult-etq">Última etiqueta generada:</small>
+                                                <div class="d-flex flex-wrap gap-2 info-ult-etiqueta" style="font-size:.82rem;">
+                                                    <span><strong>Pieza:</strong> #142</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Peso:</strong> 2.347 Kg</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Hora:</strong> 10:45:32</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Línea:</strong> 3</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Ubicación:</strong> ALM-P01</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Metros fabricados:</strong> 45m</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Metros por pieza:</strong> 8m</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
                             </div>
 
                             <!-- Sección: Devoluciones -->
@@ -1277,7 +1469,7 @@
                                     </div>
 
 
-                                    <!-- Acciones -->                                    
+                                    <!-- Acciones -->
                                     <div class="mt-4">
 
                                         <div class="d-flex flex-wrap gap-2 seccion-btns-Dev">
@@ -1296,7 +1488,7 @@
                                                 <button type="button" class="btn btn-guardarProduccion btn-sm fw-semibold px-4 py-2" data-bs-dismiss="modal">
                                                     Cancelar
                                                 </button>
-                                            </div>                                           
+                                            </div>
 
                                         </div>
 
@@ -1306,155 +1498,6 @@
 
                             </div>
 
-                            <!-- Seccion: Recibo de produccion-->
-                            <div class="tab-pane fade" id="nav-RP" role="tabpanel" aria-labelledby="nav-RP-tab">
-                                <div class="border rounded-3 shadow-sm mt-2 p-4">
-
-                                    <div class="row g-3 mb-3">
-                                        <label class="form-label fw-semibold text-dark mb-2">
-                                            <i class="bi bi-gear-wide-connected me-2"></i>
-                                            Proceso de Producción
-                                        </label>
-                                        <div class="pt-2 mb-3">
-                                            <p class="text-secondary subtitulos-seccion ps-3 mb-0">
-                                                <i class="bi bi-speedometer2 me-2"></i>
-                                                Producción por Peso (Pieza Individual)
-                                            </p>
-                                        </div>
-
-                                        <!-- IZQUIERDA: Báscula -->
-                                        <div class="col-12 col-md-6 mb-3">
-
-                                            <div class="rounded-3 text-center py-3 contenedor-bascula-indvidual">
-                                                <small class="text-secondary d-block mb-1 text-lect-pz-ind">Lectura Automática de Báscula</small>
-                                                <span class="fw-bold d-block cant-pz-ind">2.347 Kg</span>
-                                                <span class="badge bg-success conexion-bascula-cant-pz-ind">Estable</span>
-                                            </div>
-                                        </div>
-
-                                        <!-- DERECHA: estatus conteos -->
-                                        <div class="col-12 col-md-6 d-flex flex-column justify-content-end align-self-stretch mb-3">
-                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
-                                                <small class="text-secondary">Piezas Producidas:</small>
-                                                <span class="fw-semibold">142 / 200</span>
-                                            </div>
-                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
-                                                <small class="text-secondary">Peso Total Acumulado:</small>
-                                                <span class="fw-semibold">333.27 Kg</span>
-                                            </div>
-                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
-                                                <small class="text-secondary">Consumo MP Actualizado:</small>
-                                                <span class="fw-semibold text-color-proceso-MPconsumido">71% consumido</span>
-                                            </div>
-                                            <div class="progress mb-0 mt-2 contenedor-progreso">
-                                                <div class="progress-bar barra-progreso" role="progressbar"></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <!-- Contenedor generar distintos tipos de etiqueta -->
-                                    <p class="text-secondary subtitulos-seccion ps-3 mb-2">
-                                        <i class="bi bi-tags me-1"></i> Selección tipo de etiqueta
-                                    </p>
-                                    <div class="row align-items-center mt-4 mb-4">
-                                        <!-- Izquierda: Tipos -->
-                                        <div class="col-12 col-md-5">
-                                            <div class="row align-items-center g-2 pt-2 pb-4">
-
-                                                <!-- Toggles seleccion tipo de receta -->
-                                                <div class="col-12 col-xl-7">
-                                                    <div id="contenedorTipoEtiqueta" class="d-flex flex-column gap-3 ps-2">
-
-                                                        <div class="form-check">
-                                                            <input class="form-check-input check-tipo-etiqueta"
-                                                                   type="radio"
-                                                                   name="tipoEtiqueta"
-                                                                   value="conforme"
-                                                                   id="radioConforme">
-
-                                                            <label class="form-check-label fw-medium"
-                                                                   for="radioConforme">
-                                                                Conforme
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="form-check">
-                                                            <input class="form-check-input check-tipo-etiqueta"
-                                                                   type="radio"
-                                                                   name="tipoEtiqueta"
-                                                                   value="no_conforme"
-                                                                   id="radioNoConforme">
-
-                                                            <label class="form-check-label fw-medium"
-                                                                   for="radioNoConforme">
-                                                                No Conforme
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="form-check">
-                                                            <input class="form-check-input check-tipo-etiqueta"
-                                                                   type="radio"
-                                                                   name="tipoEtiqueta"
-                                                                   value="recorte"
-                                                                   id="radioRecorte">
-
-                                                            <label class="form-check-label fw-medium"
-                                                                   for="radioRecorte">
-                                                                Recorte
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="form-check">
-                                                            <input class="form-check-input check-tipo-etiqueta"
-                                                                   type="radio"
-                                                                   name="tipoEtiqueta"
-                                                                   value="relleno"
-                                                                   id="radioRelleno">
-
-                                                            <label class="form-check-label fw-medium"
-                                                                   for="radioRelleno">
-                                                                Relleno
-                                                            </label>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-                                                <!-- Botón generar etiqueta -->
-                                                <div class="col-12 col-xl-5 d-flex justify-content-center align-items-center mt-3">
-                                                    <button id="btn-generaEtiqueta" class="btn btn-genEtiquetaProduccion btn-sm fw-semibold px-4 py-2">
-                                                        <i class="bi bi-tag me-2"></i>Generar Etiqueta
-                                                    </button>
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-                                        <!-- DERECHA: Botón + Última etiqueta -->
-                                        <div class="col-12 col-md-7 d-flex flex-column gap-3">
-
-                                            <div class="rounded-3 px-3 py-3 contenedor-ult-etiq">
-                                                <small class="text-secondary d-block mb-2 titulo-ult-etq">Última etiqueta generada:</small>
-                                                <div class="d-flex flex-wrap gap-2 info-ult-etiqueta" style="font-size:.82rem;">
-                                                    <span><strong>Pieza:</strong> #142</span>
-                                                    <span class="text-secondary">|</span>
-                                                    <span><strong>Peso:</strong> 2.347 Kg</span>
-                                                    <span class="text-secondary">|</span>
-                                                    <span><strong>Hora:</strong> 10:45:32</span>
-                                                    <span class="text-secondary">|</span>
-                                                    <span><strong>Línea:</strong> 3</span>
-                                                    <span class="text-secondary">|</span>
-                                                    <span><strong>Ubicación:</strong> ALM-P01</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div><!-- /.modal-body -->

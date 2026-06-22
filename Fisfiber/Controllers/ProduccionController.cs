@@ -45,6 +45,11 @@ namespace Fisfiber.Controllers
             return View();
         }
 
+        public ActionResult InspeccionProducto()
+        {
+            return View();
+        }
+
         public ActionResult ReciboSobrantes()
         {
             return View();

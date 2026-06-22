@@ -434,31 +434,36 @@
 
 .tabla-materiales th:nth-child(2),
 .tabla-materiales td:nth-child(2) {
-    min-width: 370px;
+    min-width: 120px;
 }
 
 .tabla-materiales th:nth-child(3),
 .tabla-materiales td:nth-child(3) {
-    min-width: 850px;
+    min-width: 370px;
 }
 
 .tabla-materiales th:nth-child(4),
 .tabla-materiales td:nth-child(4) {
-    min-width: 150px;
+    min-width: 850px;
 }
 
 .tabla-materiales th:nth-child(5),
 .tabla-materiales td:nth-child(5) {
-    min-width: 190px;
+    min-width: 150px;
 }
 
 .tabla-materiales th:nth-child(6),
 .tabla-materiales td:nth-child(6) {
-    min-width: 180px;
+    min-width: 190px;
 }
 
 .tabla-materiales th:nth-child(7),
 .tabla-materiales td:nth-child(7) {
+    min-width: 180px;
+}
+
+.tabla-materiales th:nth-child(8),
+.tabla-materiales td:nth-child(8) {
     min-width: 160px;
 }
 
@@ -579,6 +584,13 @@
     box-shadow: 8px 0px 4px 0px #d5d5d5;
 }
 
+.barra-progreso-total {
+    width: 45%;
+    border-radius: 50px;
+    background: #3fdc2e80;
+    box-shadow: 8px 0px 4px 0px #d5d5d5;
+}
+
 #contenedorTipoEtiqueta input[type="radio"] {
     position: static !important;
     opacity: 1 !important;
@@ -605,6 +617,17 @@
     background: #f8f9fa;
     border: 1px solid #939393;
     box-shadow: inset 0px 0px 4px 2px #d5d5d5;
+}
+
+.btn-vistaPrevia {
+    border: 1px solid #bbbbbb;
+    border-radius: 7px;
+    color: #7f7f7f;
+    font-size: 12px;
+}
+
+.btn-vistaPrevia:hover {
+    background-color: #cfcfcf;
 }
 
 .titulo-ult-etq {

@@ -120,18 +120,18 @@
                     </a>
                 </li>
                 @*<li class="sidebar-item">
-                        <a href="#" class="sidebar-link" data-bs-toggle="collapse"
-                           data-bs-target="#compras" aria-expanded="false" aria-controls="compras">
-                            <i class="bi bi-clipboard2-data-fill"></i>
-                            <span>Compras</span>
-                        </a>
-                        <ul id="compras" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                            <li class="sidebar-item">
-                                <a href="@Url.Action("ChecklistDoc","Compras")" class="sidebar-link">Checklist Documentación</a>
-                            </li>
+            <a href="#" class="sidebar-link" data-bs-toggle="collapse"
+               data-bs-target="#compras" aria-expanded="false" aria-controls="compras">
+                <i class="bi bi-clipboard2-data-fill"></i>
+                <span>Compras</span>
+            </a>
+            <ul id="compras" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                <li class="sidebar-item">
+                    <a href="@Url.Action("ChecklistDoc","Compras")" class="sidebar-link">Checklist Documentación</a>
+                </li>
 
-                        </ul>
-                    </li>*@
+            </ul>
+        </li>*@
                 <li class="sidebar-item menuHide" id="MenuCompras">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                        data-bs-target="#compras" aria-expanded="false" aria-controls="compras">
@@ -217,11 +217,11 @@
                             </a>
                         </li>
                         @*<li class="sidebar-item">
-                                <a href="@Url.Action("Monitor","Logistica")" class="sidebar-link">Monitor de Entregas</a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a href="@Url.Action("ConsultaEdicion", "Logistica")" class="sidebar-link">Edición y Consulta</a>
-                            </li>*@
+                    <a href="@Url.Action("Monitor","Logistica")" class="sidebar-link">Monitor de Entregas</a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="@Url.Action("ConsultaEdicion", "Logistica")" class="sidebar-link">Edición y Consulta</a>
+                </li>*@
                     </ul>
                 </li>
                 <li class="sidebar-item menuHide" id="MenuVentas">
@@ -282,7 +282,7 @@
                                 Gestión de Recetas
                             </a>
                         </li>
-                        
+
                         <li class="sidebar-item">
                             <a href="@Url.Action("ReporteOTTerminados","Produccion")" class="sidebar-link">
                                 OT Terminadas
@@ -293,33 +293,50 @@
                                 Consumo Materia Prima
                             </a>
                             @*<a href="#" class="sidebar-link">
-                Consumo Materia Prima
-            </a>*@
+                        Consumo Materia Prima
+                    </a>*@
                         </li>
                         <!--<li class="sidebar-item">-->
                         @*<a href="@Url.Action("ReciboSobrantes","Produccion")" class="sidebar-link">
-            Recibo de sobrantes
-        </a>*@
+                    Recibo de sobrantes
+                </a>*@
                         <!--<a href="#" class="sidebar-link">
-            Recibo de sobrantes
-        </a>
-    </li>-->
+                    Recibo de sobrantes
+                </a>
+            </li>-->
                         <!--<li class="sidebar-item">-->
                         @*<a href="@Url.Action("Index","Produccion")" class="sidebar-link">
-            Registro de produccion
-        </a>*@
+                    Registro de produccion
+                </a>*@
                         <!--<a href="#" class="sidebar-link">
-            Registro de produccion
-        </a>
-    </li>-->
+                    Registro de produccion
+                </a>
+            </li>-->
                         <li class="sidebar-item">
                             @*<a href="@Url.Action("ReporteProduccion","Produccion")" class="sidebar-link">
-                Reporte de Producción
-            </a>*@
+                        Reporte de Producción
+                    </a>*@
                             <a href="#" class="sidebar-link">
                                 Reporte de Producción
                             </a>
                         </li>
+                    </ul>
+                </li>
+                
+                <li class="sidebar-item menuHide" id="MenuInspeccion">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                       data-bs-target="#ins" aria-expanded="false" aria-controls="ins">
+                        <i class="bi bi-clipboard-check"></i>
+                        <span>Inspeccion</span>
+                    </a>
+                    <ul id="ins" class="sidebar-dropdown list-unstyled collapse"
+                        data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a href="@Url.Action("InspeccionProducto","InspeccionProd")" class="sidebar-link">
+                                Reportes de Inspección
+                            </a>
+                        </li>
+                       
                     </ul>
                 </li>
 
@@ -343,6 +360,7 @@
                         </li>
                     </ul>
                 </li>
+
             </ul>
             <!-- Avatar -->
             <div class="dropdown me-3 showMovil avatarMovil">

@@ -313,6 +313,7 @@
             $("#MenuCyC").show();
             $("#MenuAlmacen").show();
             $("#MenuMantenimiento").show();
+            $("#MenuInspeccion").show();
 
 
             $("#creacionPP,#consultaPP").show(); // Mostrar opciones específicas si es necesario

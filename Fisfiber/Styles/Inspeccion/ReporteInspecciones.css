@@ -1,0 +1,153 @@
+﻿.card-head-ReportesIns {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.barra-sup {
+    background-color: #222e43;
+}
+
+.title-repotesProd {
+    font-size: 20px;
+    padding-left: 23px;
+}
+
+
+.title-det-reporte {
+    font-size: 20px;
+    margin-right: 0px;
+}
+
+.title-det-report {
+    display: flex;
+    padding-left: 23px;
+    justify-content: start;
+    font-weight: 700;
+    align-items: center;
+}
+
+.des-det-report {
+    background-color: #fff3e4;
+    color: #a4a4a4;
+    border-radius: 7px;
+    border: 1px solid #dbc7ae;
+    font-size: 13px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 23px;
+    padding-right: 23px;
+}
+
+.fila-lineaR {
+    cursor: pointer;
+}
+
+.seccion-det-reporte {
+    border: 2px solid #adadad;
+    border-radius: 15px;
+    box-shadow: 4px 5px 5px #d7d7d7;
+}
+
+.indicaciones {
+    font-size: 13px;
+    color: #929292;
+}
+
+
+.col-fecha {
+    min-width: 120px;
+}
+
+.col-turno {
+    min-width: 95px;
+}
+
+.col-producto {
+    min-width: 310px;
+}
+
+.col-pedido {
+    min-width: 300px;
+}
+
+.col-cliente {
+    min-width: 300px;
+}
+
+.col-sku {
+    min-width: 300px;
+}
+
+.col-cod-barras {
+    min-width: 300px;
+}
+
+.col-ancho-min {
+    min-width: 150px;
+}
+
+.col-ancho-max {
+    min-width: 150px;
+}
+
+.col-ancho-rollo {
+    min-width: 150px;
+}
+
+.col-peso-min {
+    min-width: 150px;
+}
+
+.col-peso-max {
+    min-width: 150px;
+}
+
+.col-peso-rollo {
+    min-width: 150px;
+}
+
+.col-m1 {
+    min-width: 100px;
+}
+
+.col-m2 {
+    min-width: 100px;
+}
+
+.col-m3 {
+    min-width: 100px;
+}
+
+.col-espesor {
+    min-width: 170px;
+}
+
+.col-fibra {
+    min-width: 230px;
+}
+
+.col-inspeccion {
+    min-width: 155px;
+}
+
+.col-observaciones {
+    min-width: 430px;
+}
+
+.col-acciones {
+    min-width: 155px;
+}
+
+/* Botones de acciones */
+.btn-save-inspecciones {
+    color: #4e81b7;
+}
+
+.btn-check-inspecciones {
+    color: #0fc70f;
+    font-weight: bold;
+}
+
+.btn-delete-inspecciones {
+    color: #204a63bd;
+}
