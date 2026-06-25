@@ -276,10 +276,24 @@
 
 .estilo-seccionFolio {
     font-size: 19px;
+    margin-left: 6px;
 }
 
 .icons-form-OTResina {
     color: #7a7a7a;
+}
+
+.btn-especificacion {
+    background: #0d6efd;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 10px 20px -6px rgba(0, 0, 0, 0.12);
+}
+
+.btn-especificacion:hover {
+    color: #fff;
+    background-color: #0d6efdbd;
 }
 
 
@@ -521,6 +535,13 @@
     background-color: #0d6efdbd;
 }
 
+.btn-genEmision {
+    background: #0d6efd;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+}
+
 .col-devolver {
     width: 110px;
 }
@@ -578,7 +599,7 @@
 }
 
 .barra-progreso {
-    width: 71%;
+    width: 85%;
     border-radius: 50px;
     background: #dc362e;
     box-shadow: 8px 0px 4px 0px #d5d5d5;
@@ -612,6 +633,27 @@
     border-color: #dc362e;
 }
 
+#contenedor-turnos input[type="radio"] {
+    position: static !important;
+    opacity: 1 !important;
+    left: auto !important;
+}
+
+#contenedor-turnos .form-check-label::before,
+#contenedor-turnos .form-check-label::after {
+    display: none !important;
+}
+
+.check-turno:checked {
+    background-color: #dc362e;
+    border-color: #dc362e;
+}
+
+.check-turno:focus {
+    box-shadow: 0 0 0 .25rem #dc362e40;
+    border-color: #dc362e;
+}
+
 /*Contenedor ultima etiqueta generada*/
 .contenedor-ult-etiq {
     background: #f8f9fa;
@@ -639,6 +681,54 @@
 }
 
 
+.alert-secundarias {
+    background-color: #F4F7FB;
+    color: #334155;
+    border-left: 5px solid #64748B;
+    border-color: #64748B;
+    box-shadow: 2px 2px 5px 0px #c2c2c2;
+}
+
+.alert-secundarias-hover:hover {
+    color: #334155c4;
+}
+
+.alert-cuidado {
+    border-left: 5px solid #f83345;
+    border-color: #e33054;
+    box-shadow: 2px 2px 3px 0px #c2c2c2;
+}
+
+/* Tabla de Maquila */
+.tabla-EMaquila th:nth-child(1),
+.tabla-EMaquila td:nth-child(1) {
+    width: 180px;
+}
+
+.tabla-EMaquila th:nth-child(2),
+.tabla-molido td:nth-child(2) {
+    width: 350px;
+}
+
+.tabla-EMaquila th:nth-child(3),
+.tabla-EMaquila td:nth-child(3) {
+    width: 160px;
+}
+
+.tabla-EMaquila th:nth-child(4),
+.tabla-EMaquila td:nth-child(4) {
+    width: 160px;
+}
+
+.tabla-EMaquila th:nth-child(5),
+.tabla-EMaquila td:nth-child(5) {
+    width: 160px;
+}
+
+.input-cantConsumir {
+    width: 100px;
+    text-align: center;
+}
 
 
 /* Media querys de la pagina*/

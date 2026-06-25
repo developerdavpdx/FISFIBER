@@ -806,6 +806,13 @@ textarea[readonly] {
     padding: 26px;
 }
 
+/*Confirm genera emision*/
+.icon-etiqueta-Emision {
+    background-color: #0d6efd29;
+    border-radius: 47px;
+    padding: 26px;
+}
+
 @media (max-width: 1999px) and (min-width: 576px) {
 
     .confirm-ffisa {

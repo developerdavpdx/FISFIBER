@@ -397,7 +397,7 @@
     </div>
 
     <!-- ══════════════════════════════════════════════════
-         Modal: Opciones plan de produccion
+         Modal: Opciones plan de produccion (Fibras y guata)
     ════════════════════════════════════════════════════ -->
     <div class="modal fade" id="modalOpcionesPP" tabindex="-1">
         <div class="modal-dialog modal-xl">
@@ -405,7 +405,7 @@
 
                 <div class="modal-header bg-pr text-white">
                     <h5 class="modal-title">
-                        <i class="bi bi-plus-circle me-2"></i>Producción
+                        <i class="bi bi-plus-circle me-2"></i>Producción (Fibras y Guata)
                     </h5>
                     <button type="button" class="btn btn-link text-white p-0" data-bs-dismiss="modal">
                         <i class="bi bi-x-lg"></i>
@@ -458,7 +458,7 @@
                                 </p>
                             </div>
                             <div class="col-12 col-md-4">
-                                <small class="text-secondary">Piezas: </small>
+                                <small class="text-secondary">Piezas producidas: </small>
                                 <p class="fw-semibold mb-0">
                                     <span class="fw-semibold mb-0">142 / 200</span>
                                 </p>
@@ -499,14 +499,20 @@
                             <div class="row">
 
                                 <div class="col-12">
-                                    <div class="d-flex justify-content-end align-items-center shadow-sm pt-2 pb-2 pe-3 mb-2 gap-2 seccion-folioOT">
-                                        <span class="text-secondary estilo-seccionFolio">Folio: </span>
-                                        <p class="fw-semibold mb-0 estilo-seccionFolio"> OT-001</p>
+                                    <div class="d-flex justify-content-between align-items-center shadow-sm pt-2 pb-2 ps-3 pe-3 mb-2 gap-2 seccion-folioOT">
+                                        <button class="btn btn-especificacion btn-sm fw-semibold px-4 py-2 hojaEsp" itemcode="BRAFILL III/140 L1" linea="001">
+                                            <i class="bi bi-file-earmark-text me-2"></i> Especificación
+                                        </button>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="text-secondary estilo-seccionFolio">Folio: </span>
+                                            <p class="fw-semibold mb-0 estilo-seccionFolio"> OT-001</p>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Sección: Orden de trabajo - Resinas -->
+                            <!-- Sección: Formulación de Resinas -->
                             <div class="tab-pane fade show active" id="nav-FResina" role="tabpanel" aria-labelledby="nav-FResina-tab">
                                 <div class="border rounded-3 shadow-sm mt-2 p-4">
                                     <!-- Formulario de variables -->
@@ -548,6 +554,72 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-12 col-sm-6 col-lg-4">
+                                            <label class="form-label fw-medium small d-flex align-items-center gap-2">
+                                                <i class="bi bi-moisture icons-form-OTResina me-2"></i>
+                                                Campo 4
+                                            </label>
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" class="form-control" placeholder="0" min="0" />
+                                                <span class="input-group-text text-secondary">lt</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-lg-4">
+                                            <label class="form-label fw-medium small d-flex align-items-center gap-2">
+                                                <i class="bi bi-moisture icons-form-OTResina me-2"></i>
+                                                Campo 5
+                                            </label>
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" class="form-control" placeholder="0" min="0" />
+                                                <span class="input-group-text text-secondary">lt</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-lg-4">
+                                            <label class="form-label fw-medium small d-flex align-items-center gap-2">
+                                                <i class="bi bi-moisture icons-form-OTResina me-2"></i>
+                                                Campo 6
+                                            </label>
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" class="form-control" placeholder="0" min="0" />
+                                                <span class="input-group-text text-secondary">lt</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-lg-4">
+                                            <label class="form-label fw-medium small d-flex align-items-center gap-2">
+                                                <i class="bi bi-moisture icons-form-OTResina me-2"></i>
+                                                Campo 7
+                                            </label>
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" class="form-control" placeholder="0" min="0" />
+                                                <span class="input-group-text text-secondary">lt</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-lg-4">
+                                            <label class="form-label fw-medium small d-flex align-items-center gap-2">
+                                                <i class="bi bi-moisture icons-form-OTResina me-2"></i>
+                                                Campo 8
+                                            </label>
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" class="form-control" placeholder="0" min="0" />
+                                                <span class="input-group-text text-secondary">lt</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 col-lg-4">
+                                            <label class="form-label fw-medium small d-flex align-items-center gap-2">
+                                                <i class="bi bi-moisture icons-form-OTResina me-2"></i>
+                                                Campo 9
+                                            </label>
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" class="form-control" placeholder="0" min="0" />
+                                                <span class="input-group-text text-secondary">lt</span>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <!-- Botones -->
@@ -562,7 +634,7 @@
                                 </div>
                             </div>
 
-                            <!-- Sección: Orden de trabajo - Polietileno -->
+                            <!-- Sección: Reserva de Polietileno -->
                             <div class="tab-pane fade" id="nav-RPolietileno" role="tabpanel" aria-labelledby="nav-RPolietileno-tab">
                                 <div class="border rounded-3 mt-2 p-4">
 
@@ -651,7 +723,7 @@
                                 </div>
                             </div>
 
-                            <!-- Sección: Consumo de componentes -->
+                            <!-- Sección: Reservacion de fibras -->
                             <div class="tab-pane fade" id="nav-Rfibras" role="tabpanel" aria-labelledby="nav-Rfibras-tab">
 
                                 <!-- ============================= -->
@@ -890,6 +962,7 @@
                                                             <th>Descripción</th>
                                                             <th>Cantidad Base</th>
                                                             <th>Cantidad Planificada</th>
+                                                            <th>Cantidad Consumida</th>
                                                             <th>Tipo medida</th>
                                                             <th>Almacen</th>
                                                         </tr>
@@ -904,6 +977,9 @@
                                                             <td>RECETA L1</td>
                                                             <td>1</td>
                                                             <td>594</td>
+                                                            <td>
+                                                                1,317.72
+                                                            </td>
                                                             <td>-</td>
                                                             <td>12</td>
                                                         </tr>
@@ -920,6 +996,9 @@
                                                             </td>
                                                             <td>
                                                                 25.83
+                                                            </td>
+                                                            <td>
+                                                                12.3856
                                                             </td>
                                                             <td>
                                                                 PZ
@@ -941,6 +1020,9 @@
                                                             </td>
                                                             <td>
                                                                 20.96
+                                                            </td>
+                                                            <td>
+                                                                36.6362
                                                             </td>
                                                             <td>
                                                                 KG
@@ -1128,14 +1210,20 @@
                                             </div>
                                             <!-- Alerta de materiales y recetas -->
                                             <!-- ALERTA -->
-                                            <div id="alertaReceta" class="alert alert-danger mt-3 mb-0">
+                                            <div id="alertaReceta" class="alert alert-danger alert-cuidado mt-3 mb-0">
                                                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
                                                 MAT-009 no pertenece a la receta REC-087.
                                                 Se requiere autorización del supervisor.
                                             </div>
 
+                                            <!-- ALERTA TEMPORAL -->
+                                            <div class="alert alert-secundarias mt-3 mb-0">
+                                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                                <b>No es posible continuar</b> hasta completar el consumo de las materias
+                                                primas que no hayan sido autorizadas.
+                                            </div>
+
                                             <!-- BOTONES -->
-                                           
                                             <!-- Botón de autorización -->
                                             <div id="accionesSupervisor" class="text-left mt-3 px-4 py-2">
                                                 <button id="btn-solicitarAut"
@@ -1179,7 +1267,7 @@
 
                             </div>
 
-                            <!-- Seccion: Ingreso de produccion-->
+                            <!-- Seccion: Etiquetado -->
                             <div class="tab-pane fade" id="nav-tag" role="tabpanel" aria-labelledby="nav-tag-tab">
                                 <div class="border rounded-3 shadow-sm mt-2 p-4">
 
@@ -1216,15 +1304,34 @@
                                                 <span class="fw-semibold">333.27 Kg</span>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
-                                                <small class="text-secondary">Consumo MP Actualizado:</small>
-                                                <span class="fw-semibold text-color-proceso-MPconsumido">71% consumido</span>
+                                                <small class="text-secondary">Metros totales:</small>
+                                                <span class="fw-semibold">358.56 m</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                                <small class="text-secondary">Consumo reservado:</small>
+                                                <span class="fw-semibold text-color-proceso-MPconsumido">85% consumido</span>
                                             </div>
                                             <div class="progress mb-0 mt-2 contenedor-progreso">
                                                 <div class="progress-bar barra-progreso" role="progressbar"></div>
                                             </div>
                                         </div>
+
+                                        <!-- ALERTAS -->
+                                        <div class="alert alert-secundarias mt-3 mb-0">
+                                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                            <b>La reserva ha alcanzado el porcentaje de alerta.</b> Se recomienda revisar el consumo antes de continuar.
+                                        </div>
+
+                                        <a class="alert alert-secundarias alert-secundarias-hover mt-3 mb-0 d-block text-decoration-none"
+                                           href="#"
+                                           id="alertReserva">
+                                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                            <b>No es posible generar la emisión.</b>
+                                            Regrese a la sección <u>Reserva de fibras</u> y complete el escaneo de los componentes pendientes.
+                                        </a>
+
                                         <!-- DERECHA: estatus conteos -->
-                                        <div class="col-12 d-flex flex-column justify-content-end align-self-stretch mb-3">                                            
+                                        <div class="col-12 d-flex flex-column justify-content-end align-self-stretch mb-3">
                                             <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
                                                 <small class="text-secondary">Consumo Total:</small>
                                                 <span class="fw-semibold text-color-proceso-MPconsumido">45% consumido</span>
@@ -1238,87 +1345,111 @@
 
                                     <!-- Contenedor generar distintos tipos de etiqueta -->
                                     <p class="text-secondary subtitulos-seccion ps-3 mb-2">
-                                        <i class="bi bi-tags me-1"></i> Selección tipo de etiqueta
+                                        <i class="bi bi-tags me-1"></i> Selección tipo de etiqueta y turno
                                     </p>
                                     <div class="row align-items-center mt-4 mb-4">
                                         <!-- Izquierda: Tipos -->
                                         <div class="col-12 col-md-5">
                                             <div class="row align-items-center g-2 pt-2 pb-4">
+                                                <div id="contenedorTipoEtiqueta" class="d-flex flex-column gap-3 ps-2">
 
-                                                <!-- Toggles seleccion tipo de receta -->
-                                                <div class="col-12 col-xl-7">
-                                                    <div id="contenedorTipoEtiqueta" class="d-flex flex-column gap-3 ps-2">
 
-                                                        <div class="form-check">
-                                                            <input class="form-check-input check-tipo-etiqueta"
-                                                                   type="radio"
-                                                                   name="tipoEtiqueta"
-                                                                   value="conforme"
-                                                                   id="radioConforme">
 
-                                                            <label class="form-check-label fw-medium"
-                                                                   for="radioConforme">
-                                                                Conforme
-                                                            </label>
-                                                        </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 col-xl-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input check-tipo-etiqueta"
+                                                               type="radio"
+                                                               name="tipoEtiqueta"
+                                                               value="conforme"
+                                                               id="radioConforme">
 
-                                                        <div class="form-check">
-                                                            <input class="form-check-input check-tipo-etiqueta"
-                                                                   type="radio"
-                                                                   name="tipoEtiqueta"
-                                                                   value="no_conforme"
-                                                                   id="radioNoConforme">
+                                                        <label class="form-check-label" for="radioConforme">
+                                                            Conforme
+                                                        </label>
+                                                    </div>
 
-                                                            <label class="form-check-label fw-medium"
-                                                                   for="radioNoConforme">
-                                                                No Conforme
-                                                            </label>
-                                                        </div>
+                                                    <div class="form-check mt-3">
+                                                        <input class="form-check-input check-tipo-etiqueta"
+                                                               type="radio"
+                                                               name="tipoEtiqueta"
+                                                               value="no_conforme"
+                                                               id="radioNoConforme">
 
-                                                        <div class="form-check">
-                                                            <input class="form-check-input check-tipo-etiqueta"
-                                                                   type="radio"
-                                                                   name="tipoEtiqueta"
-                                                                   value="recorte"
-                                                                   id="radioRecorte">
-
-                                                            <label class="form-check-label fw-medium"
-                                                                   for="radioRecorte">
-                                                                Recorte
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="form-check">
-                                                            <input class="form-check-input check-tipo-etiqueta"
-                                                                   type="radio"
-                                                                   name="tipoEtiqueta"
-                                                                   value="relleno"
-                                                                   id="radioRelleno">
-
-                                                            <label class="form-check-label fw-medium"
-                                                                   for="radioRelleno">
-                                                                Relleno
-                                                            </label>
-                                                        </div>
-
+                                                        <label class="form-check-label" for="radioNoConforme">
+                                                            No Conforme
+                                                        </label>
                                                     </div>
                                                 </div>
 
-                                                <!-- Botón generar etiqueta -->
-                                                <div class="col-12 col-xl-5 d-grid justify-content-center align-items-center mt-3 gap-3">
-                                                    <button id="btn-generaEtiqueta" class="btn btn-genEtiquetaProduccion btn-sm fw-semibold px-4 py-2">
-                                                        <i class="bi bi-tag me-2"></i>Generar Etiqueta
-                                                    </button>
-                                                    <button type="button" class="btn btn-vistaPrevia">
-                                                        <i class="bi bi-zoom-in"></i> Preview
-                                                    </button>
+                                                <div class="col-12 col-md-6 col-xl-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input check-tipo-etiqueta"
+                                                               type="radio"
+                                                               name="tipoEtiqueta"
+                                                               value="recorte"
+                                                               id="radioRecorte">
+
+                                                        <label class="form-check-label" for="radioRecorte">
+                                                            Recorte
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="form-check mt-3">
+                                                        <input class="form-check-input check-tipo-etiqueta"
+                                                               type="radio"
+                                                               name="tipoEtiqueta"
+                                                               value="relleno"
+                                                               id="radioRelleno">
+
+                                                        <label class="form-check-label" for="radioRelleno">
+                                                            Relleno
+                                                        </label>
+                                                    </div>
                                                 </div>
 
                                             </div>
+
                                         </div>
 
-                                        <!-- DERECHA: Botón + Última etiqueta -->
-                                        <div class="col-12 col-md-7 d-flex flex-column gap-3">
+                                        <div class="col-12 col-md-7">
+
+                                            <!-- Selección de turno -->
+                                            <div class="mb-3">
+
+                                                <label class="fw-semibold mb-2">
+                                                    Seleccione el turno
+                                                </label>
+
+                                                <div id="contenedor-turnos" class="d-flex gap-4">
+
+                                                    <div class="form-check">
+                                                        <input class="form-check-input check-turno"
+                                                               type="radio"
+                                                               name="turno"
+                                                               id="turno1"
+                                                               value="1">
+
+                                                        <label class="form-check-label ps-2" for="turno1">
+                                                            Turno 1
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="form-check">
+                                                        <input class="form-check-input check-turno"
+                                                               type="radio"
+                                                               name="turno"
+                                                               id="turno2"
+                                                               value="2">
+
+                                                        <label class="form-check-label ps-2" for="turno2">
+                                                            Turno 2
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
 
                                             <div class="rounded-3 px-3 py-3 contenedor-ult-etiq">
                                                 <small class="text-secondary d-block mb-2 titulo-ult-etq">Última etiqueta generada:</small>
@@ -1333,11 +1464,13 @@
                                                     <span class="text-secondary">|</span>
                                                     <span><strong>Ubicación:</strong> ALM-P01</span>
                                                     <span class="text-secondary">|</span>
-                                                    <span><strong>Metros fabricados:</strong> 45m</span>
+                                                    <span><strong>Metros producidos:</strong> 45 m</span>
                                                     <span class="text-secondary">|</span>
-                                                    <span><strong>Metros por pieza:</strong> 8m</span>
+                                                    <span><strong>Metros por rollo:</strong> 8 m</span>
                                                 </div>
                                             </div>
+
+
 
                                         </div>
 
@@ -1505,7 +1638,579 @@
         </div><!-- /.modal-dialog -->
     </div>
 
-    <!-- /#modalOpcionesPlanProduccion -->
+    <!-- /#modalOpcionesPlanProduccion (Fibras y guata) -->
+
+    <!-- ══════════════════════════════════════════════════
+         Modal: Opciones plan de produccion (Maquilas)
+    ════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="modalOpcionesPMaq" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <div class="modal-header bg-pr text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-plus-circle me-2"></i>Producción (Maquilas)
+                    </h5>
+                    <button type="button" class="btn btn-link text-white p-0" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- Info general -->
+                    <p class="fw-semibold text-dark ms-2 mb-2">Información General:</p>
+                    <div class="rounded-3 p-3 mb-4 seccion-tarjet-infoGen">
+                        <div class="row g-2">
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Plan Producción: </small>
+                                <p class="fw-semibold mb-0">P001:006</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="infoGenTitle-OT">Orden Fabricación: </small>
+                                <p class="mb-0 infoGenCont-OT">OF-352291</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Pedido: </small>
+                                <p class="fw-semibold mb-0 d-flex align-items-center gap-2">
+                                    PED-2025-134
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Línea: </small>
+                                <p class="fw-semibold mb-0">Línea 1</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Cantidad Solicitada: </small>
+                                <p class="fw-semibold mb-0">500 pzas</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Fecha Inicio: </small>
+                                <p class="fw-semibold mb-0">25/06/2026</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Tipo Producto: </small>
+                                <p class="fw-semibold mb-0">-</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Artículo: </small>
+                                <p class="fw-semibold mb-0">ALMOHADA MD COLUMBUS</p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Estatus: </small>
+                                <p class="fw-semibold mb-0">
+                                    <span class="badge-estatus proceso">En Proceso</span>
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <small class="text-secondary">Piezas producidas: </small>
+                                <p class="fw-semibold mb-0">
+                                    <span class="fw-semibold mb-0">23 / 500</span>
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-4 d-felx justify-content-start align-content-end">
+                                <button class="btn btn-link p-0 fw-semibold pt-2 pb-2 ps-0 pe-2 si-agregar-producto">
+                                    <i class="bi bi-plus-circle me-1"></i>Agregar más pedidos
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row g-4 mb-3">
+                        <!-- Seccion: menus de producción -->
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                
+                                <a class="nav-item nav-link active" id="nav-ConsumoM-tab" data-bs-toggle="tab" href="#nav-ConsumoM" role="tab">
+                                    <i class="bi bi-bounding-box-circles me-2"></i> Consumo Materia
+                                </a>
+                                <a class="nav-item nav-link" id="nav-tag-tab" data-bs-toggle="tab" href="#nav-tagM" role="tab">
+                                    <i class="bi bi-tag me-2"></i> Etiquetado
+                                </a>
+                                <a class="nav-item nav-link" id="nav-Dev-tab" data-bs-toggle="tab" href="#nav-DevM" role="tab">
+                                    <i class="bi bi-arrow-return-left me-2"></i> Devolución
+                                </a>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content" id="nav-tabContent">
+
+                            <div class="row">
+
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between align-items-center shadow-sm pt-2 pb-2 ps-3 pe-3 mb-2 gap-2 seccion-folioOT">
+                                        <button class="btn btn-especificacion btn-sm fw-semibold px-4 py-2 hojaEsp" itemcode="BRAFILL III/140 L1" linea="001">
+                                            <i class="bi bi-file-earmark-text me-2"></i> Especificación
+                                        </button>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="text-secondary estilo-seccionFolio">Folio: </span>
+                                            <p class="fw-semibold mb-0 estilo-seccionFolio"> OT-001</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                                                       
+                            <!-- Sección: Consumo de Materia -->
+                            <div class="tab-pane fade show active" id="nav-ConsumoM" role="tabpanel" aria-labelledby="nav-ConsumoM-tab">
+
+                                <!-- ============================= -->
+                                <!-- Receta base -->
+                                <!-- ============================= -->
+                                <div class="border rounded-3 shadow-sm mt-2 p-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <div>
+                                            <p class="fw-semibold text-dark mb-2">
+                                                <i class="bi bi-upc-scan me-2"></i>
+                                                Escaneo de Materia Prima
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row align-items-end mb-3 g-3">
+                                        <!-- ============================= -->
+                                        <!-- Escaneo -->
+                                        <!-- ============================= -->
+                                        <div class="col-12 col-md-6 col-lg-5">
+                                            <input type="text" class="form-control" placeholder="Escanear código de barras..." />
+                                        </div>
+
+                                        <div class="col-auto">
+                                            <button class="btn btn-danger px-4">
+                                                <i class="bi bi-plus-circle me-2"></i>
+                                                Agregar Material
+                                            </button>
+                                        </div>
+
+                                        <!-- ============================= -->
+                                        <!-- Registro de material Escaneado -->
+                                        <!-- ============================= -->
+                                        <div class="col-12 mt-4">
+                                            <p class="fw-semibold text-dark mb-2">
+                                                <i class="bi bi-file-text me-2"></i>
+                                                Materiales Escaneados
+                                            </p>
+                                            <div class="table-responsive rounded shadow-sm mt-3">
+                                                <table class="table table-sm align-middle mb-0 tabla-EMaquila">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SKU</th>
+                                                            <th>Descripción</th>
+                                                            <th>Cantidad a consumir</th>
+                                                            <th>Equivalencia</th>                                                            
+                                                            <th class="text-center">Acción</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+
+                                                        <tr>
+                                                            <td>RELLENO/N L8</td>
+                                                            <td>RELLENO "N" MAQUILAS</td>
+                                                            <td>
+                                                                <div class="d-flex justify-content-center align-items-center">
+                                                                    <input type="number" class="form-control form-control-sm input-cantConsumir me-3" value="12.50"> Kg
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button class="btn btn-outline-danger btn-eliminarME">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>BOL IMP MOD BOP</td>
+                                                            <td>BOLSA IMPRESA POLIETILENO PERFORADA 40X62 CAL 150 MODATELAS BOPISA</td>
+                                                            <td>
+                                                                <div class="d-flex justify-content-center align-items-center">
+                                                                    <input type="number" class="form-control form-control-sm input-cantConsumir me-3" value="12.50"> Kg
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button class="btn btn-outline-danger btn-eliminarME">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>POLI 120X120 BEB</td>
+                                                            <td>POLIETILENO RECICLADO TUBULAR 120 CAL 120 BE BAG</td>
+                                                            <td>
+                                                                <div class="d-flex justify-content-center align-items-center">
+                                                                    <input type="number" class="form-control form-control-sm input-cantConsumir me-3" value="12.50"> Kg
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button class="btn btn-outline-danger btn-eliminarME">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+                                            <!-- BOTONES -->
+                                            <!-- Botones normales -->
+                                            <div class="d-flex justify-content-between align-items-center mt-3 seccion-btns-CDM">
+
+                                                <!-- Botón de autorización -->
+                                                <div id="accionesSupervisor" class="text-left mt-3 px-4 py-2">
+                                                    <button id="btn-solicitarAut"
+                                                            class="btn btn-warning btn-sm fw-semibold px-4 py-2">
+                                                        <i class="bi bi-key me-2"></i>
+                                                        Solicitar Autorización
+                                                    </button>
+                                                </div>
+
+                                                <div class="d-flex gap-2 ps-4 pe-4">
+                                                    <button id="btn-genEmision"
+                                                            class="btn btn-genEtiquetaProduccion btn-sm fw-semibold px-4 py-2">
+                                                        <i class="bi bi-file-earmark-check me-2"></i>
+                                                        Generar Emisión
+                                                    </button>
+
+                                                    <button class="btn btn-guardarProduccion btn-sm fw-semibold px-4 py-2"
+                                                            data-bs-dismiss="modal">
+                                                        Cancelar
+                                                    </button>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                            <!-- Seccion: Etiquetado -->
+                            <div class="tab-pane fade" id="nav-tagM" role="tabpanel" aria-labelledby="nav-tagM-tab">
+                                <div class="border rounded-3 shadow-sm mt-2 p-4">
+
+                                    <div class="row g-3 mb-3">
+                                        <label class="form-label fw-semibold text-dark mb-2">
+                                            <i class="bi bi-gear-wide-connected me-2"></i>
+                                            Proceso de Producción
+                                        </label>
+                                        <div class="pt-2 mb-3">
+                                            <p class="text-secondary subtitulos-seccion ps-3 mb-0">
+                                                <i class="bi bi-speedometer2 me-2"></i>
+                                                Producción por Peso (Pieza Individual)
+                                            </p>
+                                        </div>
+
+                                        <!-- IZQUIERDA: Báscula -->
+                                        <div class="col-12 col-md-6 mb-3">
+
+                                            <div class="rounded-3 text-center py-3 contenedor-bascula-indvidual">
+                                                <small class="text-secondary d-block mb-1 text-lect-pz-ind">Lectura Automática de Báscula</small>
+                                                <span class="fw-bold d-block cant-pz-ind">2.347 Kg</span>
+                                                <span class="badge bg-success conexion-bascula-cant-pz-ind">Estable</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- DERECHA: estatus conteos -->
+                                        <div class="col-12 col-md-6 d-flex flex-column justify-content-end align-self-stretch mb-3">
+                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                                <small class="text-secondary">Piezas Producidas:</small>
+                                                <span class="fw-semibold">23 / 500</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                                <small class="text-secondary">Peso Total Acumulado:</small>
+                                                <span class="fw-semibold">245.27 Kg</span>
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                                <small class="text-secondary">Consumo reservado:</small>
+                                                <span class="fw-semibold text-color-proceso-MPconsumido">85% consumido</span>
+                                            </div>
+                                            <div class="progress mb-0 mt-2 contenedor-progreso">
+                                                <div class="progress-bar barra-progreso" role="progressbar"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- ALERTAS -->
+                                        <div class="alert alert-secundarias mt-3 mb-0">
+                                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                            <b>La reserva ha alcanzado el porcentaje de alerta.</b> Se recomienda revisar el consumo antes de continuar.
+                                        </div>                                       
+
+                                        <!-- DERECHA: estatus conteos -->
+                                        <div class="col-12 d-flex flex-column justify-content-end align-self-stretch mb-3">
+                                            <div class="d-flex justify-content-between align-items-center py-1 border-bottom">
+                                                <small class="text-secondary">Consumo Total:</small>
+                                                <span class="fw-semibold text-color-proceso-MPconsumido">45% consumido</span>
+                                            </div>
+                                            <div class="progress mb-0 mt-2 contenedor-progreso">
+                                                <div class="progress-bar barra-progreso-total" role="progressbar"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Contenedor generar distintos tipos de etiqueta -->
+                                    <p class="text-secondary subtitulos-seccion ps-3 mb-2">
+                                        <i class="bi bi-tags me-1"></i> Selección tipo de etiqueta y turno
+                                    </p>
+                                    <div class="row align-items-center mt-4 mb-4">
+                                        <!-- Izquierda: Tipos -->
+                                        <div class="col-12 col-md-5">
+                                            <div class="row align-items-center g-2 pt-2 pb-4">
+                                                <div id="contenedorTipoEtiqueta" class="d-flex flex-column gap-3 ps-2">
+
+
+
+                                                </div>
+                                                <div class="col-12 col-md-6 col-xl-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input check-tipo-etiqueta"
+                                                               type="radio"
+                                                               name="tipoEtiqueta"
+                                                               value="conforme"
+                                                               id="radioConforme">
+
+                                                        <label class="form-check-label" for="radioConforme">
+                                                            Conforme
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="form-check mt-3">
+                                                        <input class="form-check-input check-tipo-etiqueta"
+                                                               type="radio"
+                                                               name="tipoEtiqueta"
+                                                               value="no_conforme"
+                                                               id="radioNoConforme">
+
+                                                        <label class="form-check-label" for="radioNoConforme">
+                                                            No Conforme
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 col-xl-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input check-tipo-etiqueta"
+                                                               type="radio"
+                                                               name="tipoEtiqueta"
+                                                               value="recorte"
+                                                               id="radioRecorte">
+
+                                                        <label class="form-check-label" for="radioRecorte">
+                                                            Recorte
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="form-check mt-3">
+                                                        <input class="form-check-input check-tipo-etiqueta"
+                                                               type="radio"
+                                                               name="tipoEtiqueta"
+                                                               value="relleno"
+                                                               id="radioRelleno">
+
+                                                        <label class="form-check-label" for="radioRelleno">
+                                                            Relleno
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-12 col-md-7">
+
+                                            <!-- Selección de turno -->
+                                            <div class="mb-3">
+
+                                                <label class="fw-semibold mb-2">
+                                                    Seleccione el turno
+                                                </label>
+
+                                                <div id="contenedor-turnos" class="d-flex gap-4">
+
+                                                    <div class="form-check">
+                                                        <input class="form-check-input check-turno"
+                                                               type="radio"
+                                                               name="turno"
+                                                               id="turno1"
+                                                               value="1">
+
+                                                        <label class="form-check-label ps-2" for="turno1">
+                                                            Turno 1
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="form-check">
+                                                        <input class="form-check-input check-turno"
+                                                               type="radio"
+                                                               name="turno"
+                                                               id="turno2"
+                                                               value="2">
+
+                                                        <label class="form-check-label ps-2" for="turno2">
+                                                            Turno 2
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="rounded-3 px-3 py-3 contenedor-ult-etiq">
+                                                <small class="text-secondary d-block mb-2 titulo-ult-etq">Última etiqueta generada:</small>
+                                                <div class="d-flex flex-wrap gap-2 info-ult-etiqueta" style="font-size:.82rem;">
+                                                    <span><strong>Pieza:</strong> #142</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Peso:</strong> 2.347 Kg</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Hora:</strong> 10:45:32</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Línea:</strong> 3</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Ubicación:</strong> ALM-P01</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Metros producidos:</strong> 45 m</span>
+                                                    <span class="text-secondary">|</span>
+                                                    <span><strong>Metros por rollo:</strong> 8 m</span>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Sección: Devoluciones -->
+                            <div class="tab-pane fade" id="nav-DevM" role="tabpanel" aria-labelledby="nav-DevM-tab">
+                                <div class="border rounded-3 shadow-sm mt-2 p-4">
+                                    <div class="row align-items-end mb-3 g-3">
+                                        <!-- ============================= -->
+                                        <!-- Escaneo de materiales en linea de produccion -->
+                                        <!-- ============================= -->
+                                        <div class="col-12 col-md-6 col-lg-5">
+                                            <label class="form-label fw-semibold text-dark mb-2">
+                                                <i class="bi bi-upc-scan me-2"></i>
+                                                Escaneo de Materiales Línea De Producción
+                                            </label>
+
+                                            <input type="text" class="form-control" placeholder="Escanear código de barras..." />
+                                        </div>
+
+                                        <div class="col-auto">
+                                            <button class="btn btn-danger px-4">
+                                                <i class="bi bi-plus-circle me-2"></i>
+                                                Agregar Material
+                                            </button>
+                                        </div>
+
+                                        <!-- ============================= -->
+                                        <!-- Registro de material linea de produccion Escaneado -->
+                                        <!-- ============================= -->
+                                        <div class="col-12 mt-4">
+                                            <span class="fw-semibold text-dark mb-2">
+                                                <i class="bi bi-clipboard2-check me-2"></i>
+                                                Materiales Escaneados línea Producción
+                                            </span>
+
+                                            <div class="table-responsive rounded shadow-sm mt-3">
+                                                <table class="table table-sm mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Acciones</th>
+                                                            <th>Material</th>
+                                                            <th>Descripción</th>
+                                                            <th>Lote/SKU</th>
+                                                            <th>Unidad</th>
+                                                            <th>Disponible</th>
+                                                            <th class="col-devolver">Devolver</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                                                                               
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                <button class="btn btn-outline-danger btn-eliminarME">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                            <td>MAT-003</td>
+                                                            <td>Aditivo UV</td>
+                                                            <td>LOT-2026-205</td>
+                                                            <td>Kg</td>
+                                                            <td>3.00</td>
+                                                            <td>
+                                                                <input type="number" class="form-control form-control-sm input-cantDevolver" value="3.00">
+                                                            </td>
+                                                        </tr>
+                                                                                                               
+                                                    </tbody>
+
+                                                </table>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Acciones -->
+                                    <div class="mt-4">
+
+                                        <div class="d-flex flex-wrap gap-2 seccion-btns-Dev">
+                                            <div id="accionesSupervisor" class="d-flex align-items-center justify-content-start btn-sol-dev ps-4">
+                                                <button id="btn-generaDevolucion" type="button" class="btn btn-danger btn-sm fw-semibold px-4 py-2">
+                                                    <i class="bi bi-arrow-return-left me-2"></i>
+                                                    Generar Devolución
+                                                </button>
+                                            </div>
+
+                                            <div class="d-flex align-items-center justify-content-end btn-sol-GC pe-4 gap-2">
+                                                <button id="btn-generaEtiqueta" type="button" class="btn btn-genEtiquetaProduccion btn-sm fw-semibold px-4 py-2">
+                                                    <i class="bi bi-tag me-2"></i>
+                                                    Generar Etiqueta
+                                                </button>
+                                                <button type="button" class="btn btn-guardarProduccion btn-sm fw-semibold px-4 py-2" data-bs-dismiss="modal">
+                                                    Cancelar
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!-- /.modal-body -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <!-- /#modalOpcionesPlanProduccion (Fibras y guata) -->
 
 </div>
 

@@ -1,6 +1,5 @@
 ﻿class ConsPlaPro {
 
-
     constructor() {
 
         // * Atributos para guardar los datos de la lista de las ordenes de venta agrupados por linea
@@ -276,7 +275,8 @@
                         }
                         let ParoEstatus = item.ParoEstatus;
                         let IconParoEstatus = "";
-                        let IconOpciones = "";
+                        let IconOpcionesPFG = "";
+                        let IconOpcionesPMaq = "";
                         let HojaEspecificaciones = "";
                         //if (ParoEstatus == "Terminado" || ParoEstatus == "Sin Paro") {
                         IconParoEstatus = `<button class="btn btn-paroLinea ParoLineaPP" 
@@ -290,10 +290,18 @@
                                             </button>`;
 
                         //}
-                        IconOpciones = `<button class="btn btn-opcionesPPlus" 
+                        IconOpcionesPFG = `<button class="btn btn-opcionesPPlus" 
                                                 data-bs-toggle="modal"
-                                                data-bs-target="#modalOpcionesPP">
-                                            <i class="bi bi-plus-square"></i>
+                                                data-bs-target="#modalOpcionesPP"
+                                                title="Producción - Guata y Filtro">
+                                            <i class="bi bi-stack"></i>
+                                        </button>`;
+
+                        IconOpcionesPMaq = `<button class="btn btn-opcionesPPlus" 
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalOpcionesPMaq"
+                                                title="Producción - Maquilas">
+                                            <i class="bi bi-gear"></i>
                                         </button>`;
 
                         HojaEspecificaciones = `<button class="btn btn-opcionesPP hojaEsp" itemcode = "${item.Articulo}" linea = "${item.Linea}">
@@ -308,7 +316,8 @@
                                                                        ${clock}
                                                                        ${IconParoEstatus}                                                                       
                                                                        ${HojaEspecificaciones}
-                                                                       ${IconOpciones}
+                                                                       ${IconOpcionesPFG}
+                                                                       ${IconOpcionesPMaq}
                                                                   </div>
                                                              </td>
                                                              <td class="d-none" data-name="Linea">${item.Linea}</td>
@@ -1358,6 +1367,52 @@
 
     }
 
+    //Confirmacion de Emisión
+    ConfirmarEmision() {
+        $.confirm({
+
+            theme: 'modern',
+            type: 'red',
+            columnClass: 'confirm-ffisa',
+            animation: 'scale',
+            closeAnimation: 'scale',
+            title: `
+            <div class="text-center">
+                <div class="pt-3 pb-5">
+                    <i class="bi bi-file-earmark-check text-black fs-1 icon-etiqueta-Emision"></i>
+                </div>                
+                <div class="mt-2 fw-semibold text-dark accion-confirm-realizar">
+                    Generar emisión
+                </div>
+            </div>`,
+            content: `
+            <div class="text-center text-secondary accion-confirm">
+                Se generará la emisión correspondiente. ¿Desea continuar?</div>`,
+
+            buttons: {
+
+                eliminar: {
+                    text: 'Generar',
+                    btnClass: 'btn-genEmision',
+
+                    action: function () {
+
+                        // lógica
+
+                    }
+                },
+
+                cancelar: function () { },
+
+            },
+            onOpenBefore: function () {
+                this.$jconfirmBox[0].style.setProperty('border-top', '5px solid #737474', 'important');
+            }
+        });
+
+    }
+
+
     //Confirmar generar devolucion
     ConfirmarDevolucion() {
         $.confirm({
@@ -1796,6 +1851,9 @@ function closeParo(paro) {
 //EVENTOS
 $(function () {
 
+    //Variables globales
+    let articulo = "";
+    let linea = "";
 
     const User = sessionStorage.getItem("email");
     initHubParos(User);
@@ -2101,8 +2159,8 @@ $(function () {
 
     //Muestra la hoja de especificaciones en nueva pestaña
     $(document).on("click", ".hojaEsp", function () {
-        let articulo = $(this).attr("itemcode");
-        let linea = $(this).attr("linea");
+        articulo = $(this).attr("itemcode");
+        linea = $(this).attr("linea");
         if (articulo != "" && articulo != null) {
             localStorage.setItem("articulo", articulo);
             localStorage.setItem("linea", linea);
@@ -2173,6 +2231,11 @@ $(function () {
         ConsultaPlanProduccionCs.ConfirmarAutorizacion();
     });
 
+    //Generar emision
+    $(document).on("click", "#btn-genEmision", function () {
+        ConsultaPlanProduccionCs.ConfirmarEmision();
+    });
+
     //Generar la devolucion
     $(document).on("click", "#btn-generaDevolucion", function () {
         ConsultaPlanProduccionCs.ConfirmarDevolucion();
@@ -2184,6 +2247,12 @@ $(function () {
 
     });
 
+    $(document).on('click', '#alertReserva', function (e) {
+
+        e.preventDefault();
+        $("#nav-Rfibras-tab").tab("show");
+
+    });
 
     //Contracciones de Area
     $('.btnToggleSeccion').on('click', function () {
