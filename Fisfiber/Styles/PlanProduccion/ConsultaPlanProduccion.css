@@ -194,16 +194,25 @@
 }
 
 
+
 /* Texto de los tabs */
+.nav-tabs {
+    border-bottom-color: #334155c7 !important;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    border-color: #334155 !important;
+}
+
 .nav-tabs .nav-link {
-    color: #dc362e;
+    color: #334155;
 }
 
 /* Tab activo */
 .nav-tabs .nav-link.active {
     color: #ffffff !important;
-    background-color: #dc362ede !important;
-    border-color: #dc362e !important;
+    background-color: #334155 !important;
+    border-color: #64748B !important;
 }
 
 
@@ -694,9 +703,24 @@
 }
 
 .alert-cuidado {
-    border-left: 5px solid #f83345;
-    border-color: #e33054;
-    box-shadow: 2px 2px 3px 0px #c2c2c2;
+    color: #894a4a;
+    border-left: 5px solid #d60000 !important;
+    border-color: #d60000;
+    box-shadow: 2px 2px 5px 0px #c2c2c2;
+}
+
+.alert-cuidado-hover:hover {
+    color: #a66969;
+}
+
+.alert-info {
+    color: #0e4394;
+    border-left: 5px solid #5e95ea !important;
+    border-color: #5e95ea;
+    box-shadow: 2px 2px 5px 0px #c2c2c2;
+}
+.alert-info-hover:hover {
+    color: #769cd7;
 }
 
 /* Tabla de Maquila */
@@ -728,6 +752,14 @@
 .input-cantConsumir {
     width: 100px;
     text-align: center;
+}
+
+.visor-etiqueta {
+    min-height: 285px;
+    border: 2px dashed #c9c9c9 !important;
+    border-radius: 10px;
+    background: #fafafa;
+    width: 300px;
 }
 
 

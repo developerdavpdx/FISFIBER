@@ -1412,6 +1412,53 @@
 
     }
 
+    //Confirmacion de Autorizacion para escaneo de materiales en maquilas
+    ConfirmarAutorizacionMatMaq() {
+        $.confirm({
+
+            theme: 'modern',
+            type: 'red',
+            columnClass: 'confirm-ffisa',
+            animation: 'scale',
+            closeAnimation: 'scale',
+            title: `
+            <div class="text-center">
+                <div class="pt-3 pb-5">
+                    <i class="bi bi-floppy text-black fs-1 icon-etiqueta-autorizacion"></i>
+                </div>                
+                <div class="mt-2 fw-semibold text-dark accion-confirm-realizar">
+                    Solicitar Autorización
+                </div>
+            </div>`,
+            content: `
+            <div class="text-center text-secondary accion-confirm">
+                La emisión permanecerá en espera hasta que el supervisor apruebe o rechace el consumo de materiales.
+                ¿Desea continuar?
+            </div>`,
+
+            buttons: {
+
+                eliminar: {
+                    text: 'Solicitar',
+                    btnClass: 'btn-warning',
+
+                    action: function () {
+
+                        // lógica
+
+                    }
+                },
+
+                cancelar: function () { },
+
+            },
+            onOpenBefore: function () {
+                this.$jconfirmBox[0].style.setProperty('border-top', '5px solid #737474', 'important');
+            }
+        });
+
+    }
+
 
     //Confirmar generar devolucion
     ConfirmarDevolucion() {
@@ -2239,6 +2286,11 @@ $(function () {
     //Generar la devolucion
     $(document).on("click", "#btn-generaDevolucion", function () {
         ConsultaPlanProduccionCs.ConfirmarDevolucion();
+    });
+
+    //Solicitar autorizacion
+    $(document).on("click", "#btn-solicitarAutMaq", function () {
+        ConsultaPlanProduccionCs.ConfirmarAutorizacionMatMaq()
     });
 
     $(document).on('input', '.input-molido', function () {
