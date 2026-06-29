@@ -213,8 +213,15 @@
     color: #ffffff !important;
     background-color: #334155 !important;
     border-color: #64748B !important;
+    box-shadow: 2px -1px 7px 0px #7e7e7e;
+        
 }
 
+.nav-tabs .nav-link:focus-visible {
+    background-color: #334155;
+    color: #ffffff;
+    box-shadow: 2px -1px 7px 0px #7e7e7e;
+}
 
 
 

@@ -1182,6 +1182,10 @@
 
     }
 
+    //=================================================================================
+    //======================= Confirmaciones de botones ===============================
+    // ------- Botones de confirmacion GUATA y FILTRO --------
+
     //Confirmacion impresion de materiales
     ConfirmarPrintEtiqueta() {
         $.confirm({
@@ -1411,55 +1415,7 @@
         });
 
     }
-
-    //Confirmacion de Autorizacion para escaneo de materiales en maquilas
-    ConfirmarAutorizacionMatMaq() {
-        $.confirm({
-
-            theme: 'modern',
-            type: 'red',
-            columnClass: 'confirm-ffisa',
-            animation: 'scale',
-            closeAnimation: 'scale',
-            title: `
-            <div class="text-center">
-                <div class="pt-3 pb-5">
-                    <i class="bi bi-floppy text-black fs-1 icon-etiqueta-autorizacion"></i>
-                </div>                
-                <div class="mt-2 fw-semibold text-dark accion-confirm-realizar">
-                    Solicitar Autorización
-                </div>
-            </div>`,
-            content: `
-            <div class="text-center text-secondary accion-confirm">
-                La emisión permanecerá en espera hasta que el supervisor apruebe o rechace el consumo de materiales.
-                ¿Desea continuar?
-            </div>`,
-
-            buttons: {
-
-                eliminar: {
-                    text: 'Solicitar',
-                    btnClass: 'btn-warning',
-
-                    action: function () {
-
-                        // lógica
-
-                    }
-                },
-
-                cancelar: function () { },
-
-            },
-            onOpenBefore: function () {
-                this.$jconfirmBox[0].style.setProperty('border-top', '5px solid #737474', 'important');
-            }
-        });
-
-    }
-
-
+        
     //Confirmar generar devolucion
     ConfirmarDevolucion() {
         $.confirm({
@@ -1510,6 +1466,116 @@
         });
     }
 
+    // ------- Botones de confirmacion MAQUILAS --------
+    //Confirmacion de Emisión - Consumo de Materia - MAQUILAS
+    ConfirmarEmisionCMM() {
+        $.confirm({
+
+            theme: 'modern',
+            type: 'red',
+            columnClass: 'confirm-ffisa',
+            animation: 'scale',
+            closeAnimation: 'scale',
+            title: `
+            <div class="text-center">
+                <div class="pt-3 pb-5">
+                    <i class="bi bi-file-earmark-check text-black fs-1 icon-etiqueta-Emision"></i>
+                </div>                
+                <div class="mt-2 fw-semibold text-dark accion-confirm-realizar">
+                    Generar emisión
+                </div>
+            </div>`,
+            content: `
+                <div class="text-center text-secondary mb-2">
+                    Se detectó una <b>resina</b> en la emisión.
+                </div>
+
+                <div class="border rounded p-2 bg-light">
+
+                    <div><strong>Descripción:</strong> RESINA WT152</div>
+                    <div><strong>Cantidad:</strong> 10.62 Lt</div>
+
+                </div>
+
+                <div class="text-center mt-3">
+                   ¿Confirma que desea generar la emisión con esta cantidad?
+                </div>
+
+            `,
+
+            buttons: {
+
+                eliminar: {
+                    text: 'Generar',
+                    btnClass: 'btn-genEmision',
+
+                    action: function () {
+
+                        // lógica
+
+                    }
+                },
+
+                cancelar: function () { },
+
+            },
+            onOpenBefore: function () {
+                this.$jconfirmBox[0].style.setProperty('border-top', '5px solid #737474', 'important');
+            }
+        });
+
+    }
+
+    //Confirmacion de Autorizacion para escaneo de materiales en maquilas
+    ConfirmarAutorizacionMatMaq() {
+        $.confirm({
+
+            theme: 'modern',
+            type: 'red',
+            columnClass: 'confirm-ffisa',
+            animation: 'scale',
+            closeAnimation: 'scale',
+            title: `
+            <div class="text-center">
+                <div class="pt-3 pb-5">
+                    <i class="bi bi-floppy text-black fs-1 icon-etiqueta-autorizacion"></i>
+                </div>                
+                <div class="mt-2 fw-semibold text-dark accion-confirm-realizar">
+                    Solicitar Autorización
+                </div>
+            </div>`,
+            content: `
+            <div class="text-center text-secondary accion-confirm">
+                La emisión permanecerá en espera hasta que el supervisor apruebe o rechace el consumo de materiales.
+                ¿Desea continuar?
+            </div>`,
+
+            buttons: {
+
+                eliminar: {
+                    text: 'Solicitar',
+                    btnClass: 'btn-warning',
+
+                    action: function () {
+
+                        // lógica
+
+                    }
+                },
+
+                cancelar: function () { },
+
+            },
+            onOpenBefore: function () {
+                this.$jconfirmBox[0].style.setProperty('border-top', '5px solid #737474', 'important');
+            }
+        });
+
+    }
+
+
+    //=================================================================================
+    //=================================================================================
     //Toolip Mensajes
     MostrarTooltipMolido(input, mensaje) {
 
@@ -2257,13 +2323,13 @@ $(function () {
 
     //Modales de confirmacion
     //Impresion de materiales
-    $(document).on("click", "#btn-generaEtiqueta", function () {
+    $(document).on("click", ".btn-generaEtiqueta", function () {
         ConsultaPlanProduccionCs.ConfirmarPrintEtiqueta();
 
     });
 
     //Guardado de información
-    $(document).on("click", "#btn-guardarInfo", function () {
+    $(document).on("click", ".btn-guardarInfo", function () {
         ConsultaPlanProduccionCs.ConfirmarGuardado();
 
     });
@@ -2274,23 +2340,57 @@ $(function () {
     });
 
     //Solicitar autorizacion
-    $(document).on("click", "#btn-solicitarAut", function () {
+    $(document).on("click", ".btn-solicitarAut", function () {
         ConsultaPlanProduccionCs.ConfirmarAutorizacion();
     });
 
-    //Generar emision
-    $(document).on("click", "#btn-genEmision", function () {
-        ConsultaPlanProduccionCs.ConfirmarEmision();
+    //Generar Emision
+    $(document).on("click", ".btn-genEmision", function () {
+        let tipoEmision = $(this).data('btnemision');
+        
+        switch (tipoEmision) {
+            case "btn-emisionMatCMM":
+                ConsultaPlanProduccionCs.ConfirmarEmisionCMM();
+                break;
+            default:
+                ConsultaPlanProduccionCs.ConfirmarEmision();
+                break;
+        }
+
+       
     });
 
+
+    //Radio buttons para cambios de TURNO
+    $('.check-turno').on('click', function (e) {
+
+        alert("Interceptado");
+
+        e.preventDefault();
+
+    });
+
+
     //Generar la devolucion
-    $(document).on("click", "#btn-generaDevolucion", function () {
+    $(document).on("click", ".btn-generaDevolucion", function () {
         ConsultaPlanProduccionCs.ConfirmarDevolucion();
     });
 
     //Solicitar autorizacion
-    $(document).on("click", "#btn-solicitarAutMaq", function () {
-        ConsultaPlanProduccionCs.ConfirmarAutorizacionMatMaq()
+    $(document).on("click", ".btn-solicitarAutMaq", function () {
+
+        let tipoAutorizacion = $(this).data('btnsolicitaraut');
+
+        switch (tipoAutorizacion) {
+            case "btn-solicitarAutMatCMM":
+                ConsultaPlanProduccionCs.ConfirmarAutorizacionMatMaq();
+                break;
+            default:
+                ConsultaPlanProduccionCs.ConfirmarAutorizacion();
+                break;
+        }
+
+       
     });
 
     $(document).on('input', '.input-molido', function () {
