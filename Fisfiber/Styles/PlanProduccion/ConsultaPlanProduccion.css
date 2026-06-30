@@ -660,12 +660,12 @@
     display: none !important;
 }
 
-.check-turno:checked {
+.check-tipo-turno:checked {
     background-color: #dc362e;
     border-color: #dc362e;
 }
 
-.check-turno:focus {
+.check-tipo-turno:focus {
     box-shadow: 0 0 0 .25rem #dc362e40;
     border-color: #dc362e;
 }
@@ -756,6 +756,10 @@
     width: 160px;
 }
 
+.texto-info {
+    font-size: 9px;
+}
+
 .input-cantConsumir {
     width: 100px;
     text-align: center;
@@ -767,6 +771,34 @@
     border-radius: 10px;
     background: #fafafa;
     width: 300px;
+}
+
+
+/* Modal de cambios de turno */
+#modalAutorizacionTurno {
+    background-color: #00000085;
+}
+
+.input-codigo-autTurno {
+    text-align: center;
+    width: 50%;
+}
+
+.btn-validar-turno {
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+.btn-cancelar-cambioTurno {
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: #ecf0f1;
+    border-radius: 4px;
 }
 
 

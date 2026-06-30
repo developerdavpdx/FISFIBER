@@ -103,6 +103,9 @@
         //tooltip alertas
         this.tooltipMolido = null;
 
+        //Variables de deteccion para la autorizacion de los cambios de turno
+        this.turnoActual = null;
+        this.turnoPendiente = null;
 
     }
     //Listado de planes de produccion
@@ -1964,9 +1967,12 @@ function closeParo(paro) {
 //EVENTOS
 $(function () {
 
-    //Variables globales
+    //Variables globales 
     let articulo = "";
     let linea = "";
+
+    // <-- AQUÍ
+    ConsultaPlanProduccionCs.turnoActual = $('input[name="tipoTurno"]:checked').val();
 
     const User = sessionStorage.getItem("email");
     initHubParos(User);
@@ -2361,14 +2367,7 @@ $(function () {
     });
 
 
-    //Radio buttons para cambios de TURNO
-    $('.check-turno').on('click', function (e) {
 
-        alert("Interceptado");
-
-        e.preventDefault();
-
-    });
 
 
     //Generar la devolucion
@@ -2416,6 +2415,46 @@ $(function () {
 
         icono.toggleClass('bi-chevron-up bi-chevron-down');
     });
+
+    //Mostrar modal de autorizacion para cambios de turno
+        //Guata y Filtro
+    $(document).on('change', 'input[name="tipoTurno"]', function () {
+
+        let nuevoTurno = $(this).val();
+
+        if (nuevoTurno === ConsultaPlanProduccionCs.turnoActual)
+            return;
+
+        ConsultaPlanProduccionCs.turnoPendiente = nuevoTurno;
+
+        // Regresar el radio al turno actual
+        $('input[name="tipoTurno"][value="' + ConsultaPlanProduccionCs.turnoActual + '"]')
+            .prop('checked', true);
+
+        // Abrir modal
+        $('#modalAutorizacionTurno').modal('show');
+
+    });
+
+        //Maquila
+    $(document).on('change', 'input[name="tipoTurnoM"]', function () {
+
+        let nuevoTurno = $(this).val();
+
+        if (nuevoTurno === ConsultaPlanProduccionCs.turnoActual)
+            return;
+
+        ConsultaPlanProduccionCs.turnoPendiente = nuevoTurno;
+
+        // Regresar el radio al turno actual
+        $('input[name="tipoTurnoM"][value="' + ConsultaPlanProduccionCs.turnoActual + '"]')
+            .prop('checked', true);
+
+        // Abrir modal
+        $('#modalAutorizacionTurno').modal('show');
+
+    });
+    
 });
 
 

@@ -1186,7 +1186,7 @@
                                                                 </span>
                                                             </td>
                                                             <td class="text-center">
-                                                                <button class="btn btn-outline-danger btn-eliminarME" 
+                                                                <button class="btn btn-outline-danger btn-eliminarME"
                                                                         data-btneliminar="btn-eliminarMRFGyF">
                                                                     <i class="bi bi-trash"></i>
                                                                 </button>
@@ -1205,7 +1205,7 @@
                                                                 </span>
                                                             </td>
                                                             <td class="text-center">
-                                                                <button class="btn btn-outline-danger btn-eliminarME" 
+                                                                <button class="btn btn-outline-danger btn-eliminarME"
                                                                         data-btneliminar="btn-eliminarMRFGyF">
                                                                     <i class="bi bi-trash"></i>
                                                                 </button>
@@ -1231,7 +1231,7 @@
                                                     primas que no hayan sido autorizadas.
                                                 </div>
                                             </div>
-                                            
+
 
                                             <!-- BOTONES -->
                                             <!-- Botón de autorización -->
@@ -1261,7 +1261,7 @@
                                                         Guardar
                                                     </button>
 
-                                                    <button class="btn btn-guardarProduccion btn-sm fw-semibold px-4 py-2"                                                            
+                                                    <button class="btn btn-guardarProduccion btn-sm fw-semibold px-4 py-2"
                                                             data-bs-dismiss="modal">
                                                         Cancelar
                                                     </button>
@@ -1340,7 +1340,7 @@
                                                 <b>No es posible generar la emisión.</b>
                                                 Regrese a la sección <u>Reserva de fibras</u> y complete el escaneo de los componentes pendientes.
                                             </a>
-                                        </div>                                        
+                                        </div>
 
                                         <!-- DERECHA: estatus conteos -->
                                         <div class="col-12 d-flex flex-column justify-content-end align-self-stretch mb-3">
@@ -1374,7 +1374,7 @@
                                                             Seleccione la etiqueta:
                                                         </label>
 
-                                                        <div class="form-check mb-2">                                                            
+                                                        <div class="form-check mb-2">
                                                             <input class="form-check-input check-tipo-etiqueta check-tipo-etiquetaGyF"
                                                                    type="radio"
                                                                    name="tipoEtiqueta"
@@ -1430,25 +1430,28 @@
                                                 <div class="col-12 col-md-6 col-xl-12">
                                                     <!-- Turno -->
                                                     <div class="mb-4">
-
-                                                        <label class="fw-semibold ps-2 mb-2">
-                                                            Seleccione el turno:
-                                                        </label>
+                                                        <div class="d-flex flex-column">
+                                                            <label class="fw-semibold ps-2 mb-0">
+                                                                Turno en curso:
+                                                            </label>
+                                                            <span class="text-secondary fs-6 ps-2 mb-3">Para cambios se requiere autorización</span>
+                                                        </div>
 
                                                         <div class="form-check mb-2">
-                                                            <input class="form-check-input check-tipo-etiqueta turno1GyF"
+                                                            <input class="form-check-input check-tipo-turno turno1GyF"
                                                                    type="radio"
                                                                    name="tipoTurno"
                                                                    value="turno1GyF"
-                                                                   id="turno1GyF">
+                                                                   id="turno1GyF" checked>
 
                                                             <label class="form-check-label" for="turno1GyF">
                                                                 Turno 1
+                                                                <span class="text-secondary mb-3 texto-info">(06:00 a 14:00)</span>
                                                             </label>
                                                         </div>
 
-                                                        <div class="form-check">
-                                                            <input class="form-check-input check-tipo-etiqueta turno2GyF"
+                                                        <div class="form-check mb-2">
+                                                            <input class="form-check-input check-tipo-turno turno2GyF"
                                                                    type="radio"
                                                                    name="tipoTurno"
                                                                    value="turno2GyF"
@@ -1456,12 +1459,49 @@
 
                                                             <label class="form-check-label" for="turno2GyF">
                                                                 Turno 2
+                                                                <span class="text-secondary mb-3 texto-info">(14:00 a 22:00)</span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check mb-2">
+                                                            <input class="form-check-input check-tipo-turno turno3GyF"
+                                                                   type="radio"
+                                                                   name="tipoTurno"
+                                                                   value="turno3GyF"
+                                                                   id="turno3GyF">
+
+                                                            <label class="form-check-label" for="turno3GyF">
+                                                                Turno 3
+                                                                <span class="text-secondary mb-3 texto-info">(22:00 a 06:00)</span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check mb-2">
+                                                            <input class="form-check-input check-tipo-turno turnoMix1GyF"
+                                                                   type="radio"
+                                                                   name="tipoTurno"
+                                                                   value="turnoMix1GyF"
+                                                                   id="turnoMix1GyF">
+
+                                                            <label class="form-check-label" for="turnoMix1GyF">
+                                                                Turno mixto 1
+                                                                <span class="text-secondary mb-3 texto-info">(08:00 a 17:00)</span>
                                                             </label>
                                                         </div>
 
+                                                        <div class="form-check mb-2">
+                                                            <input class="form-check-input check-tipo-turno check-turnoMix2GyF"
+                                                                   type="radio"
+                                                                   name="tipoTurno"
+                                                                   value="turnoMix2GyF"
+                                                                   id="turnoMix2GyF">
+
+                                                            <label class="form-check-label" for="turnoMix2GyF">
+                                                                Turno mixto 2
+                                                                <span class="text-secondary mb-3 texto-info">(06:00 a 06:00)</span>
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
                                             <!-- Botones para generar etiquetas -->
                                             <div class="row">
@@ -1476,7 +1516,7 @@
 
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
 
                                         <!-- ===================== -->
@@ -1559,7 +1599,7 @@
                                         </div>
 
                                         <div class="col-auto">
-                                            <button id="btn-agregaMaterial" 
+                                            <button id="btn-agregaMaterial"
                                                     class="btn btn-danger px-4"
                                                     data-btnagregamaterial="btn-agregarMaterialDev">
                                                 <i class="bi bi-plus-circle me-2"></i>
@@ -1672,7 +1712,7 @@
 
                                         <div class="d-flex flex-wrap gap-2 seccion-btns-Dev">
                                             <div id="accionesSupervisor" class="d-flex align-items-center justify-content-start btn-sol-dev ps-4">
-                                                <button type="button" 
+                                                <button type="button"
                                                         class="btn btn-danger btn-sm fw-semibold btn-generaDevolucion px-4 py-2"
                                                         data-btndevolucion="btn-devolucionME">
                                                     <i class="bi bi-arrow-return-left me-2"></i>
@@ -1681,16 +1721,15 @@
                                             </div>
 
                                             <div class="d-flex align-items-center justify-content-end btn-sol-GC pe-4 gap-2">
-                                                <button type="button" 
+                                                <button type="button"
                                                         class="btn btn-genEtiquetaProduccion btn-sm fw-semibold btn-generaEtiqueta px-4 py-2"
                                                         data-btngeneraetiqueta="btn-generaEtiqDevME">
                                                     <i class="bi bi-tag me-2"></i>
                                                     Generar Etiqueta
                                                 </button>
-                                                <button type="button" 
-                                                        class="btn btn-guardarProduccion btn-sm fw-semibold px-4 py-2" 
-                                                        data-bs-dismiss="modal"
-                                                        >
+                                                <button type="button"
+                                                        class="btn btn-guardarProduccion btn-sm fw-semibold px-4 py-2"
+                                                        data-bs-dismiss="modal">
                                                     Cancelar
                                                 </button>
                                             </div>
@@ -1711,7 +1750,6 @@
     </div>
 
     <!-- /#modalOpcionesPlanProduccion (Fibras y guata) -->
-
     <!-- ══════════════════════════════════════════════════
          Modal: Opciones plan de produccion (Maquilas)
     ════════════════════════════════════════════════════ -->
@@ -1792,7 +1830,7 @@
                         <!-- Seccion: menus de producción -->
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                
+
                                 <a class="nav-item nav-link active" id="nav-ConsumoM-tab" data-bs-toggle="tab" href="#nav-ConsumoM" role="tab">
                                     <i class="bi bi-bounding-box-circles me-2"></i> Consumo Materia
                                 </a>
@@ -1822,7 +1860,7 @@
                                     </div>
                                 </div>
                             </div>
-                                                       
+
                             <!-- Sección: Consumo de Materia -->
                             <div class="tab-pane fade show active" id="nav-ConsumoM" role="tabpanel" aria-labelledby="nav-ConsumoM-tab">
 
@@ -1958,7 +1996,7 @@
                                                     <i class="bi bi-exclamation-triangle-fill me-2"></i>
                                                     Se envió una solicitud de autorización al supervisor para validar el consumo de los materiales escaneados.
                                                 </div>
-                                               
+
                                             </div>
                                             <!-- BOTONES -->
                                             <!-- Botones normales -->
@@ -2140,12 +2178,15 @@
                                                     <!-- Turno -->
                                                     <div class="mb-4">
 
-                                                        <label class="fw-semibold ps-2 mb-2">
-                                                            Seleccione el turno:
-                                                        </label>
+                                                        <div class="d-flex flex-column">
+                                                            <label class="fw-semibold ps-2 mb-0">
+                                                                Turno en curso:
+                                                            </label>
+                                                            <span class="text-secondary ps-2 mb-3 texto-info">Para cambios se requiere autorización</span>
+                                                        </div>
 
                                                         <div class="form-check mb-2">
-                                                            <input class="form-check-input check-tipo-etiqueta check-turnoM"
+                                                            <input class="form-check-input check-tipo-turno check-turnoM"
                                                                    type="radio"
                                                                    name="tipoTurnoM"
                                                                    value="turno1M"
@@ -2153,11 +2194,12 @@
 
                                                             <label class="form-check-label" for="turno1M">
                                                                 Turno 1
+                                                                <span class="text-secondary mb-3 texto-info">(06:00 a 14:00)</span>
                                                             </label>
                                                         </div>
 
-                                                        <div class="form-check">
-                                                            <input class="form-check-input check-tipo-etiqueta check-turnoM"
+                                                        <div class="form-check mb-2">
+                                                            <input class="form-check-input check-tipo-turno check-turnoM"
                                                                    type="radio"
                                                                    name="tipoTurnoM"
                                                                    value="turno2M"
@@ -2165,6 +2207,46 @@
 
                                                             <label class="form-check-label" for="turno2M">
                                                                 Turno 2
+                                                                <span class="text-secondary mb-3 texto-info">(14:00 a 22:00)</span>
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-check mb-2">
+                                                            <input class="form-check-input check-tipo-turno check-turnoM"
+                                                                   type="radio"
+                                                                   name="tipoTurnoM"
+                                                                   value="turno3M"
+                                                                   id="turno3M">
+
+                                                            <label class="form-check-label" for="turno3M">
+                                                                Turno 3
+                                                                <span class="text-secondary mb-3 texto-info">(22:00 a 06:00)</span>
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-check mb-2">
+                                                            <input class="form-check-input check-tipo-turno check-turnoMix1M"
+                                                                   type="radio"
+                                                                   name="tipoTurnoM"
+                                                                   value="turnoMix1M"
+                                                                   id="turnoMix1M">
+
+                                                            <label class="form-check-label" for="turnoMix1M">
+                                                                Turno mixto 1
+                                                                <span class="text-secondary mb-3 texto-info">(08:00 a 17:00)</span>
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="form-check mb-2">
+                                                            <input class="form-check-input check-tipo-turno check-turnoMix2M"
+                                                                   type="radio"
+                                                                   name="tipoTurnoM"
+                                                                   value="turnoMix2M"
+                                                                   id="turnoMix2M">
+
+                                                            <label class="form-check-label" for="turnoMix2M">
+                                                                Turno mixto 2
+                                                                <span class="text-secondary mb-3 texto-info">(06:00 a 06:00)</span>
                                                             </label>
                                                         </div>
 
@@ -2301,7 +2383,7 @@
                                                     </thead>
 
                                                     <tbody>
-                                                                                                               
+
                                                         <tr>
                                                             <td class="text-center">
                                                                 <button class="btn btn-outline-danger btn-eliminarME"
@@ -2318,7 +2400,7 @@
                                                                 <input type="number" class="form-control form-control-sm input-cantDevolver" value="3.00">
                                                             </td>
                                                         </tr>
-                                                                                                               
+
                                                     </tbody>
 
                                                 </table>
@@ -2335,8 +2417,8 @@
 
                                         <div class="d-flex flex-wrap gap-2 seccion-btns-Dev">
                                             <div id="accionesSupervisor" class="d-flex align-items-center justify-content-start btn-sol-dev ps-4">
-                                                <button type="button" 
-                                                        class="btn btn-danger btn-sm fw-semibold btn-generaDevolucion px-4 py-2" 
+                                                <button type="button"
+                                                        class="btn btn-danger btn-sm fw-semibold btn-generaDevolucion px-4 py-2"
                                                         data-btndevolucion="btn-devolucionMEM">
                                                     <i class="bi bi-arrow-return-left me-2"></i>
                                                     Generar Devolución
@@ -2344,7 +2426,7 @@
                                             </div>
 
                                             <div class="d-flex align-items-center justify-content-end btn-sol-GC pe-4 gap-2">
-                                                <button type="button" 
+                                                <button type="button"
                                                         class="btn btn-genEtiquetaProduccion btn-sm fw-semibold btn-generaEtiqueta px-4 py-2"
                                                         data-btngeneraetiqueta="btn-generaEtiqDevMEM">
                                                     <i class="bi bi-tag me-2"></i>
@@ -2370,8 +2452,84 @@
         </div><!-- /.modal-dialog -->
     </div>
 
-    <!-- /#modalOpcionesPlanProduccion (Fibras y guata) -->
+    <!-- /#modalOpcionesPlanProduccion (Maquilas) -->
+    <!-- ══════════════════════════════════════════════════
+         Modal: Autorizacion cambios de Turno
+    ════════════════════════════════════════════════════ -->
+    <div class="modal fade" id="modalAutorizacionTurno" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
 
+            <div class="modal-content border-0 shadow">
+
+                <div class="modal-header bg-pr text-white">
+
+                    <div>
+                        <h5 class="mb-0">
+                            <i class="fas fa-exchange-alt me-2"></i>
+                            Cambio de turno
+                        </h5>
+                    </div>
+
+                    <button type="button" class="btn btn-link text-white p-0" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+
+                </div>
+
+                <div class="modal-body pt-4">
+
+                    <div class="pt-3 pb-5 text-center">
+                        <i class="bi bi-exclamation-triangle fs-1 icon-etiqueta-autorizacion"></i>
+                    </div>
+                                       
+                    <div class="d-flex flex-column text-center text-secondary pb-4">
+                        <b>Se detectó un intento de cambio de turno.</b>
+                        Ingrese el código de autorización para confirmar la operación.
+                    </div>
+
+                    <div class="mb-3 d-flex flex-column justify-content-center align-items-center">
+
+                        <label class="form-label fw-semibold">
+
+                            Código de autorización
+
+                        </label>
+
+                        <input id="txtCodigoTurno"
+                               class="form-control input-codigo-autTurno"
+                               type="password"
+                               maxlength="6"
+                               placeholder="Ingrese el código">
+
+                    </div>
+
+
+                    <div id="lblErrorTurno"
+                         class="small text-danger d-none">
+                        <i class="fas fa-times-circle me-1"></i>
+                        Código incorrecto.
+                    </div>
+
+                </div>
+
+                <div class="modal-footer d-flex justify-content-center align-items-center">
+
+                    <button class="btn btn-warning btn-validar-turno" id="btnConfirmarCambio">
+                        VALIDAR
+                    </button>
+                    <button class="btn btn-default btn-cancelar-cambioTurno" data-bs-dismiss="modal">
+                        CANCELAR
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- /#modalOpcionesPlanProduccion (Maquilas) -->
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
