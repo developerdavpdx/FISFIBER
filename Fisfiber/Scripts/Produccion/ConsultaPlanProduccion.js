@@ -1971,8 +1971,12 @@ $(function () {
     let articulo = "";
     let linea = "";
 
-    // <-- AQUÍ
+    // Lectura valor inicial Turno GyF
     ConsultaPlanProduccionCs.turnoActual = $('input[name="tipoTurno"]:checked').val();
+
+    // Lectura valor inicial Turno Maquila
+    ConsultaPlanProduccionCs.turnoActual = $('input[name="tipoTurnoM"]:checked').val();
+
 
     const User = sessionStorage.getItem("email");
     initHubParos(User);
@@ -2365,10 +2369,6 @@ $(function () {
 
        
     });
-
-
-
-
 
     //Generar la devolucion
     $(document).on("click", ".btn-generaDevolucion", function () {

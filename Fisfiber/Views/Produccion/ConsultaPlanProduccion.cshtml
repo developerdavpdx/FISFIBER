@@ -1445,9 +1445,14 @@
                                                                    id="turno1GyF" checked>
 
                                                             <label class="form-check-label" for="turno1GyF">
-                                                                Turno 1
-                                                                <span class="text-secondary mb-3 texto-info">(06:00 a 14:00)</span>
+                                                                <div class="fw-semibold">
+                                                                    Turno 1
+                                                                </div>
+                                                                <small class="text-secondary texto-info">
+                                                                    (06:00 a 14:00)
+                                                                </small>
                                                             </label>
+
                                                         </div>
 
                                                         <div class="form-check mb-2">
@@ -1458,8 +1463,12 @@
                                                                    id="turno2GyF">
 
                                                             <label class="form-check-label" for="turno2GyF">
-                                                                Turno 2
-                                                                <span class="text-secondary mb-3 texto-info">(14:00 a 22:00)</span>
+                                                                <div class="fw-semibold">
+                                                                    Turno 2
+                                                                </div>
+                                                                <small class="text-secondary texto-info">
+                                                                    (14:00 a 22:00)
+                                                                </small>
                                                             </label>
                                                         </div>
                                                         <div class="form-check mb-2">
@@ -1470,8 +1479,12 @@
                                                                    id="turno3GyF">
 
                                                             <label class="form-check-label" for="turno3GyF">
-                                                                Turno 3
-                                                                <span class="text-secondary mb-3 texto-info">(22:00 a 06:00)</span>
+                                                                <div class="fw-semibold">
+                                                                    Turno 3
+                                                                </div>                                                                
+                                                                <small class="text-secondary texto-info">
+                                                                    (22:00 a 06:00)
+                                                                </small>
                                                             </label>
                                                         </div>
                                                         <div class="form-check mb-2">
@@ -1482,8 +1495,12 @@
                                                                    id="turnoMix1GyF">
 
                                                             <label class="form-check-label" for="turnoMix1GyF">
-                                                                Turno mixto 1
-                                                                <span class="text-secondary mb-3 texto-info">(08:00 a 17:00)</span>
+                                                                <div class="fw-semibold">
+                                                                    Turno mixto 1
+                                                                </div>                                                                
+                                                                <small class="text-secondary texto-info">
+                                                                    (08:00 a 17:00)
+                                                                </small>
                                                             </label>
                                                         </div>
 
@@ -1495,8 +1512,12 @@
                                                                    id="turnoMix2GyF">
 
                                                             <label class="form-check-label" for="turnoMix2GyF">
-                                                                Turno mixto 2
-                                                                <span class="text-secondary mb-3 texto-info">(06:00 a 06:00)</span>
+                                                                <div class="fw-semibold">
+                                                                    Turno mixto 2
+                                                                </div>
+                                                                <small class="text-secondary texto-info">
+                                                                    (06:00 a 06:00)
+                                                                </small>
                                                             </label>
                                                         </div>
                                                     </div>
@@ -1525,7 +1546,7 @@
                                         <div class="col-12 col-xl-8 d-flex flex-column align-items-center">
 
                                             <!-- Visor -->
-                                            <div class="rounded-3 border border-2 p-3 mb-3 visor-etiqueta">
+                                            <div class="rounded-3 border border-2 p-3 mb-5 visor-etiqueta">
 
                                                 <div class="d-flex justify-content-center align-items-center h-100 text-secondary">
 
@@ -1894,6 +1915,18 @@
                                             </button>
                                         </div>
 
+                                        <!-- Cantidad a producir -->
+                                        <div class="col-12 col-lg-3 ms-lg-auto">
+                                            <label class="form-label fw-semibold mb-2">
+                                                Cantidad a producir:
+                                            </label>
+
+                                            <input type="number"
+                                                   class="form-control text-start"
+                                                   value="500"
+                                                   id="cantidadProducir">
+                                        </div>
+
                                         <!-- ============================= -->
                                         <!-- Registro de material Escaneado -->
                                         <!-- ============================= -->
@@ -1908,6 +1941,7 @@
                                                         <tr>
                                                             <th>SKU</th>
                                                             <th>Descripción</th>
+                                                            <th>Cantidad base</th>
                                                             <th>Cantidad a consumir</th>
                                                             <th>Unidad Medida</th>
                                                             <th class="text-center">Acción</th>
@@ -1921,11 +1955,14 @@
                                                             <td>RELLENO "N" MAQUILAS</td>
                                                             <td>
                                                                 <div class="d-flex justify-content-center align-items-center">
-                                                                    <input type="number" class="form-control form-control-sm input-cantConsumir me-3" value="00.150">
+                                                                    <input type="number" class="form-control form-control-sm input-cantConsumir me-3">
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                Kg
+                                                                1
+                                                            </td>
+                                                            <td>
+                                                                -
                                                             </td>
                                                             <td class="text-center">
                                                                 <button class="btn btn-outline-danger btn-eliminarME" data-btneliminar="btn-eliminarMaterialCMM">
@@ -1939,8 +1976,11 @@
                                                             <td>BOLSA IMPRESA POLIETILENO PERFORADA 40X62 CAL 150 MODATELAS BOPISA</td>
                                                             <td>
                                                                 <div class="d-flex justify-content-center align-items-center">
-                                                                    <input type="number" class="form-control form-control-sm input-cantConsumir me-3" value="45.00">
+                                                                    <input type="number" class="form-control form-control-sm input-cantConsumir me-3">
                                                                 </div>
+                                                            </td>
+                                                            <td>
+                                                                2 
                                                             </td>
                                                             <td>
                                                                 Pz
@@ -1957,8 +1997,11 @@
                                                             <td>POLIETILENO RECICLADO TUBULAR 120 CAL 120 BE BAG</td>
                                                             <td>
                                                                 <div class="d-flex justify-content-center align-items-center">
-                                                                    <input type="number" class="form-control form-control-sm input-cantConsumir me-3" value="0.78">
+                                                                    <input type="number" class="form-control form-control-sm input-cantConsumir me-3">
                                                                 </div>
+                                                            </td>
+                                                            <td>
+                                                                1
                                                             </td>
                                                             <td>
                                                                 Kg
@@ -1974,8 +2017,11 @@
                                                             <td>RESINA WT152</td>
                                                             <td>
                                                                 <div class="d-flex justify-content-center align-items-center">
-                                                                    <input type="number" class="form-control form-control-sm input-cantConsumir me-3" value="10.62">
+                                                                    <input type="number" class="form-control form-control-sm input-cantConsumir me-3">
                                                                 </div>
+                                                            </td>
+                                                            <td>
+                                                                0.03212
                                                             </td>
                                                             <td>
                                                                 Lt
@@ -2190,11 +2236,16 @@
                                                                    type="radio"
                                                                    name="tipoTurnoM"
                                                                    value="turno1M"
-                                                                   id="turno1M">
+                                                                   id="turno1M" checked>
 
                                                             <label class="form-check-label" for="turno1M">
-                                                                Turno 1
-                                                                <span class="text-secondary mb-3 texto-info">(06:00 a 14:00)</span>
+                                                                <div class="fw-semibold">
+                                                                    Turno 1
+                                                                </div>
+                                                                <small class="text-secondary texto-info">
+                                                                    (06:00 a 14:00)
+                                                                </small>
+
                                                             </label>
                                                         </div>
 
@@ -2206,8 +2257,12 @@
                                                                    id="turno2M">
 
                                                             <label class="form-check-label" for="turno2M">
-                                                                Turno 2
-                                                                <span class="text-secondary mb-3 texto-info">(14:00 a 22:00)</span>
+                                                                <div class="fw-semibold">
+                                                                    Turno 2
+                                                                </div>
+                                                                <small class="text-secondary texto-info">
+                                                                    (14:00 a 22:00)
+                                                                </small>                                                               
                                                             </label>
                                                         </div>
 
@@ -2219,8 +2274,12 @@
                                                                    id="turno3M">
 
                                                             <label class="form-check-label" for="turno3M">
-                                                                Turno 3
-                                                                <span class="text-secondary mb-3 texto-info">(22:00 a 06:00)</span>
+                                                                <div class="fw-semibold">
+                                                                    Turno 3
+                                                                </div>
+                                                                <small class="text-secondary texto-info">
+                                                                    (22:00 a 06:00)
+                                                                </small>
                                                             </label>
                                                         </div>
 
@@ -2232,8 +2291,12 @@
                                                                    id="turnoMix1M">
 
                                                             <label class="form-check-label" for="turnoMix1M">
-                                                                Turno mixto 1
-                                                                <span class="text-secondary mb-3 texto-info">(08:00 a 17:00)</span>
+                                                                <div class="fw-semibold">
+                                                                    Turno mixto 1
+                                                                </div>
+                                                                <small class="text-secondary texto-info">
+                                                                    (08:00 a 17:00)
+                                                                </small>
                                                             </label>
                                                         </div>
 
@@ -2245,8 +2308,13 @@
                                                                    id="turnoMix2M">
 
                                                             <label class="form-check-label" for="turnoMix2M">
-                                                                Turno mixto 2
-                                                                <span class="text-secondary mb-3 texto-info">(06:00 a 06:00)</span>
+                                                                <div class="fw-semibold">
+                                                                    Turno mixto 2
+                                                                </div>
+                                                                <small class="text-secondary texto-info">
+                                                                    (06:00 a 06:00)
+                                                                </small>
+                                                               
                                                             </label>
                                                         </div>
 
@@ -2276,7 +2344,7 @@
                                         <div class="col-12 col-xl-8 d-flex flex-column align-items-center">
 
                                             <!-- Visor -->
-                                            <div class="rounded-3 border border-2 p-3 mb-3 visor-etiqueta">
+                                            <div class="rounded-3 border border-2 p-3 mb-5 visor-etiqueta">
 
                                                 <div class="d-flex justify-content-center align-items-center h-100 text-secondary">
 
@@ -2312,15 +2380,7 @@
                                                     <span class="text-secondary">|</span>
 
                                                     <span><strong>Ubicación:</strong> ALM-P01</span>
-
-                                                    <span class="text-secondary">|</span>
-
-                                                    <span><strong>Metros producidos:</strong> 45 m</span>
-
-                                                    <span class="text-secondary">|</span>
-
-                                                    <span><strong>Metros por rollo:</strong> 8 m</span>
-
+                                                    
                                                 </div>
 
                                             </div>

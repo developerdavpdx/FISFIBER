@@ -734,26 +734,43 @@
 .tabla-EMaquila th:nth-child(1),
 .tabla-EMaquila td:nth-child(1) {
     width: 180px;
+    height: 47px;
+    align-content: center;
 }
 
 .tabla-EMaquila th:nth-child(2),
 .tabla-molido td:nth-child(2) {
     width: 350px;
+    height: 47px;
+    align-content: center;
 }
 
 .tabla-EMaquila th:nth-child(3),
 .tabla-EMaquila td:nth-child(3) {
     width: 160px;
+    height: 47px;
+    align-content: center;
 }
 
 .tabla-EMaquila th:nth-child(4),
 .tabla-EMaquila td:nth-child(4) {
     width: 160px;
+    height: 47px;
+    align-content: center;
 }
 
 .tabla-EMaquila th:nth-child(5),
 .tabla-EMaquila td:nth-child(5) {
     width: 160px;
+    height: 47px;
+    align-content: center;
+}
+
+.tabla-EMaquila th:nth-child(6),
+.tabla-EMaquila td:nth-child(6) {
+    width: 112px;
+    height: 47px;
+    align-content: center;
 }
 
 .texto-info {
