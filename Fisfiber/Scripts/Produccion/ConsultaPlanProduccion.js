@@ -294,8 +294,18 @@
 
                         //}
                         IconOpcionesPFG = `<button class="btn btn-opcionesPPlus" 
+                                                id="btn-Mproduccion"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modalOpcionesPP"
+                                                data-planproduccion="${item.Folio}"
+                                                data-ordenfabricacion="${item.OrdenFabricacion}"
+                                                data-pedido="${item.Pedido}"
+                                                data-linea="${item.Linea}"
+                                                data-cantidad="${item.CantidadKilos}"
+                                                data-fechaini="${item.FechaContabilizacion}"
+                                                data-articulo="${item.DescripcionArticulo}"
+                                                data-estatus="${item.EstatusProduccion}"
+                                                data-piezasproducidas="${item.PiezasProducidas}"                                                
                                                 title="Producción - Guata y Filtro">
                                             <i class="bi bi-stack"></i>
                                         </button>`;
@@ -1576,6 +1586,74 @@
 
     }
 
+    //=================================================================================
+    //======================= Eventos y funcionalidad ===============================
+
+    informacionEncabezadoProd(planProduccion, ordenFabricacion, pedido, linea, cantidad, fechaIni, articulo, estatusColor, estatus, piezasproducidas) {
+        let htmlEncabezado = `  <p class="fw-semibold text-dark ms-2 mb-2">Información General:</p>
+                                <div class="rounded-3 p-3 mb-4 seccion-tarjet-infoGen">
+                                    <div class="row g-2">
+                                        <div class="col-12 col-md-4">
+                                            <small class="text-secondary">Plan Producción: </small>
+                                            <p class="fw-semibold mb-0">${planProduccion}</p>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <small class="infoGenTitle-OT">Orden Fabricación: </small>
+                                            <p class="mb-0 infoGenCont-OT">OF-${ordenFabricacion}</p>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <small class="text-secondary">Pedido: </small>
+                                            <p class="fw-semibold mb-0 d-flex align-items-center gap-2">
+                                                PED-${pedido}
+                                            </p>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <small class="text-secondary">Línea: </small>
+                                            <p class="fw-semibold mb-0">${linea}</p>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <small class="text-secondary">Cantidad Solicitada: </small>
+                                            <p class="fw-semibold mb-0">${cantidad}</p>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <small class="text-secondary">Fecha Inicio: </small>
+                                            <p class="fw-semibold mb-0">${fechaIni}</p>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <small class="text-secondary">Tipo Producto: </small>
+                                            <p class="fw-semibold mb-0">-</p>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <small class="text-secondary">Artículo: </small>
+                                            <p class="fw-semibold mb-0">${articulo}</p>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <small class="text-secondary">Estatus: </small>
+                                            <p class="fw-semibold mb-0">
+                                                <span class="badge-estatus ${estatusColor}">${estatus}</span>
+                                            </p>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <small class="text-secondary">Piezas producidas: </small>
+                                            <p class="fw-semibold mb-0">
+                                                <span class="fw-semibold mb-0">${piezasproducidas} / ${cantidad}</span>
+                                            </p>
+                                        </div>
+                                        <div class="col-12 col-md-4 d-felx justify-content-start align-content-end">
+                                            <button class="btn btn-link p-0 fw-semibold pt-2 pb-2 ps-0 pe-2 si-agregar-producto">
+                                                <i class="bi bi-plus-circle me-1"></i>Agregar más pedidos
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            `;
+
+
+        //Implementamos el encabezado
+        $('#content-encabezado-MProd').html(htmlEncabezado);
+    }
+
 
     //=================================================================================
     //=================================================================================
@@ -2454,7 +2532,46 @@ $(function () {
         $('#modalAutorizacionTurno').modal('show');
 
     });
-    
+
+
+    //=================================================================================
+    //========================= Eventos y funcionalidad ===============================
+    //Botones modal produccion GyF y Maquila
+    $(document).on('click', '#btn-Mproduccion', function () {
+        //Se obtiene la informacion de la cabecera
+        let planProduccion = $(this).data('planproduccion');
+        let ordenFabricacion = $(this).data('ordenfabricacion');
+        let pedido = $(this).data('pedido');
+        let linea = $(this).data('linea');
+        let cantidad = $(this).data('cantidad');
+        let fechaIni = $(this).data('fechaini');
+        let articulo = $(this).data('articulo');
+        let estatus = $(this).data('estatus').charAt(0).toUpperCase() + $(this).data('estatus').slice(1) ;
+        let piezasproducidas = $(this).data('piezasproducidas');
+
+        //Limpieza de contenido modal producción
+        $('#content-encabezado-MProd').html("");
+
+        //Asignacion color de estatus en producción
+        let estatusColor = "";
+        switch (estatus) {
+            case 'En cola':
+                estatusColor = "pendiente"
+                break;
+            default:
+                estatusColor = "terminado"
+                break;
+        }
+
+        //funciones armado de modal produccion
+        ConsultaPlanProduccionCs.informacionEncabezadoProd(planProduccion, ordenFabricacion, pedido, linea, cantidad, fechaIni, articulo, estatusColor, estatus, piezasproducidas);
+
+
+    });
+
+
+    //=================================================================================
+    //=================================================================================
 });
 
 

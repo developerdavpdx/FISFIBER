@@ -413,64 +413,11 @@
                 </div>
 
                 <div class="modal-body">
-                    <!-- Info general -->
-                    <p class="fw-semibold text-dark ms-2 mb-2">Información General:</p>
-                    <div class="rounded-3 p-3 mb-4 seccion-tarjet-infoGen">
-                        <div class="row g-2">
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Plan Producción: </small>
-                                <p class="fw-semibold mb-0">P001:006</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="infoGenTitle-OT">Orden Fabricación: </small>
-                                <p class="mb-0 infoGenCont-OT">OF-2024-001</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Pedido: </small>
-                                <p class="fw-semibold mb-0 d-flex align-items-center gap-2">
-                                    PED-2024-101
-                                </p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Línea: </small>
-                                <p class="fw-semibold mb-0">Línea 1</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Cantidad Solicitada: </small>
-                                <p class="fw-semibold mb-0">5,000 pzas</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Fecha Inicio: </small>
-                                <p class="fw-semibold mb-0">20/05/2026</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Tipo Producto: </small>
-                                <p class="fw-semibold mb-0">Resina</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Artículo: </small>
-                                <p class="fw-semibold mb-0">Bolsa HD 60x90</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Estatus: </small>
-                                <p class="fw-semibold mb-0">
-                                    <span class="badge-estatus proceso">En Proceso</span>
-                                </p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Piezas producidas: </small>
-                                <p class="fw-semibold mb-0">
-                                    <span class="fw-semibold mb-0">142 / 200</span>
-                                </p>
-                            </div>
-                            <div class="col-12 col-md-4 d-felx justify-content-start align-content-end">
-                                <button class="btn btn-link p-0 fw-semibold pt-2 pb-2 ps-0 pe-2 si-agregar-producto">
-                                    <i class="bi bi-plus-circle me-1"></i>Agregar más pedidos
-                                </button>
-                            </div>
+                    <!-- Info general (Encabezado) -->
+                    <div id="content-encabezado-MProd">
 
-                        </div>
                     </div>
+                    
 
                     <div class="row g-4 mb-3">
                         <!-- Seccion: menus de producción -->
@@ -1481,7 +1428,7 @@
                                                             <label class="form-check-label" for="turno3GyF">
                                                                 <div class="fw-semibold">
                                                                     Turno 3
-                                                                </div>                                                                
+                                                                </div>
                                                                 <small class="text-secondary texto-info">
                                                                     (22:00 a 06:00)
                                                                 </small>
@@ -1497,7 +1444,7 @@
                                                             <label class="form-check-label" for="turnoMix1GyF">
                                                                 <div class="fw-semibold">
                                                                     Turno mixto 1
-                                                                </div>                                                                
+                                                                </div>
                                                                 <small class="text-secondary texto-info">
                                                                     (08:00 a 17:00)
                                                                 </small>
@@ -1789,6 +1736,9 @@
 
                 <div class="modal-body">
                     <!-- Info general -->
+                    <div id="content-encabezado-MProd">
+
+                    </div>
                     <p class="fw-semibold text-dark ms-2 mb-2">Información General:</p>
                     <div class="rounded-3 p-3 mb-4 seccion-tarjet-infoGen">
                         <div class="row g-2">
