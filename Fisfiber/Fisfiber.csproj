@@ -362,6 +362,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\ApiController.cs" />
+    <Compile Include="Controllers\BasculaController.cs" />
     <Compile Include="Controllers\CreditoCobranzaController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\GlobalController.cs" />
@@ -380,6 +381,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\BasculaHub.cs" />
     <Compile Include="Hubs\DashTendPesosHub.cs" />
     <Compile Include="Hubs\EntregasMercanciaHub.cs" />
     <Compile Include="Hubs\EstatusEnvioHub.cs" />
@@ -387,6 +389,7 @@
     <Compile Include="Hubs\ProductionHub.cs" />
     <Compile Include="Hubs\ProgresoCargaHub.cs" />
     <Compile Include="Models\AccesoDatos.cs" />
+    <Compile Include="Models\BasculaPesoDto.cs" />
     <Compile Include="Models\Correos.cs" />
     <Compile Include="Models\EmailRequest.cs" />
     <Compile Include="Models\EstadoUnidad.cs" />
@@ -2791,6 +2794,7 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="Views\Api\" />
+    <Folder Include="Views\Bascula\" />
     <Folder Include="Views\Export\" />
   </ItemGroup>
   <ItemGroup>

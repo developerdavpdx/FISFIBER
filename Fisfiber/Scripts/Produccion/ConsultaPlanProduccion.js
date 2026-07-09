@@ -2567,6 +2567,7 @@ $(function () {
         ConsultaPlanProduccionCs.informacionEncabezadoProd(planProduccion, ordenFabricacion, pedido, linea, cantidad, fechaIni, articulo, estatusColor, estatus, piezasproducidas);
 
 
+
     });
 
 
