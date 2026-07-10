@@ -107,6 +107,9 @@
         this.turnoActual = null;
         this.turnoPendiente = null;
 
+        //Variables para el contador de la bascula
+        this.pesoActual = 0;
+        this.animadorPeso = new PesoAnimator("#lblPeso"); // Animacion del peso en bascula
     }
     //Listado de planes de produccion
     PlanesProduccion(terminados, showLoading = 1, CurrentFolio = '') {
@@ -1428,7 +1431,7 @@
         });
 
     }
-        
+
     //Confirmar generar devolucion
     ConfirmarDevolucion() {
         $.confirm({
@@ -1654,6 +1657,35 @@
         $('#content-encabezado-MProd').html(htmlEncabezado);
     }
 
+    //Reserva polietileno
+    indicadorBascula() {
+        let htmlPantallaIndicador = `
+             <p class="fw-semibold text-dark mb-2">
+                <i class="bi bi-hdd me-2"></i>
+                Báscula Conectada
+            </p>
+            <div class="d-inline-flex flex-column align-items-center border rounded-3 text-center gap-2 mb-3 cuadro-pesaje">
+
+                <span id="lblEstatusConexion" class="badge bg-success mb-1 indicador-conectada"></span>
+                <span id="lblPeso" class="fw-bold text-success pesaje-medida">0.00 kg</span>
+                <small id="lblMarca" class="text-secondary indicador-PActual"></small>
+                <small id="lblModelo" class="text-secondary indicador-PActual"></small>
+
+            </div>
+
+            <div class="cont-numConteo ms-2 mb-3"><small class="infoGenTitle-OT">Num. Bolsas: </small><p class="mb-0 infoGenCont-OT">25</p></div>
+                        
+        `;
+
+        //Implementamos el indicador de la bascula
+        $('#basculaConexion').html(htmlPantallaIndicador);
+
+        // El elemento ya existe, ahora sí crea el animador
+        this.animadorPeso = new PesoAnimator("#lblPeso");
+
+        // Recupera el último peso
+        this.animadorPeso.actualizar(this.pesoActual);
+    }
 
     //=================================================================================
     //=================================================================================
@@ -1811,7 +1843,37 @@
 
         }
     }
+        
+    //Recepcion del peso por signal R
+    initHubBascula(email) {
 
+        $.connection.hub.qs = {
+            userId: email
+        };
+
+        var hubBascula = $.connection.basculaHub;
+
+        hubBascula.client.actualizarPeso = (data) => {
+
+            console.log(data);
+
+            this.animadorPeso.actualizar(parseFloat(data.Peso));
+
+            $("#lblPeso").addClass("peso-update");
+
+            setTimeout(() => {
+
+                $("#lblPeso").removeClass("peso-update");
+
+            }, 250);
+
+            $("#lblEstatusConexion").text("● " + data.Estatus);
+            $("#lblMarca").text(data.Marca);
+            $("#lblModelo").text(data.Modelo);
+
+        };
+    }
+   
     //Calcular capacidad linea , menos paros
     async CapacidadHorasReal() {
         let CapacidadHoras = parseFloat(ConsultaPlanProduccionCs.CapacidadLinea);
@@ -1885,6 +1947,8 @@
             return false;
         }
     }
+
+
 
 }
 
@@ -2019,7 +2083,6 @@ function initHubParos(Email) {
     //END SinalR
 }
 
-
 function closeParo(paro) {
     console.log(`Paro en:`);
     console.log(paro);
@@ -2057,6 +2120,10 @@ $(function () {
 
 
     const User = sessionStorage.getItem("email");
+
+    //Se inicializa el evento para la actualizacion del peso de la bascula en RESERVA POLIETILENO
+    ConsultaPlanProduccionCs.initHubBascula(User);
+
     initHubParos(User);
 
     window.addEventListener("offline", function () {
@@ -2068,8 +2135,6 @@ $(function () {
         refrescarEstadoParos(); // 🔥 importante
         console.log("Reconciliando informacion")
     });
-
-
 
 
     // Validación de formularios
@@ -2566,11 +2631,15 @@ $(function () {
         //funciones armado de modal produccion
         ConsultaPlanProduccionCs.informacionEncabezadoProd(planProduccion, ordenFabricacion, pedido, linea, cantidad, fechaIni, articulo, estatusColor, estatus, piezasproducidas);
 
-
-
     });
 
+    //Seccion de Reserva de polietileno
+    $(document).on('click', '#nav-RPolietileno-tab', function () {
 
+        // Construccion de indicador bascula
+        ConsultaPlanProduccionCs.indicadorBascula();
+
+    });
     //=================================================================================
     //=================================================================================
 });

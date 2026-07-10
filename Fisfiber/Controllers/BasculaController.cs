@@ -12,13 +12,13 @@ namespace Fisfiber.Controllers
     public class BasculaController : Controller
     {
 
-        // GET: 
+        // POST: Solicitud de datos de bascula
         [HttpPost]
         public ActionResult ActualizarPeso(BasculaPesoDto model)
         {
             var hub = GlobalHost.ConnectionManager.GetHubContext<BasculaHub>();
 
-            hub.Clients.All.actualizarPeso(model.Peso);
+            hub.Clients.All.actualizarPeso(model);
 
             return Json(new { ok = true });
         }

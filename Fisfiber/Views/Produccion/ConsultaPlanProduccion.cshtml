@@ -589,25 +589,16 @@
 
                                     <div class="row g-3 mb-3">
                                         <!--Bascula -->
-                                        <div class="col-12 col-lg-3 ps-3">
-                                            <p class="fw-semibold text-dark mb-2">
-                                                <i class="bi bi-hdd me-2"></i>
-                                                Báscula Conectada
-                                            </p>
-                                            <div class="d-flex justify-content-center align-items-center">
-                                                <div class="d-inline-flex flex-column align-items-center border rounded-3 p-3 text-center mb-3 cuadro-pesaje">
-                                                    <span class="badge bg-success mb-1 indicador-conectada">● Conectada</span>
-                                                    <span id="lblPeso" class="fw-bold text-success pesaje-medida">0.00 kg</span>
-                                                    <small class="text-secondary indicador-PActual">Peso actual en báscula</small>
-                                                </div>
+                                        <div class="col-12 col-lg-4 col-xl-3 ps-3">
+                                            <div id="basculaConexion">
+
                                             </div>
 
-                                            <div class="cont-numConteo ms-2 mb-3"><small class="infoGenTitle-OT">Num. Bolsas: </small><p class="mb-0 infoGenCont-OT">25</p></div>
-
+                                           
                                         </div>
 
                                         <!-- Registro de Producción -->
-                                        <div class="col-12 col-lg-9">
+                                        <div class="col-12 col-lg-8 col-xl-9">
 
                                             <p class="fw-semibold text-dark mb-2">
                                                 <i class="bi bi-file-text me-2"></i>
@@ -2546,4 +2537,5 @@
 @*<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>*@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
+<script src="~/Scripts/Helpers/PesoAnimator.js"></script>
 <script src="~/Scripts/Produccion/ConsultaPlanProduccion.js?v=1.4.4"></script>

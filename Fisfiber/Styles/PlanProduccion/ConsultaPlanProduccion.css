@@ -315,7 +315,9 @@
 
 /*Seccion de bascula*/
 .cuadro-pesaje {
-    min-width: 130px;
+    width: 100%;
+    padding: 23px;
+    overflow: hidden;
     background: #fff;
 }
 
@@ -324,7 +326,12 @@
 }
 
 .pesaje-medida {
-    font-size: 53px;
+    display: block;
+    width: 100%;
+    font-size: 2.3rem;
+    font-weight: 700;
+    line-height: 1;
+    word-break: break-all;
 }
 
 .indicador-PActual {
@@ -341,6 +348,11 @@
     border: 1px solid #d5d5d5;
     background: #f8f9fa;
     box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.075);
+}
+
+
+.peso-update {
+    animation: pesoUpdate 250ms ease;
 }
 
 /*Seccion OT Polietileno*/

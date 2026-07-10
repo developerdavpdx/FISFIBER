@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using Fisfiber.Models;
+using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace Fisfiber.Hubs
 {
     public class BasculaHub : Hub
     {
-        public void ActualizarPeso(decimal peso)
+        public void ActualizarPeso(BasculaPesoDto model)
         {
-            Clients.All.actualizarPeso(peso);
+            Clients.All.actualizarPeso(model);
         }
     }
 }
