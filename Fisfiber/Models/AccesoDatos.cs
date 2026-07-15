@@ -284,6 +284,12 @@ namespace Fisfiber.Controllers
         public string GCGetNewLote { get { return "EXEC SpPdxFF_GetLotesPorSisNum @SisNum"; } }
         public string GCUpdatePedidoCargado { get { return "EXEC SpPdxFF_UpdatePedidoCargado @Id"; } }
 
+        #region ReservaPolietileno
+        public string RPInsertaLineaReservaPolietileno { get { return "EXEC SpPdxFF_InsertaLineasFyGReservaPolietileno  @PlanProduccion, @OrdenFabricacion, @Pedido, @Linea, @Peso, @Operador"; } }
+
+
+        #endregion
+
         #region ConsultaUnidades
         public string GCGetUnidadesActivas { get { return "EXEC SpPdxFF_GetUnidadesActivas "; } }
         public string GCGetEstadosUnidadesActivas { get { return "EXEC SpPdxFF_GetEstadosActivosUniades "; } }

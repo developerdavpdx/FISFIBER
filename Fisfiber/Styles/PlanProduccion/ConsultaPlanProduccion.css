@@ -356,28 +356,36 @@
 }
 
 /*Seccion OT Polietileno*/
-#tblRegistroProduccion td:nth-child(1) {
-    width: 50px;
+#tblRegistroProduccion thead th {
+    background: linear-gradient(119deg, #e53935, #b62c2c);
+    color: #fff;
+    font-weight: 500;
+    font-size: 15px;
+    border: none;
+    text-transform: none;
 }
 
-#tblRegistroProduccion th:nth-child(2),
-#tblRegistroProduccion td:nth-child(2) {
-    width: 65px;
+#tblRegistroProduccion tbody tr {
+    transition: .2s;
 }
 
-#tblRegistroProduccion th:nth-child(3),
-#tblRegistroProduccion td:nth-child(3) {
-    width: 100px;
+table.dataTable > tbody > tr > td {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 15px;
+    cursor: pointer !important;
+    font-weight: 100 !important;
 }
 
-#tblRegistroProduccion th:nth-child(4),
-#tblRegistroProduccion td:nth-child(4) {
-    width: 125px;
+table.dataTable > tbody > tr:hover td{
+    background-color: #dedede !important;
 }
 
-#tblRegistroProduccion th:nth-child(5),
-#tblRegistroProduccion td:nth-child(5) {
-    width: 120px;
+.dataTables_wrapper .paginate_button {
+    border-radius: 8px !important;
+    border: none !important;
+    margin: 0 3px;
+    min-width: 34px;
 }
 
 /* Tabla de molino */
@@ -829,6 +837,116 @@
     background-color: #ecf0f1;
     border-radius: 4px;
 }
+
+/*
+==============================================================
+        DATATABLES ESTILOS
+==============================================================
+*/
+
+.table {
+    border: 1px solid #e1e1e1;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+/* Contenedor */
+div.dt-container .dt-paging {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .35rem;
+    margin-top: 1rem;
+}
+
+/* Botones */
+div.dt-container .dt-paging .dt-paging-button {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 .75rem;
+    border: 1px solid #d0d7de !important;
+    border-radius: 6px !important;
+    background: #fff !important;
+    color: #24292f !important;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all .15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Hover */
+
+div.dt-container .dt-paging .dt-paging-button:hover {
+    background: #f6f8fa !important;
+    border-color: #afb8c1 !important;
+    color: #24292f !important;
+}
+
+/* Página actual */
+
+div.dt-container .dt-paging .dt-paging-button.current {
+    background: #dc3545 !important;
+    color: #ffffff !important;
+    border-color: #dc3545 !important;
+}
+
+div.dt-container .dt-paging .dt-paging-button.current:hover {
+    color: #ffffff !important;
+    background: #dc3545c4 !important;
+}
+
+/* Deshabilitados */
+
+div.dt-container .dt-paging .dt-paging-button.disabled {
+    opacity: .45;
+    cursor: default;
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav {
+    display: inline-flex !important;
+    width: auto !important;
+    flex: none !important;
+    white-space: nowrap;
+}
+
+/* Labels */
+div.dt-container .dt-length label,
+div.dt-container .dt-search label {
+    font-size: .85rem;
+    font-weight: 500;
+    color: #6c757d;
+}
+
+/* Select */
+div.dt-container .dt-length select {
+    min-width: 70px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+}
+
+/* Buscador */
+div.dt-container .dt-search input {
+    width: 220px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 0 .75rem;
+    transition: .2s;
+}
+
+div.dt-container .dt-search input:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 .15rem rgba(13,110,253,.15);
+}
+
+div.dt-container div.dt-layout-row div.dt-layout-cell.dt-layout-start {
+    margin-top: 7px;
+}
+
 
 
 /* Media querys de la pagina*/

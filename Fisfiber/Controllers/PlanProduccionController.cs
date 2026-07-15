@@ -1,9 +1,11 @@
-﻿using DocumentFormat.OpenXml.Office2010.Excel;
+﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Fisfiber.Hubs;
 using Fisfiber.Models;
 using log4net;
 using Microsoft.AspNet.SignalR;
+using Microsoft.SqlServer.Server;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -1232,6 +1234,35 @@ namespace Fisfiber.Controllers
                 return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" });
             }
         }
+
+        //Producción Guata y Filtro
+        //Procesamiento de informacion para seccion de Reserva polietileno GyF
+        public JsonResult InsertaLineaRPolietileno(ReservaPolietilenoDto modeloInsertaRPolietileno)
+        {
+            try
+            {
+                AD.RequestParameters = new Dictionary<string, string>();
+                AD.RequestParameters.Add("PlanProduccion", modeloInsertaRPolietileno.PlanProduccion);
+                AD.RequestParameters.Add("OrdenFabricacion", modeloInsertaRPolietileno.OrdenFabricacion);
+                AD.RequestParameters.Add("Pedido", modeloInsertaRPolietileno.Pedido);
+                AD.RequestParameters.Add("Linea", modeloInsertaRPolietileno.Linea);
+                AD.RequestParameters.Add("Peso", modeloInsertaRPolietileno.BasculaPeso.ToString());
+                AD.RequestParameters.Add("Operador", modeloInsertaRPolietileno.Empleado);
+                string CPP = Logic.GlobalProcedure(AD.RPInsertaLineaReservaPolietileno, AD.RequestParameters);
+
+
+
+
+                return null;
+            }
+            catch (Exception E)
+            {
+                //Devolver el error en formato JSON
+                return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = E.ToString(), Data = "[]" });
+            }
+        }
+
+
         #endregion
 
         #region ConsultaPP

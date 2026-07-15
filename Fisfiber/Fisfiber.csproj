@@ -395,14 +395,17 @@
     <Compile Include="Models\EstadoUnidad.cs" />
     <Compile Include="Models\Logica.cs" />
     <Compile Include="Models\Operador.cs" />
+    <Compile Include="Models\ReservaPolietilenoDto.cs" />
     <Compile Include="Models\RevisionModel.cs" />
     <Compile Include="Models\UnidadViewModel.cs" />
     <Compile Include="Models\UpdateDataRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="Scripts\Datatables\datatablehelper.js" />
     <Content Include="Images\load-files.png" />
     <Content Include="ImgPruebas\pruebaEvidencia.png" />
     <Content Include="Scripts\Helpers\pesoAnimator.js" />
     <Content Include="Scripts\Inspeccion\InspeccionProducto.js" />
+    <Content Include="Scripts\PlanProduccion\ReservaPolietilenoDto.js" />
     <Content Include="Scripts\Produccion\ReporteOrdenesTrabajo.js" />
     <Content Include="Scripts\Produccion\ConsultaGestionRecetas.js" />
   </ItemGroup>
@@ -2710,6 +2713,7 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="App_Data\confighead.ini" />
     <Content Include="Images\Avatar.webp" />
+    <Content Include="Scripts\Datatables\i18n\es-ES.json" />
     <None Include="Scripts\Jquery\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\Datatables\datatables.js" />
     <Content Include="Scripts\Datatables\datatables.min.js" />
@@ -2797,6 +2801,7 @@
     <Folder Include="Views\Api\" />
     <Folder Include="Views\Bascula\" />
     <Folder Include="Views\Export\" />
+    <Folder Include="Views\ReservaPolietilenoDto\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

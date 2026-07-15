@@ -788,8 +788,8 @@
         }
     }
 
-    getPedidoInData(pedido) {
-        let elemento = this.dataViajes.find((d) => d.Pedido == pedido);
+    getPedidoInData(Id, pedido) {
+        let elemento = this.dataViajes.find((d) => d.id == Id && d.Pedido == pedido);
         return elemento
     }
 
@@ -928,10 +928,10 @@ function initHubProgesoCarga() {
     //Escuchando eventos con SinalR
     var hub = $.connection.progresoCargaHub; // Conectar con el Hub de SignalR
 
-    hub.client.actualizarPlanEmb = function (pedido, NumViaje, Unidad, TPzsEntrega, TPzsCargadas) {
-        console.log(`Actualización recibida. Pedido: ${pedido} totalPzs ${TPzsEntrega} totalPzsCardas ${TPzsCargadas}`);
+    hub.client.actualizarPlanEmb = function (Id, pedido, NumViaje, Unidad, TPzsEntrega, TPzsCargadas) {
+        console.log(`Actualización recibida. Id: ${Id} Pedido: ${pedido} totalPzs ${TPzsEntrega} totalPzsCardas ${TPzsCargadas}`);
         // Llama a una función para recargar la tabla
-        UpdateProgressPedido(pedido, NumViaje, Unidad, TPzsEntrega, TPzsCargadas);
+        UpdateProgressPedido(Id, pedido, NumViaje, Unidad, TPzsEntrega, TPzsCargadas);
     };
 
     $.connection.hub.start().done(function () {
@@ -940,10 +940,10 @@ function initHubProgesoCarga() {
     //END SinalR
 }
 
-function UpdateProgressPedido(pedido, NumViaje, Unidad, TPzsEntrega, TPzsCargadas) {
+function UpdateProgressPedido(Id, pedido, NumViaje, Unidad, TPzsEntrega, TPzsCargadas) {
 
 
-    let objPedido = MP.getPedidoInData(pedido);
+    let objPedido = MP.getPedidoInData(Id, pedido);
     let idTabla = MP.getIdTabla(objPedido);
 
     let $row = $(`#${idTabla} tr[idppd='${objPedido.id}']`);

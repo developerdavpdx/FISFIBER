@@ -27,8 +27,8 @@ namespace Fisfiber.Controllers
 
                 log.Info($"[UPDATE-DATA] : Entrando en actualizacion carga en vista ");
 
-                var pedido = request.pedido;
-                var rollos = request.rollos;
+                var pedido = request.pedido; //DOCENTRY OV
+                var rollos = request.rollos; //Num escaneos realizados
                 
                 log.Info($"[UPDATE-DATA] : Datos entrantes pedido con DocEntry: {pedido} rollos: {rollos}");
 

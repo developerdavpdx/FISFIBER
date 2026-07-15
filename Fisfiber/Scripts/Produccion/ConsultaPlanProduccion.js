@@ -110,6 +110,9 @@
         //Variables para el contador de la bascula
         this.pesoActual = 0;
         this.animadorPeso = new PesoAnimator("#lblPeso"); // Animacion del peso en bascula
+
+        //Inicializacion de datatables
+        this.dataTableHelper = new DataTableHelper();
     }
     //Listado de planes de produccion
     PlanesProduccion(terminados, showLoading = 1, CurrentFolio = '') {
@@ -1299,7 +1302,7 @@
     }
 
     //Confirmacion de Guardar
-    ConfirmarGuardado() {
+    ConfirmarGuardado(planProduccion, ordenFabricacion, pedido, linea, btnIdentificado) {
         $.confirm({
 
             theme: 'modern',
@@ -1312,7 +1315,7 @@
                 <div class="pt-3 pb-5">
                     <i class="bi bi-floppy text-primary fs-1 icon-etiqueta"></i>
                 </div>                
-                <div class="mt-2 fw-semibold text-dark accion-confirm-realizar">
+                <div class="mt-2 fw-semibold text-dark accion-confirm-realizar">                     
                     Guardar
                 </div>
             </div>`,
@@ -1322,13 +1325,40 @@
 
             buttons: {
 
-                eliminar: {
+                guardar: {
                     text: 'Guardar',
                     btnClass: 'btn-genEtiquetaProduccion',
 
                     action: function () {
 
-                        // lógica
+                        //Se obtiene de que boton viene la accion para que asi se ejecute la logica correspondiente
+                        switch (btnIdentificado) {
+                            case "btn-guardaInfoRP":
+
+                                //Obtenemos el peso de la bascula 
+                                let basculaPeso = ConsultaPlanProduccionCs.pesoActual;
+
+                                //Obtenemos el empleado que esta logueado en el sistema
+                                let empleado = sessionStorage.getItem("empleado");
+
+                                let modeloRPolietileno = new ReservaPolietilenoDto(
+                                    planProduccion,
+                                    ordenFabricacion,
+                                    pedido,
+                                    linea,
+                                    basculaPeso,
+                                    empleado
+                                );
+
+                                //Mandamos los registros a la funcion que se encarga de procesar el guardado de la reserva de polietileno
+                                ConsultaPlanProduccionCs.procesaGuardadoReservaPolietileno(modeloRPolietileno)
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                       
 
                     }
                 },
@@ -1652,24 +1682,61 @@
                                 </div>
                             `;
 
+        let htmlEspecificacionFolio = `
+            <div class="d-flex justify-content-between align-items-center shadow-sm pt-2 pb-2 ps-3 pe-3 mb-2 gap-2 seccion-folioOT">
+                <button class="btn btn-especificacion btn-sm fw-semibold px-4 py-2 hojaEsp" itemcode="${articulo}" linea="${linea}">
+                    <i class="bi bi-file-earmark-text me-2"></i> Especificación
+                </button>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-secondary estilo-seccionFolio">Folio: </span>
+                    <p class="fw-semibold mb-0 estilo-seccionFolio"> OF-${ordenFabricacion}</p>
+                </div>
+            </div>
+        `;
 
-        //Implementamos el encabezado
+        let htmlbtnsReservaPolietileno = `
+            <button class="btn btn-genEtiquetaProduccion btn-sm fw-semibold btn-generaEtiqueta px-4 py-2"
+                    data-btngeneraetiqueta="btn-generaEtiqRP"
+                    data-planproduccion="${planProduccion}"
+                    data-ordenfabricacion="${ordenFabricacion}"
+                    data-pedido="${pedido}"
+                    data-linea="${linea}">
+                <i class="bi bi-tag me-1"></i>Generar Etiqueta
+            </button>
+            <button class="btn btn-guardarProduccion btn-sm fw-semibold btn-guardarInfo px-4 py-2"
+                    data-btnguardarinfo="btn-guardaInfoRP"
+                    data-planproduccion="${planProduccion}"
+                    data-ordenfabricacion="${ordenFabricacion}"
+                    data-pedido="${pedido}"
+                    data-linea="${linea}">
+                <i class="bi bi-floppy me-2"></i>Guardar
+            </button>
+        `;
+
+
+        // Implementamos el encabezado
         $('#content-encabezado-MProd').html(htmlEncabezado);
+
+        // Implementacion de especificacion y folio
+        $('#especificacion-folio').html(htmlEspecificacionFolio)
+
+        // Implementacion de btn para la seccion de reserva de polietileno
+        $('.seccion-btns-polietileno').html(htmlbtnsReservaPolietileno)
     }
 
     //Reserva polietileno
     indicadorBascula() {
-        let htmlPantallaIndicador = `
+        let htmlSeccionEncabezado = `
              <p class="fw-semibold text-dark mb-2">
                 <i class="bi bi-hdd me-2"></i>
                 Báscula Conectada
             </p>
             <div class="d-inline-flex flex-column align-items-center border rounded-3 text-center gap-2 mb-3 cuadro-pesaje">
 
-                <span id="lblEstatusConexion" class="badge bg-success mb-1 indicador-conectada"></span>
-                <span id="lblPeso" class="fw-bold text-success pesaje-medida">0.00 kg</span>
-                <small id="lblMarca" class="text-secondary indicador-PActual"></small>
-                <small id="lblModelo" class="text-secondary indicador-PActual"></small>
+                <span id="lblEstatusConexion" class="badge bg-danger mb-1 indicador-conectada">● Desconectado</span>
+                <span id="lblPeso" class="fw-bold text-danger pesaje-medida">0.00 kg</span>
+                <small id="lblMarca" class="text-secondary indicador-PActual">Sin conexión</small>
+                <small id="lblModelo" class="text-secondary indicador-PActual">Sin conexión</small>
 
             </div>
 
@@ -1677,18 +1744,73 @@
                         
         `;
 
+        
         //Implementamos el indicador de la bascula
-        $('#basculaConexion').html(htmlPantallaIndicador);
+        $('#basculaConexion').html(htmlSeccionEncabezado);
 
         // El elemento ya existe, ahora sí crea el animador
         this.animadorPeso = new PesoAnimator("#lblPeso");
 
         // Recupera el último peso
         this.animadorPeso.actualizar(this.pesoActual);
+
     }
 
     //=================================================================================
     //=================================================================================
+
+    //=================================================================================
+    //======================== Eventos de botones G y F ===============================
+
+    //Se procesa el guardado de la reserva de polietileno
+    procesaGuardadoReservaPolietileno(modeloRPolietileno) {
+        try {
+            let urlInsertaLineaRPolietileno = $('body').attr("insertaLineaReservaPolietileno");
+                                    
+            $.ajax({
+                url: urlInsertaLineaRPolietileno,
+                type: 'POST',
+                data: modeloRPolietileno,
+                dataType: 'json',
+
+                beforeSend: () => {
+                    // $('#listaTecnicosAsignados').html(`
+                    // <div class="text-center py-2">
+                    //     <div class="spinner-border spinner-border-sm text-primary"></div>
+                    // </div>`);
+                },
+
+                success: (data) => {
+
+                    //this.cacheTecnicos[key] = data;
+
+                    console.log(data);
+                },
+
+                error: (xhr, status, error) => {
+
+                //     $('#listaTecnicosAsignados').html(`
+                //     <div style="color:red; font-size:0.9rem;">
+                //         Error al cargar técnicos
+                //     </div>
+                // `);
+
+                    console.error(error);
+                }
+            });
+
+
+
+        } catch (error) {
+            LayoutCs.Excepcion(error, "Plan de producción");
+            StopLoading();
+
+        }
+    }
+
+    //=================================================================================
+    //=================================================================================
+
     //Toolip Mensajes
     MostrarTooltipMolido(input, mensaje) {
 
@@ -1855,21 +1977,57 @@
 
         hubBascula.client.actualizarPeso = (data) => {
 
-            console.log(data);
+            
+            if (data.Estatus == "Conectada") {
 
-            this.animadorPeso.actualizar(parseFloat(data.Peso));
+                // Se remueven clases de conexión no encontrada
+                $("#lblEstatusConexion").removeClass("bg-danger");
+                $("#lblPeso").removeClass("text-danger");
 
-            $("#lblPeso").addClass("peso-update");
+                // Guardar el último peso recibido
+                this.pesoActual = parseFloat(data.Peso);
 
-            setTimeout(() => {
+                // Actualización de peso
+                this.animadorPeso.actualizar(this.pesoActual);
 
-                $("#lblPeso").removeClass("peso-update");
+                $("#lblPeso").addClass("peso-update");
 
-            }, 250);
+                setTimeout(() => {
 
-            $("#lblEstatusConexion").text("● " + data.Estatus);
-            $("#lblMarca").text(data.Marca);
-            $("#lblModelo").text(data.Modelo);
+                    $("#lblPeso").removeClass("peso-update");
+
+                }, 250);
+
+                // Actualizacion de clases en bascula para deteccion de conexion
+                $("#lblEstatusConexion").addClass("bg-success");
+                $("#lblPeso").addClass("text-success");
+
+                // Actualizacion de datos de la bascula
+                $("#lblEstatusConexion").text("● " + data.Estatus);
+                $("#lblMarca").text(data.Marca);
+                $("#lblModelo").text(data.Modelo);
+
+              
+            } else {
+
+                // Si se desconecta, también reiniciamos el peso
+                this.pesoActual = 0;
+                
+                // Se remueven clases de conexion encontrada en caso de que se haya perdido la conexión
+                $("#lblEstatusConexion").removeClass("bg-success");
+                $("#lblPeso").removeClass("text-success");
+
+                // Se añaden las clases de conexion no encontrada
+                $("#lblEstatusConexion").addClass("bg-danger");
+                $("#lblPeso").addClass("text-danger");
+
+                $("#lblEstatusConexion").text("● " + data.Estatus);
+                $("#lblPeso").text("0.00 kg");
+                $("#lblMarca").text("Sin conexión");
+                $("#lblModelo").text("Sin conexión");
+            }
+
+           
 
         };
     }
@@ -1947,9 +2105,7 @@
             return false;
         }
     }
-
-
-
+       
 }
 
 LayoutCs.validarUsuario("Producci\u00F3n");
@@ -1957,6 +2113,7 @@ LayoutCs.validarUsuario("Producci\u00F3n");
 
 //Instancia de clase
 const ConsultaPlanProduccionCs = new ConsPlaPro();
+
 // Función para manejar el envío del formulario
 function ValidacionFormularios(event) {
     // Validar el formulario
@@ -2483,7 +2640,16 @@ $(function () {
 
     //Guardado de información
     $(document).on("click", ".btn-guardarInfo", function () {
-        ConsultaPlanProduccionCs.ConfirmarGuardado();
+        //Obtencion de datos generales
+        let planProduccion = $(this).data('planproduccion');
+        let ordenFabricacion = $(this).data('ordenfabricacion');
+        let pedido = $(this).data('pedido');
+        let linea = $(this).data('linea');
+        let btnIdentificado = $(this).data('btnguardarinfo');
+
+
+
+        ConsultaPlanProduccionCs.ConfirmarGuardado(planProduccion, ordenFabricacion, pedido, linea, btnIdentificado);
 
     });
 
@@ -2616,6 +2782,7 @@ $(function () {
 
         //Limpieza de contenido modal producción
         $('#content-encabezado-MProd').html("");
+        $('#especificacion-folio').html("");
 
         //Asignacion color de estatus en producción
         let estatusColor = "";
@@ -2635,6 +2802,16 @@ $(function () {
 
     //Seccion de Reserva de polietileno
     $(document).on('click', '#nav-RPolietileno-tab', function () {
+
+        // Limpieza de modal produccion - seccion Reserva polietileno
+        $('#basculaConexion').html("");
+
+        ConsultaPlanProduccionCs.dataTableHelper.crearDataTable("#tblRegistroProduccion", {
+            paging: true,
+            searching: true,
+            ordering: true,
+            autoWidth: true,
+        });
 
         // Construccion de indicador bascula
         ConsultaPlanProduccionCs.indicadorBascula();

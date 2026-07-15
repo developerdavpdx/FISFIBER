@@ -416,10 +416,9 @@
                     <!-- Info general (Encabezado) -->
                     <div id="content-encabezado-MProd">
 
-                    </div>
-                    
+                    </div>                    
 
-                    <div class="row g-4 mb-3">
+                    <div class="row g-4">
                         <!-- Seccion: menus de producción -->
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -442,20 +441,11 @@
                         </nav>
 
                         <div class="tab-content" id="nav-tabContent">
-
+                            <!-- Seccion: Especificacion y Folio -->
                             <div class="row">
 
-                                <div class="col-12">
-                                    <div class="d-flex justify-content-between align-items-center shadow-sm pt-2 pb-2 ps-3 pe-3 mb-2 gap-2 seccion-folioOT">
-                                        <button class="btn btn-especificacion btn-sm fw-semibold px-4 py-2 hojaEsp" itemcode="BRAFILL III/140 L1" linea="001">
-                                            <i class="bi bi-file-earmark-text me-2"></i> Especificación
-                                        </button>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="text-secondary estilo-seccionFolio">Folio: </span>
-                                            <p class="fw-semibold mb-0 estilo-seccionFolio"> OT-001</p>
-                                        </div>
-
-                                    </div>
+                                <div class="col-12" id="especificacion-folio">
+                                    
                                 </div>
                             </div>
 
@@ -593,8 +583,7 @@
                                             <div id="basculaConexion">
 
                                             </div>
-
-                                           
+                                                                                       
                                         </div>
 
                                         <!-- Registro de Producción -->
@@ -617,35 +606,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @*<tr><td colspan="5" class="text-center text-secondary fst-italic py-3">Sin registros</td></tr>*@
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>25.4</td>
-                                                            <td>20/05/2026 08:15</td>
-                                                            <td>ETQ-001-001</td>
-                                                            <td>Laura</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>24.8</td>
-                                                            <td>20/05/2026 08:32</td>
-                                                            <td>ETQ-001-002</td>
-                                                            <td>Laura</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>25.1</td>
-                                                            <td>20/05/2026 08:50</td>
-                                                            <td>ETQ-001-003</td>
-                                                            <td>Laura</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>4</td>
-                                                            <td>25.0</td>
-                                                            <td>20/05/2026 09:05</td>
-                                                            <td>ETQ-001-004</td>
-                                                            <td>Laura</td>
-                                                        </tr>
+                                                       <!-- Registros generados de manera dinamica -->
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -2537,5 +2498,7 @@
 @*<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>*@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
+<script src="~/Scripts/Datatables/datatablehelper.js"></script>
+<script src="~/Scripts/PlanProduccion/ReservaPolietilenoDto.js"></script>
 <script src="~/Scripts/Helpers/PesoAnimator.js"></script>
 <script src="~/Scripts/Produccion/ConsultaPlanProduccion.js?v=1.4.4"></script>
