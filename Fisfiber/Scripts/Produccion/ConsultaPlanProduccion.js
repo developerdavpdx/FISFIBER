@@ -1751,9 +1751,53 @@
         // El elemento ya existe, ahora sí crea el animador
         this.animadorPeso = new PesoAnimator("#lblPeso");
 
-        // Recupera el último peso
+        // Recupera el último peso en caso de que no se quiera regresar a cero al cambiar de seccion
+        //this.animadorPeso.actualizar(this.pesoActual);
+
+        // Se reinicia el contador de bascula a 0
+        this.pesoActual = 0;
         this.animadorPeso.actualizar(this.pesoActual);
 
+    }
+
+    // RESERVA POLIETILENO
+    mostrarRegistrosRPolietileno() {
+        $.ajax({
+            url: $("body").attr("obtenerLineaReservaPolietileno"),
+            type: "GET",
+            dataType: "json",
+
+            success: (response) => {
+                let data = [];
+                if (response.Status == "OK") {
+
+                    data = JSON.parse(response.Data);
+                }
+                    ConsultaPlanProduccionCs.dataTableHelper.crearDataTable("#tblRegistroProduccion", {
+                        data: data,
+                        columns: [
+                            { data: "Id" },
+                            { data: "Peso" },
+                            {
+                                data: "Fecha",
+                                render: data => this.formatearFecha(data)
+                            },
+                            { data: "Etiqueta" },
+                            { data: "Operador" }
+                        ]
+                    });
+                
+            },
+            error: function (xhr) {
+                console.log("STATUS:", xhr.status);
+                console.log("RESPONSE:", xhr.responseText);
+            },
+            complete: function () {
+                StopLoading();
+            }
+
+        });
+        
     }
 
     //=================================================================================
@@ -1761,7 +1805,7 @@
 
     //=================================================================================
     //======================== Eventos de botones G y F ===============================
-
+    
     //Se procesa el guardado de la reserva de polietileno
     procesaGuardadoReservaPolietileno(modeloRPolietileno) {
         try {
@@ -1774,28 +1818,52 @@
                 dataType: 'json',
 
                 beforeSend: () => {
-                    // $('#listaTecnicosAsignados').html(`
-                    // <div class="text-center py-2">
-                    //     <div class="spinner-border spinner-border-sm text-primary"></div>
-                    // </div>`);
+                    Loading();
                 },
 
-                success: (data) => {
+                success: (response) => {
+                                        
+                    try {
 
-                    //this.cacheTecnicos[key] = data;
+                        if (response.Status !== "OK") {
+                            LayoutCs.Alerta("Reserva de Polietileno", response.Message);
+                            return;
+                        }
 
-                    console.log(data);
+                        const data = JSON.parse(response.Data);
+
+                        console.log(response);
+
+                        LayoutCs.Alerta(
+                            "Reserva de Polietileno",
+                            response.Message,
+                            "OK"
+                        );
+
+                        //Actualizamos la tabla con la nueva linea añadida
+                        ConsultaPlanProduccionCs.mostrarRegistrosRPolietileno();
+                       
+                    } catch (ex) {
+                                                
+                        LayoutCs.Excepcion(
+                            ex,
+                            "Reserva de Polietileno"
+                        ); 
+                       
+                    }
+
                 },
 
                 error: (xhr, status, error) => {
 
-                //     $('#listaTecnicosAsignados').html(`
-                //     <div style="color:red; font-size:0.9rem;">
-                //         Error al cargar técnicos
-                //     </div>
-                // `);
-
-                    console.error(error);
+                    LayoutCs.Excepcion(
+                        error,
+                        "Reserva de Polietileno"
+                    );
+                   
+                },
+                complete: function () {
+                    StopLoading();
                 }
             });
 
@@ -1807,6 +1875,7 @@
 
         }
     }
+
 
     //=================================================================================
     //=================================================================================
@@ -2105,7 +2174,27 @@
             return false;
         }
     }
-       
+
+    //=================================================================================
+    //============================= Funciones Generales ===============================
+
+    //Conversion de fechas
+    formatearFecha(fecha) {
+        return new Date(fecha).toLocaleString("es-MX", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false
+        });
+    }
+
+
+    //=================================================================================
+    //=================================================================================
+    
 }
 
 LayoutCs.validarUsuario("Producci\u00F3n");
@@ -2805,17 +2894,13 @@ $(function () {
 
         // Limpieza de modal produccion - seccion Reserva polietileno
         $('#basculaConexion').html("");
-
-        ConsultaPlanProduccionCs.dataTableHelper.crearDataTable("#tblRegistroProduccion", {
-            paging: true,
-            searching: true,
-            ordering: true,
-            autoWidth: true,
-        });
+                   
 
         // Construccion de indicador bascula
         ConsultaPlanProduccionCs.indicadorBascula();
 
+
+        ConsultaPlanProduccionCs.mostrarRegistrosRPolietileno();
     });
     //=================================================================================
     //=================================================================================

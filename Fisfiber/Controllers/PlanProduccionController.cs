@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
@@ -1241,24 +1242,44 @@ namespace Fisfiber.Controllers
         {
             try
             {
-                AD.RequestParameters = new Dictionary<string, string>();
-                AD.RequestParameters.Add("PlanProduccion", modeloInsertaRPolietileno.PlanProduccion);
-                AD.RequestParameters.Add("OrdenFabricacion", modeloInsertaRPolietileno.OrdenFabricacion);
-                AD.RequestParameters.Add("Pedido", modeloInsertaRPolietileno.Pedido);
-                AD.RequestParameters.Add("Linea", modeloInsertaRPolietileno.Linea);
-                AD.RequestParameters.Add("Peso", modeloInsertaRPolietileno.BasculaPeso.ToString());
-                AD.RequestParameters.Add("Operador", modeloInsertaRPolietileno.Empleado);
-                string CPP = Logic.GlobalProcedure(AD.RPInsertaLineaReservaPolietileno, AD.RequestParameters);
+                AD.RequestParameters = new Dictionary<string, string>
+                {
+                    { "PlanProduccion", modeloInsertaRPolietileno.PlanProduccion },
+                    { "OrdenFabricacion", modeloInsertaRPolietileno.OrdenFabricacion },
+                    { "Pedido", modeloInsertaRPolietileno.Pedido },
+                    { "Linea", modeloInsertaRPolietileno.Linea },
+                    { "Peso", modeloInsertaRPolietileno.BasculaPeso.ToString() },
+                    { "Operador", modeloInsertaRPolietileno.Empleado }
+                };
+                string RPInserta = Logic.GlobalProcedure(AD.RPInsertaLineaReservaPolietileno, AD.RequestParameters);
 
 
-
-
-                return null;
+                //retornamos en JSON la data obtenida
+                // Validación del los datos
+                if (RPInserta.Contains("Error"))
+                {
+                    return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = RPInserta });
+                }
+                //No existe información
+                else if (RPInserta.Contains("[]"))
+                {
+                    return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = "Ocurrio un error al insertar la linea: " + string.Empty + "." });
+                }
+                //OK
+                var result = Json(new AccesoDatos.JsonResponse { Status = "OK", Message = "Información insertada correctamente.", Data = RPInserta });
+                result.MaxJsonLength = 2147483644; //Modificamos directamente el tamaño de la cadena JSON
+                return result;
             }
             catch (Exception E)
             {
                 //Devolver el error en formato JSON
-                return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = E.ToString(), Data = "[]" });
+                string MethodName = MethodBase.GetCurrentMethod().Name;
+                string ControllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+                string msg = "No es posible insertar la informacion de reserva de polietileno " + MethodName + " en: " + ControllerName + ", por favor contacte al administrador del sistema con el siguiente código de error: ";
+                string finalmessage = AD.Excepcion(E, msg).ToString();
+                log.Error($"{finalmessage} - {E.Message}", E);
+
+                return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" });
             }
         }
 
@@ -2638,6 +2659,44 @@ namespace Fisfiber.Controllers
                 return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" });
             }
         }
+
+        public JsonResult GetInfoLineasRP() {
+            try {
+
+                AD.RequestParameters = new Dictionary<string, string>();
+                
+                string ObtenLineasRP = Logic.GlobalProcedure(AD.RPObtenerLineasReservaPolietileno, AD.RequestParameters);
+                //retornamos en JSON la data obtenida
+                // Validación del los datos
+                if (ObtenLineasRP.Contains("Error"))
+                {
+                    return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = ObtenLineasRP }, JsonRequestBehavior.AllowGet);
+                }
+                //No existe información
+                else if (ObtenLineasRP.Contains("[]"))
+                {
+                    return Json(new AccesoDatos.JsonResponse { Status = "EMPTY", Message = "No se encontró información referente a las reservas de polietileno." }, JsonRequestBehavior.AllowGet);
+                }
+                //OK
+                var result = Json(new AccesoDatos.JsonResponse { Status = "OK", Message = "Información de reservas de polietileno obtenidas correctamente.", Data = ObtenLineasRP }, JsonRequestBehavior.AllowGet);
+                result.MaxJsonLength = 2147483644; //Modificamos directamente el tamaño de la cadena JSON
+                return result;
+
+            }
+            catch (Exception E)
+            {
+                //Devolver el error en formato JSON
+                string MethodName = MethodBase.GetCurrentMethod().Name;
+                string ControllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+                string msg = "No es posible obtener la información de reservas de polietileno " + MethodName + " en: " + ControllerName + ", por favor contacte al administrador del sistema con el siguiente código de error: ";
+                string finalmessage = AD.Excepcion(E, msg).ToString();
+                log.Error($"{finalmessage} - {E.Message}", E);
+
+                return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        
+        
         #endregion
     }
 }

@@ -11,12 +11,15 @@
             destroy: true,
             responsive: true,
             autoWidth: false,
-            searching: false,
-            ordering: false,
-            paging: false,
+            searching: true,
+            ordering: true,
+            paging: true,
             info: false,
+            autoWidth: true,
             language: {
                 url: "/Scripts/DataTables/i18n/es-ES.json",
+                emptyTable: "No se encontraron registros.",
+                zeroRecords: "No se encontraron registros.",
                 paginate: {
                     previous: "← Anterior",
                     next: "Siguiente →"

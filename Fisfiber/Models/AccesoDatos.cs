@@ -285,7 +285,11 @@ namespace Fisfiber.Controllers
         public string GCUpdatePedidoCargado { get { return "EXEC SpPdxFF_UpdatePedidoCargado @Id"; } }
 
         #region ReservaPolietileno
+        //Post
         public string RPInsertaLineaReservaPolietileno { get { return "EXEC SpPdxFF_InsertaLineasFyGReservaPolietileno  @PlanProduccion, @OrdenFabricacion, @Pedido, @Linea, @Peso, @Operador"; } }
+
+        //Gets
+        public string RPObtenerLineasReservaPolietileno { get { return "SpPdxFF_GetLineasReservasPolietileno"; } }
 
 
         #endregion
