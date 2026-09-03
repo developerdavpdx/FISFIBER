@@ -16,6 +16,11 @@
             paging: true,
             info: false,
             autoWidth: true,
+            pageLength: 5,
+            lengthMenu: [
+                [5, 10, 25, 50, -1],
+                [5, 10, 25, 50, "Todos"]
+            ],
             language: {
                 url: "/Scripts/DataTables/i18n/es-ES.json",
                 emptyTable: "No se encontraron registros.",

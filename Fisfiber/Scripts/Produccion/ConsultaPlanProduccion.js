@@ -1761,6 +1761,7 @@
     }
 
     // RESERVA POLIETILENO
+    // Mostrar los registros de lineas de reserva de polietileno en la tabla
     mostrarRegistrosRPolietileno() {
         $.ajax({
             url: $("body").attr("obtenerLineaReservaPolietileno"),
@@ -1773,19 +1774,20 @@
 
                     data = JSON.parse(response.Data);
                 }
-                    ConsultaPlanProduccionCs.dataTableHelper.crearDataTable("#tblRegistroProduccion", {
-                        data: data,
-                        columns: [
-                            { data: "Id" },
-                            { data: "Peso" },
-                            {
-                                data: "Fecha",
-                                render: data => this.formatearFecha(data)
-                            },
-                            { data: "Etiqueta" },
-                            { data: "Operador" }
-                        ]
-                    });
+
+                ConsultaPlanProduccionCs.dataTableHelper.crearDataTable("#tblRegistroProduccion", {
+                    data: data,
+                    columns: [
+                        { data: "Id" },
+                        { data: "Peso" },
+                        {
+                            data: "Fecha",
+                            render: data => this.formatearFecha(data)
+                        },
+                        { data: "Etiqueta" },
+                        { data: "Operador" }
+                    ]
+                });
                 
             },
             error: function (xhr) {
