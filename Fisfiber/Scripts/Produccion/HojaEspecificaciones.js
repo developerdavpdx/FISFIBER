@@ -97,7 +97,7 @@
         }
     }
 
-    AsignarValores(datos) {
+    async AsignarValores(datos) {
         let idsNoEncontrados = [];
         let keys = Object.keys(datos);
 
@@ -174,6 +174,20 @@
 
             if (e == "codigocliente") {
                 $("#hCliente").text(datos[e]);
+            }
+
+            if (e == "TipoProducto") {
+                // $("#hTipoProducto").text("NA");
+                // $("#hTipoProducto").text(datos[e]);
+                if (datos[e] == null || datos[e] == '') {
+                    // Si viene null o vacío, muestra '--'
+                    $("#hTipoProducto").text('--');
+                } else {
+                    // Si tiene valor, consulta la descripción
+                    this.consultarTipoProducto(parseInt(datos[e]));
+                }
+                
+
             }
 
         })
@@ -341,6 +355,47 @@
         $("#dataExtra").append(filas);
 
 
+    }
+
+    async consultarTipoProducto(tipoProducto) {
+        try {
+            //let urlnamelineas = $('body').attr("nombrelineasprod");
+            Loading();
+            let urlAction = $("#HojaEsp").attr("GetTP");
+
+            const response = await $.ajax({
+                // url: '/Produccion/GetHeaderHoja',
+                url: urlAction,
+                type: 'POST',
+                data: {
+                    "tipoProducto": tipoProducto,
+                }
+            });
+
+            // console.log(response);
+
+            if (response.Status == "OK") {
+                let header = JSON.parse(response.Data);
+
+                // 👇 Si viene null, vacío o no existe, muestra '--'
+                let valor = (header.length == 0 || header[0].TipoProducto == null || header[0].TipoProducto == '')
+                    ? '--'
+                    : header[0].TipoProducto;
+
+                $("#hTipoProducto").text(valor);
+            }
+
+            else {
+                LayoutCs.Alerta("Plan de producción", response.Message);
+            }
+            StopLoading();
+
+
+        } catch (error) {
+            LayoutCs.Excepcion(error, "Plan de producción");
+            StopLoading();
+
+        }
     }
 
 }

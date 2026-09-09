@@ -10,7 +10,7 @@
     GetHH="@Url.Action("GetHeaderHoja","Produccion")"      
     UpdateHH="@Url.Action("UpdateHeaderHoja","Produccion")"      
     DatosExtras="@Url.Action("GetDatosExtras","Produccion")"      
-     
+    GetTP="@Url.Action("GetTipoProducto","Produccion")"
 >
 
 
@@ -113,11 +113,11 @@
                     </tr>
 
                     @*<tr>
-                        <th>Color y Clave</th>
-                        <td class="bg-secondary bg-opacity-10" id="hColorProducto">
-                            ColorProducto
-                        </td>
-                    </tr>*@
+            <th>Color y Clave</th>
+            <td class="bg-secondary bg-opacity-10" id="hColorProducto">
+                ColorProducto
+            </td>
+        </tr>*@
                     <tr>
                         <th>Uniones de Rollo</th>
                         <td class="bg-secondary bg-opacity-10"
@@ -137,6 +137,13 @@
                         <td class="bg-secondary bg-opacity-10"
                             id="hcodigocliente">
                             codigocliente
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Tipo Producto</th>
+                        <td class="bg-secondary bg-opacity-10"
+                            id="hTipoProducto">
+                            TipoProducto
                         </td>
                     </tr>
                 </tbody>

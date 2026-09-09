@@ -2695,8 +2695,54 @@ namespace Fisfiber.Controllers
                 return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" }, JsonRequestBehavior.AllowGet);
             }
         }
-        
-        
+
+        public JsonResult GetTipoProducto(string tipoProducto)
+        {
+            try
+            {
+                AD.RequestParameters = new Dictionary<string, string>();
+                AD.RequestParameters.Add("IdTipoProducto", tipoProducto);
+
+                string connectionString = string.Empty;
+                string opciones = Logic.GlobalProcedure(AD.GCGetTipoProducto, AD.RequestParameters);
+                //retornamos en JSON la data obtenida
+                var resultado = Json(new AccesoDatos.JsonResponse
+                {
+                    Status = "OK",
+                    Message = "Lista de tipos de producto obtenida correctamente".ToString(),
+                    Data = opciones
+                });
+                resultado.MaxJsonLength = 2147483644; //Modificamos directamente el tamaño de la cadena JSON
+                return resultado;
+            }
+            catch (Exception E)
+            {
+                //Devolver el error en formato JSON
+                string MethodName = MethodBase.GetCurrentMethod().Name;
+                string ControllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+                string msg = "No es posible obtener la lista de tipos de producto " + MethodName + " en: " + ControllerName + ", por favor contacte al administrador del sistema con el siguiente código de error: ";
+                string finalmessage = AD.Excepcion(E, msg).ToString();
+                return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult GetClasificacionTipoProducto(int idTipoProducto)
+        {
+            string tiposGyF = ConfigurationManager.AppSettings["TiposGuataFiltro"];
+            string tiposMaq = ConfigurationManager.AppSettings["TiposMaquila"];
+            var listaGyF = tiposGyF.Split(',').Select(int.Parse).ToList();
+            var listaMaq = tiposMaq.Split(',').Select(int.Parse).ToList();
+            string clasificacion = "";
+            if (listaGyF.Contains(idTipoProducto))
+                clasificacion = "GuataFiltro";
+            else if (listaMaq.Contains(idTipoProducto))
+                clasificacion = "Maquila";
+            else
+                clasificacion = "Desconocido";
+            return Json(new { Status = "OK", Clasificacion = clasificacion });
+        }
+
         #endregion
     }
 }

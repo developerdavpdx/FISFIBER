@@ -61,6 +61,8 @@
                    configuracion="@Url.Action("GetConfigxUsuarioPP","PlanProduccion")"
                    updateconfiguracion="@Url.Action("InsertaConfigxUsuarioPP","PlanProduccion")"
                    ParoMannto="@Url.Action("InsertaParoMannto","PlanProduccion")"
+                   GetTP="@Url.Action("GetTipoProducto","PlanProduccion")"
+                   GetCTP="@Url.Action("GetClasificacionTipoProducto","PlanProduccion")"
                    class="table table-striped table-fixed"
                    style="min-width: 800px !important;">
                 <thead>
@@ -396,17 +398,18 @@
         </div>
     </div>
 
-    <!-- ══════════════════════════════════════════════════
-         Modal: Opciones plan de produccion (Fibras y guata)
-    ════════════════════════════════════════════════════ -->
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Modal: Opciones plan de produccion (Fibras y guata) (Maquilas)
+    ════════════════════════════════════════════════════════════════════════════ -->
     <div class="modal fade" id="modalOpcionesPP" tabindex="-1">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
 
                 <div class="modal-header bg-pr text-white">
-                    <h5 class="modal-title">
-                        <i class="bi bi-plus-circle me-2"></i>Producción (Fibras y Guata)
+                    <h5 class="modal-title" id="titulo-modalProd">
+                        
                     </h5>
+                    
                     <button type="button" class="btn btn-link text-white p-0" data-bs-dismiss="modal">
                         <i class="bi bi-x-lg"></i>
                     </button>
@@ -415,13 +418,14 @@
                 <div class="modal-body">
                     <!-- Info general (Encabezado) -->
                     <div id="content-encabezado-MProd">
-
-                    </div>                    
+                        <!-- Se genera dinamicamente -->
+                    </div>
 
                     <div class="row g-4">
                         <!-- Seccion: menus de producción -->
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <!-- Pestañas: Fibras y Guata -->
                                 <a class="nav-item nav-link active" id="nav-FResina-tab" data-bs-toggle="tab" href="#nav-FResina" role="tab">
                                     <i class="bi bi-beaker me-2"></i> Formulación de resina
                                 </a>
@@ -437,18 +441,29 @@
                                 <a class="nav-item nav-link" id="nav-Dev-tab" data-bs-toggle="tab" href="#nav-Dev" role="tab">
                                     <i class="bi bi-arrow-return-left me-2"></i> Devolución
                                 </a>
+
+                                <!-- Pestañas: Maquilas -->
+                                <a class="nav-item nav-link" id="nav-ConsumoM-tab" data-bs-toggle="tab" href="#nav-ConsumoM" role="tab">
+                                    <i class="bi bi-bounding-box-circles me-2"></i> Consumo Materia
+                                </a>
+                                <a class="nav-item nav-link" id="nav-tagM-tab" data-bs-toggle="tab" href="#nav-tagM" role="tab">
+                                    <i class="bi bi-tag me-2"></i> Etiquetado
+                                </a>
+                                <a class="nav-item nav-link" id="nav-DevM-tab" data-bs-toggle="tab" href="#nav-DevM" role="tab">
+                                    <i class="bi bi-arrow-return-left me-2"></i> Devolución
+                                </a>
                             </div>
                         </nav>
 
                         <div class="tab-content" id="nav-tabContent">
                             <!-- Seccion: Especificacion y Folio -->
                             <div class="row">
-
                                 <div class="col-12" id="especificacion-folio">
-                                    
+                                    <!-- Se genera dinamicamente -->
                                 </div>
                             </div>
 
+                            <!------------------------- Secciones: Fibras y Guata -------------------------------->
                             <!-- Sección: Formulación de Resinas -->
                             <div class="tab-pane fade show active" id="nav-FResina" role="tabpanel" aria-labelledby="nav-FResina-tab">
                                 <div class="border rounded-3 shadow-sm mt-2 p-4">
@@ -583,7 +598,7 @@
                                             <div id="basculaConexion">
 
                                             </div>
-                                                                                       
+
                                         </div>
 
                                         <!-- Registro de Producción -->
@@ -606,7 +621,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                       <!-- Registros generados de manera dinamica -->
+                                                        <!-- Registros generados de manera dinamica -->
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1661,131 +1676,10 @@
                                 </div>
 
                             </div>
-
-                        </div>
-                    </div>
-                </div><!-- /.modal-body -->
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
-
-    <!-- /#modalOpcionesPlanProduccion (Fibras y guata) -->
-    <!-- ══════════════════════════════════════════════════
-         Modal: Opciones plan de produccion (Maquilas)
-    ════════════════════════════════════════════════════ -->
-    <div class="modal fade" id="modalOpcionesPMaq" tabindex="-1">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-
-                <div class="modal-header bg-pr text-white">
-                    <h5 class="modal-title">
-                        <i class="bi bi-plus-circle me-2"></i>Producción (Maquilas)
-                    </h5>
-                    <button type="button" class="btn btn-link text-white p-0" data-bs-dismiss="modal">
-                        <i class="bi bi-x-lg"></i>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                    <!-- Info general -->
-                    <div id="content-encabezado-MProd">
-
-                    </div>
-                    <p class="fw-semibold text-dark ms-2 mb-2">Información General:</p>
-                    <div class="rounded-3 p-3 mb-4 seccion-tarjet-infoGen">
-                        <div class="row g-2">
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Plan Producción: </small>
-                                <p class="fw-semibold mb-0">P001:006</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="infoGenTitle-OT">Orden Fabricación: </small>
-                                <p class="mb-0 infoGenCont-OT">OF-352291</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Pedido: </small>
-                                <p class="fw-semibold mb-0 d-flex align-items-center gap-2">
-                                    PED-2025-134
-                                </p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Línea: </small>
-                                <p class="fw-semibold mb-0">Línea 1</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Cantidad Solicitada: </small>
-                                <p class="fw-semibold mb-0">500 pzas</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Fecha Inicio: </small>
-                                <p class="fw-semibold mb-0">25/06/2026</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Tipo Producto: </small>
-                                <p class="fw-semibold mb-0">Bondeado</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Artículo: </small>
-                                <p class="fw-semibold mb-0">ALMOHADA MD COLUMBUS</p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Estatus: </small>
-                                <p class="fw-semibold mb-0">
-                                    <span class="badge-estatus proceso">En Proceso</span>
-                                </p>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <small class="text-secondary">Piezas producidas: </small>
-                                <p class="fw-semibold mb-0">
-                                    <span class="fw-semibold mb-0">23 / 500</span>
-                                </p>
-                            </div>
-                            <div class="col-12 col-md-4 d-felx justify-content-start align-content-end">
-                                <button class="btn btn-link p-0 fw-semibold pt-2 pb-2 ps-0 pe-2 si-agregar-producto">
-                                    <i class="bi bi-plus-circle me-1"></i>Agregar más pedidos
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="row g-4 mb-3">
-                        <!-- Seccion: menus de producción -->
-                        <nav>
-                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-
-                                <a class="nav-item nav-link active" id="nav-ConsumoM-tab" data-bs-toggle="tab" href="#nav-ConsumoM" role="tab">
-                                    <i class="bi bi-bounding-box-circles me-2"></i> Consumo Materia
-                                </a>
-                                <a class="nav-item nav-link" id="nav-tag-tab" data-bs-toggle="tab" href="#nav-tagM" role="tab">
-                                    <i class="bi bi-tag me-2"></i> Etiquetado
-                                </a>
-                                <a class="nav-item nav-link" id="nav-Dev-tab" data-bs-toggle="tab" href="#nav-DevM" role="tab">
-                                    <i class="bi bi-arrow-return-left me-2"></i> Devolución
-                                </a>
-                            </div>
-                        </nav>
-
-                        <div class="tab-content" id="nav-tabContent">
-
-                            <div class="row">
-
-                                <div class="col-12">
-                                    <div class="d-flex justify-content-between align-items-center shadow-sm pt-2 pb-2 ps-3 pe-3 mb-2 gap-2 seccion-folioOT">
-                                        <button class="btn btn-especificacion btn-sm fw-semibold px-4 py-2 hojaEsp" itemcode="BRAFILL III/140 L1" linea="001">
-                                            <i class="bi bi-file-earmark-text me-2"></i> Especificación
-                                        </button>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="text-secondary estilo-seccionFolio">Folio: </span>
-                                            <p class="fw-semibold mb-0 estilo-seccionFolio"> OT-001</p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
+                            <!------------------------------------------------------------------------------------>
+                            <!----------------------------- Secciones: Maquila ----------------------------------->
                             <!-- Sección: Consumo de Materia -->
-                            <div class="tab-pane fade show active" id="nav-ConsumoM" role="tabpanel" aria-labelledby="nav-ConsumoM-tab">
+                            <div class="tab-pane fade" id="nav-ConsumoM" role="tabpanel" aria-labelledby="nav-ConsumoM-tab">
 
                                 <!-- ============================= -->
                                 <!-- Receta base -->
@@ -1882,7 +1776,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                2 
+                                                                2
                                                             </td>
                                                             <td>
                                                                 Pz
@@ -2164,7 +2058,7 @@
                                                                 </div>
                                                                 <small class="text-secondary texto-info">
                                                                     (14:00 a 22:00)
-                                                                </small>                                                               
+                                                                </small>
                                                             </label>
                                                         </div>
 
@@ -2216,7 +2110,7 @@
                                                                 <small class="text-secondary texto-info">
                                                                     (06:00 a 06:00)
                                                                 </small>
-                                                               
+
                                                             </label>
                                                         </div>
 
@@ -2282,7 +2176,7 @@
                                                     <span class="text-secondary">|</span>
 
                                                     <span><strong>Ubicación:</strong> ALM-P01</span>
-                                                    
+
                                                 </div>
 
                                             </div>
@@ -2406,6 +2300,7 @@
                                 </div>
 
                             </div>
+                            <!------------------------------------------------------------------------------------>
 
                         </div>
                     </div>
@@ -2414,7 +2309,8 @@
         </div><!-- /.modal-dialog -->
     </div>
 
-    <!-- /#modalOpcionesPlanProduccion (Maquilas) -->
+    <!-- /#modalOpcionesPlanProduccion -->
+
     <!-- ══════════════════════════════════════════════════
          Modal: Autorizacion cambios de Turno
     ════════════════════════════════════════════════════ -->
@@ -2443,7 +2339,7 @@
                     <div class="pt-3 pb-5 text-center">
                         <i class="bi bi-exclamation-triangle fs-1 icon-etiqueta-autorizacion"></i>
                     </div>
-                                       
+
                     <div class="d-flex flex-column text-center text-secondary pb-4">
                         <b>Se detectó un intento de cambio de turno.</b>
                         Ingrese el código de autorización para confirmar la operación.

@@ -78,7 +78,7 @@
             "RollosSAP", "CantidadMetrosSAP", "CantidadKilosSAP", "Folio1", "OrdenFabricacion1", "EstatusProduccion",
             "Especificacion", "Linea", "FlagOrdenFabricacion",
             "Orden", "IdPPD", "Folio", "fecha", "DocEntry",
-            "GenerarOF", "OrdenFabricacion", "EstatusSapOF", "Especificacion", "EsDiaAnterior", "ParoEstatus", "ParoFechaFin"
+            "GenerarOF", "OrdenFabricacion", "EstatusSapOF", "Especificacion", "EsDiaAnterior", "ParoEstatus", "ParoFechaFin", "TipoProducto"
         ];
         this.ColumnsWithEdit = ["UbicacionFinal"];
         this.ColumnsWithEditNumber = ["PiezasProducidas"];
@@ -233,6 +233,17 @@
                 //Datos de OV agrupados por linea
                 this.grouppreviewdataPP = LayoutCs.agruparPorLinea(this.previewdataPP);
 
+
+                //Obtener tipo de producto
+                let tiposUnicos = [...new Set(this.previewdataPP
+                    .map(i => parseInt(i.TipoProducto))
+                    .filter(i => !isNaN(i))
+                )];
+                let tiposMap = {};
+                for (let tipo of tiposUnicos) {
+                    tiposMap[tipo] = await ConsultaPlanProduccionCs.consultarTipoProducto(tipo);
+                }
+                
                 // Recorrer el resultado agrupado y mostrar en la consola
                 $.each(this.grouppreviewdataPP, function (linea, items) {
                     ConsultaPlanProduccionCs.subtablelinedetails = "";
@@ -282,11 +293,20 @@
 
                             grayColor = "background-color: lightgray; box-shadow: none;";
                         }
+
+                        //Tipo de producto
+
                         let ParoEstatus = item.ParoEstatus;
                         let IconParoEstatus = "";
                         let IconOpcionesPFG = "";
                         let IconOpcionesPMaq = "";
                         let HojaEspecificaciones = "";
+
+                        //Validacion de tipos de producto
+                        let idTipo = parseInt(item.TipoProducto);
+                        let dataTipoId = !isNaN(idTipo) ? `data-idtipoproducto="${idTipo}"` : '';
+                        let dataTipoDesc = !isNaN(idTipo) ? `data-tipoproducto="${tiposMap[idTipo] || ''}"` : '';
+
                         //if (ParoEstatus == "Terminado" || ParoEstatus == "Sin Paro") {
                         IconParoEstatus = `<button class="btn btn-paroLinea ParoLineaPP" 
                                                    value="${item.Folio}" 
@@ -301,8 +321,7 @@
                         //}
                         IconOpcionesPFG = `<button class="btn btn-opcionesPPlus" 
                                                 id="btn-Mproduccion"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalOpcionesPP"
+                                               
                                                 data-planproduccion="${item.Folio}"
                                                 data-ordenfabricacion="${item.OrdenFabricacion}"
                                                 data-pedido="${item.Pedido}"
@@ -311,17 +330,13 @@
                                                 data-fechaini="${item.FechaContabilizacion}"
                                                 data-articulo="${item.DescripcionArticulo}"
                                                 data-estatus="${item.EstatusProduccion}"
-                                                data-piezasproducidas="${item.PiezasProducidas}"                                                
+                                                data-piezasproducidas="${item.PiezasProducidas}"   
+                                                ${dataTipoId}
+                                                ${dataTipoDesc}
+                                                data-itemcode = "${item.Articulo}"
                                                 title="Producción - Guata y Filtro">
                                             <i class="bi bi-stack"></i>
-                                        </button>`;
-
-                        IconOpcionesPMaq = `<button class="btn btn-opcionesPPlus" 
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalOpcionesPMaq"
-                                                title="Producción - Maquilas">
-                                            <i class="bi bi-gear"></i>
-                                        </button>`;
+                                        </button>`;                       
 
                         HojaEspecificaciones = `<button class="btn btn-opcionesPP hojaEsp" itemcode = "${item.Articulo}" linea = "${item.Linea}">
                                                     <i class="bi bi-file-earmark-text"></i>
@@ -506,6 +521,26 @@
 
         }
     }
+
+    async consultarTipoProducto(tipoProducto) {
+        try {
+            let urlAction = $("#PlanProduccion").attr("GetTP");
+            const response = await $.ajax({
+                url: urlAction,
+                type: 'POST',
+                data: { "tipoProducto": tipoProducto }
+            });
+            if (response.Status == "OK") {
+                let data = JSON.parse(response.Data);
+                return data[0].TipoProducto; //  retorna el nombre
+            }
+            return "";
+        } catch (error) {
+            LayoutCs.Excepcion(error, "Plan de producción");
+            return "";
+        }
+    }
+
     //Pintar Sobre Capacidad 
     showCapLineaPlan(loader = 0) {
         //rowppd
@@ -1139,10 +1174,7 @@
         // Quitar el ícono de flecha derecha de todas las filas
         $('#PlanProduccion tbody tr').find('td:first-child .fa-arrow-right').remove();
     }
-    //Reordenar configuracion PP
-    ReordenarConfigPP() {
 
-    }
 
     //Actualizar los porcentajes de la receta
     ActualizarPorcentajeMolido(input) {
@@ -1622,7 +1654,7 @@
     //=================================================================================
     //======================= Eventos y funcionalidad ===============================
 
-    informacionEncabezadoProd(planProduccion, ordenFabricacion, pedido, linea, cantidad, fechaIni, articulo, estatusColor, estatus, piezasproducidas) {
+    informacionEncabezadoProd(planProduccion, ordenFabricacion, pedido, linea, cantidad, fechaIni, articulo, estatusColor, estatus, piezasproducidas, tipoProducto, itemCode) {
         let htmlEncabezado = `  <p class="fw-semibold text-dark ms-2 mb-2">Información General:</p>
                                 <div class="rounded-3 p-3 mb-4 seccion-tarjet-infoGen">
                                     <div class="row g-2">
@@ -1654,7 +1686,7 @@
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <small class="text-secondary">Tipo Producto: </small>
-                                            <p class="fw-semibold mb-0">-</p>
+                                            <p class="fw-semibold mb-0">${tipoProducto}</p>
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <small class="text-secondary">Artículo: </small>
@@ -1684,7 +1716,7 @@
 
         let htmlEspecificacionFolio = `
             <div class="d-flex justify-content-between align-items-center shadow-sm pt-2 pb-2 ps-3 pe-3 mb-2 gap-2 seccion-folioOT">
-                <button class="btn btn-especificacion btn-sm fw-semibold px-4 py-2 hojaEsp" itemcode="${articulo}" linea="${linea}">
+                <button class="btn btn-especificacion btn-sm fw-semibold px-4 py-2 hojaEsp" itemcode="${itemCode}" linea="${linea}">
                     <i class="bi bi-file-earmark-text me-2"></i> Especificación
                 </button>
                 <div class="d-flex justify-content-between align-items-center">
@@ -2859,7 +2891,9 @@ $(function () {
     //=================================================================================
     //========================= Eventos y funcionalidad ===============================
     //Botones modal produccion GyF y Maquila
-    $(document).on('click', '#btn-Mproduccion', function () {
+    $(document).on('click', '#btn-Mproduccion', async function () {
+        Loading();
+
         //Se obtiene la informacion de la cabecera
         let planProduccion = $(this).data('planproduccion');
         let ordenFabricacion = $(this).data('ordenfabricacion');
@@ -2870,10 +2904,22 @@ $(function () {
         let articulo = $(this).data('articulo');
         let estatus = $(this).data('estatus').charAt(0).toUpperCase() + $(this).data('estatus').slice(1) ;
         let piezasproducidas = $(this).data('piezasproducidas');
+        let tipoProducto = $(this).data('tipoproducto') || '--';  // Se obtiene el tipo de producto
+        let idTipoProducto = $(this).data('idtipoproducto'); // Se obtiene el id del tipo de producto
+        let itemCode = $(this).data('itemcode');
+        
+        // Si no tiene un id de tipo de producto no muestra ningun modal para produccion, es obligatorio que se le asigne un tipo de producto
+        if (!idTipoProducto) {
+            LayoutCs.Alerta("Clasificación de producto", "La línea seleccionada no tiene asignado un tipo de producto, favor de asginarle o contacta con el administrador.");
+            StopLoading();
+            return;
+           
+        }
 
         //Limpieza de contenido modal producción
         $('#content-encabezado-MProd').html("");
         $('#especificacion-folio').html("");
+        $('#titulo-modalProd').html("");
 
         //Asignacion color de estatus en producción
         let estatusColor = "";
@@ -2887,8 +2933,53 @@ $(function () {
         }
 
         //funciones armado de modal produccion
-        ConsultaPlanProduccionCs.informacionEncabezadoProd(planProduccion, ordenFabricacion, pedido, linea, cantidad, fechaIni, articulo, estatusColor, estatus, piezasproducidas);
+        ConsultaPlanProduccionCs.informacionEncabezadoProd(planProduccion, ordenFabricacion, pedido, linea, cantidad, fechaIni, articulo, estatusColor, estatus, piezasproducidas, tipoProducto, itemCode);
 
+               
+        let urlAction = $("#PlanProduccion").attr("GetCTP"); // Se obtiene el endpoint para consulta por Id la clasificacion del tipo de producto
+        // Consultar al servidor qué dclasificacion corresponde
+        const response = await $.ajax({
+            url: urlAction, // atributo en el HTML igual que los demás
+            type: 'POST',
+            data: { idTipoProducto: idTipoProducto }
+        });        
+
+        if (response.Status == "OK") {
+           // Se obtiene a que clasificacion o que grupo pertenece
+            if (response.Clasificacion == "GuataFiltro") {
+                //Colocar el tipo de modal 
+                $('#titulo-modalProd').html("<i class='bi bi-plus-circle me-2'></i>Producción (Fibras y Guata)");
+
+                // Mostrar/ocultar SOLO los tabs (links), nunca los panes
+                $("#nav-FResina-tab, #nav-RPolietileno-tab, #nav-Rfibras-tab, #nav-tag-tab, #nav-Dev-tab").show();
+                $("#nav-ConsumoM-tab, #nav-tagM-tab, #nav-DevM-tab").hide();
+
+                // Bootstrap se encarga de mostrar/ocultar los panels correctamente
+                $("#nav-FResina-tab").tab("show");
+
+                $('#modalOpcionesPP').modal('show');
+            }
+            else if (response.Clasificacion == "Maquila") {
+                //Colocar el tipo de modal 
+                $('#titulo-modalProd').html("<i class='bi bi-plus-circle me-2'></i>Producción (Maquilas)");
+
+                $("#nav-ConsumoM-tab, #nav-tagM-tab, #nav-DevM-tab").show();
+                $("#nav-FResina-tab, #nav-RPolietileno-tab, #nav-Rfibras-tab, #nav-tag-tab, #nav-Dev-tab").hide();
+
+                $("#nav-ConsumoM-tab").tab("show");
+
+                $('#modalOpcionesPP').modal('show');
+            }
+            else {
+                LayoutCs.Alerta("Producción", "Tipo de producto no reconocido");
+            }
+            StopLoading();
+        }
+        else {
+            StopLoading();
+            LayoutCs.Alerta("Producción", response.Message);
+        }
+       
     });
 
     //Seccion de Reserva de polietileno
