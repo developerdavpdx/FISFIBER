@@ -548,6 +548,37 @@ namespace Fisfiber.Controllers
                 return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" });
             }
         }
-        #endregion
+
+        //Se obtiene la hora del servidor
+        public JsonResult GetHoraServidor()
+        {
+            try
+            {
+                DateTime ahora = DateTime.Now;
+
+                var resultado = Json(new AccesoDatos.JsonResponse
+                {
+                    Status = "OK",
+                    Message = "Hora obtenida correctamente",
+                    Data = Newtonsoft.Json.JsonConvert.SerializeObject(new
+                    {
+                        hora = ahora.Hour,
+                        minutos = ahora.Minute
+                    })
+                });
+
+                return resultado;
+            }
+            catch (Exception E)
+            {
+                string MethodName = MethodBase.GetCurrentMethod().Name;
+                string ControllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+                string msg = "No es posible obtener la hora del servidor " + MethodName + " en: " + ControllerName + ", por favor contacte al administrador del sistema con el siguiente código de error: ";
+                string finalmessage = AD.Excepcion(E, msg).ToString();
+                return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" });
+            }
+        }
+
+       #endregion
     }
 }

@@ -63,6 +63,7 @@
                    ParoMannto="@Url.Action("InsertaParoMannto","PlanProduccion")"
                    GetTP="@Url.Action("GetTipoProducto","PlanProduccion")"
                    GetCTP="@Url.Action("GetClasificacionTipoProducto","PlanProduccion")"
+                   GetTurnosHorarios="@Url.Action("GetTurnosHorarios","PlanProduccion")"
                    class="table table-striped table-fixed"
                    style="min-width: 800px !important;">
                 <thead>
@@ -1350,90 +1351,10 @@
                                                             </label>
                                                             <span class="text-secondary fs-6 ps-2 mb-3">Para cambios se requiere autorización</span>
                                                         </div>
-
-                                                        <div class="form-check mb-2">
-                                                            <input class="form-check-input check-tipo-turno turno1GyF"
-                                                                   type="radio"
-                                                                   name="tipoTurno"
-                                                                   value="turno1GyF"
-                                                                   id="turno1GyF" checked>
-
-                                                            <label class="form-check-label" for="turno1GyF">
-                                                                <div class="fw-semibold">
-                                                                    Turno 1
-                                                                </div>
-                                                                <small class="text-secondary texto-info">
-                                                                    (06:00 a 14:00)
-                                                                </small>
-                                                            </label>
+                                                        <div id="checksTurnoHorasGyF">
 
                                                         </div>
-
-                                                        <div class="form-check mb-2">
-                                                            <input class="form-check-input check-tipo-turno turno2GyF"
-                                                                   type="radio"
-                                                                   name="tipoTurno"
-                                                                   value="turno2GyF"
-                                                                   id="turno2GyF">
-
-                                                            <label class="form-check-label" for="turno2GyF">
-                                                                <div class="fw-semibold">
-                                                                    Turno 2
-                                                                </div>
-                                                                <small class="text-secondary texto-info">
-                                                                    (14:00 a 22:00)
-                                                                </small>
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check mb-2">
-                                                            <input class="form-check-input check-tipo-turno turno3GyF"
-                                                                   type="radio"
-                                                                   name="tipoTurno"
-                                                                   value="turno3GyF"
-                                                                   id="turno3GyF">
-
-                                                            <label class="form-check-label" for="turno3GyF">
-                                                                <div class="fw-semibold">
-                                                                    Turno 3
-                                                                </div>
-                                                                <small class="text-secondary texto-info">
-                                                                    (22:00 a 06:00)
-                                                                </small>
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check mb-2">
-                                                            <input class="form-check-input check-tipo-turno turnoMix1GyF"
-                                                                   type="radio"
-                                                                   name="tipoTurno"
-                                                                   value="turnoMix1GyF"
-                                                                   id="turnoMix1GyF">
-
-                                                            <label class="form-check-label" for="turnoMix1GyF">
-                                                                <div class="fw-semibold">
-                                                                    Turno mixto 1
-                                                                </div>
-                                                                <small class="text-secondary texto-info">
-                                                                    (08:00 a 17:00)
-                                                                </small>
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="form-check mb-2">
-                                                            <input class="form-check-input check-tipo-turno check-turnoMix2GyF"
-                                                                   type="radio"
-                                                                   name="tipoTurno"
-                                                                   value="turnoMix2GyF"
-                                                                   id="turnoMix2GyF">
-
-                                                            <label class="form-check-label" for="turnoMix2GyF">
-                                                                <div class="fw-semibold">
-                                                                    Turno mixto 2
-                                                                </div>
-                                                                <small class="text-secondary texto-info">
-                                                                    (06:00 a 06:00)
-                                                                </small>
-                                                            </label>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
 
@@ -2026,92 +1947,8 @@
                                                             </label>
                                                             <span class="text-secondary ps-2 mb-3 texto-info">Para cambios se requiere autorización</span>
                                                         </div>
+                                                        <div id="checksTurnoHorasM">
 
-                                                        <div class="form-check mb-2">
-                                                            <input class="form-check-input check-tipo-turno check-turnoM"
-                                                                   type="radio"
-                                                                   name="tipoTurnoM"
-                                                                   value="turno1M"
-                                                                   id="turno1M" checked>
-
-                                                            <label class="form-check-label" for="turno1M">
-                                                                <div class="fw-semibold">
-                                                                    Turno 1
-                                                                </div>
-                                                                <small class="text-secondary texto-info">
-                                                                    (06:00 a 14:00)
-                                                                </small>
-
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="form-check mb-2">
-                                                            <input class="form-check-input check-tipo-turno check-turnoM"
-                                                                   type="radio"
-                                                                   name="tipoTurnoM"
-                                                                   value="turno2M"
-                                                                   id="turno2M">
-
-                                                            <label class="form-check-label" for="turno2M">
-                                                                <div class="fw-semibold">
-                                                                    Turno 2
-                                                                </div>
-                                                                <small class="text-secondary texto-info">
-                                                                    (14:00 a 22:00)
-                                                                </small>
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="form-check mb-2">
-                                                            <input class="form-check-input check-tipo-turno check-turnoM"
-                                                                   type="radio"
-                                                                   name="tipoTurnoM"
-                                                                   value="turno3M"
-                                                                   id="turno3M">
-
-                                                            <label class="form-check-label" for="turno3M">
-                                                                <div class="fw-semibold">
-                                                                    Turno 3
-                                                                </div>
-                                                                <small class="text-secondary texto-info">
-                                                                    (22:00 a 06:00)
-                                                                </small>
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="form-check mb-2">
-                                                            <input class="form-check-input check-tipo-turno check-turnoMix1M"
-                                                                   type="radio"
-                                                                   name="tipoTurnoM"
-                                                                   value="turnoMix1M"
-                                                                   id="turnoMix1M">
-
-                                                            <label class="form-check-label" for="turnoMix1M">
-                                                                <div class="fw-semibold">
-                                                                    Turno mixto 1
-                                                                </div>
-                                                                <small class="text-secondary texto-info">
-                                                                    (08:00 a 17:00)
-                                                                </small>
-                                                            </label>
-                                                        </div>
-
-                                                        <div class="form-check mb-2">
-                                                            <input class="form-check-input check-tipo-turno check-turnoMix2M"
-                                                                   type="radio"
-                                                                   name="tipoTurnoM"
-                                                                   value="turnoMix2M"
-                                                                   id="turnoMix2M">
-
-                                                            <label class="form-check-label" for="turnoMix2M">
-                                                                <div class="fw-semibold">
-                                                                    Turno mixto 2
-                                                                </div>
-                                                                <small class="text-secondary texto-info">
-                                                                    (06:00 a 06:00)
-                                                                </small>
-
-                                                            </label>
                                                         </div>
 
                                                     </div>
@@ -2363,7 +2200,7 @@
 
 
                     <div id="lblErrorTurno"
-                         class="small text-danger d-none">
+                         class="small text-center text-danger d-none">
                         <i class="fas fa-times-circle me-1"></i>
                         Código incorrecto.
                     </div>

@@ -2743,6 +2743,35 @@ namespace Fisfiber.Controllers
             return Json(new { Status = "OK", Clasificacion = clasificacion });
         }
 
+
+        //Obtencion de turnos y horarios
+        public JsonResult GetTurnosHorarios()
+        {
+            try
+            {
+                AD.RequestParameters = new Dictionary<string, string>();
+                string opciones = Logic.GlobalProcedure(AD.GetTurnosYHorarios, AD.RequestParameters);
+                //retornamos en JSON la data obtenida
+                var resultado = Json(new AccesoDatos.JsonResponse
+                {
+                    Status = "OK",
+                    Message = "Lista de turnos y horarios obtenida correctamente".ToString(),
+                    Data = opciones
+                });
+                resultado.MaxJsonLength = 2147483644; //Modificamos directamente el tamaño de la cadena JSON
+                return resultado;
+            }
+            catch (Exception E)
+            {
+                //Devolver el error en formato JSON
+                string MethodName = MethodBase.GetCurrentMethod().Name;
+                string ControllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+                string msg = "No es posible obtener la lista de turnos y horarios del rubro " + MethodName + " en: " + ControllerName + ", por favor contacte al administrador del sistema con el siguiente código de error: ";
+                string finalmessage = AD.Excepcion(E, msg).ToString();
+                return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" });
+            }
+        }
+
         #endregion
     }
 }

@@ -105,7 +105,11 @@
 
         //Variables de deteccion para la autorizacion de los cambios de turno
         this.turnoActual = null;
+        this.turnoActualM = null;
         this.turnoPendiente = null;
+        this.grupoTurnoPendiente = null;
+        let clasificacionModal = null;
+
 
         //Variables para el contador de la bascula
         this.pesoActual = 0;
@@ -113,6 +117,7 @@
 
         //Inicializacion de datatables
         this.dataTableHelper = new DataTableHelper();
+                
     }
     //Listado de planes de produccion
     PlanesProduccion(terminados, showLoading = 1, CurrentFolio = '') {
@@ -240,8 +245,10 @@
                     .filter(i => !isNaN(i))
                 )];
                 let tiposMap = {};
+                let clasificacionMap = {}; 
                 for (let tipo of tiposUnicos) {
-                    tiposMap[tipo] = await ConsultaPlanProduccionCs.consultarTipoProducto(tipo);
+                    tiposMap[tipo] = await ConsultaPlanProduccionCs.consultarTipoProducto(tipo); //Obtener tipos de productos
+                    clasificacionMap[tipo] = await ConsultaPlanProduccionCs.consultaClasificacion(tipo); //Obtener clasificacion por producto
                 }
                 
                 // Recorrer el resultado agrupado y mostrar en la consola
@@ -307,6 +314,8 @@
                         let dataTipoId = !isNaN(idTipo) ? `data-idtipoproducto="${idTipo}"` : '';
                         let dataTipoDesc = !isNaN(idTipo) ? `data-tipoproducto="${tiposMap[idTipo] || ''}"` : '';
 
+                        let textTooltipProd = clasificacionMap[idTipo] || 'Sin clasificación para asignar';
+                                              
                         //if (ParoEstatus == "Terminado" || ParoEstatus == "Sin Paro") {
                         IconParoEstatus = `<button class="btn btn-paroLinea ParoLineaPP" 
                                                    value="${item.Folio}" 
@@ -334,7 +343,7 @@
                                                 ${dataTipoId}
                                                 ${dataTipoDesc}
                                                 data-itemcode = "${item.Articulo}"
-                                                title="Producción - Guata y Filtro">
+                                                title="${textTooltipProd}">
                                             <i class="bi bi-stack"></i>
                                         </button>`;                       
 
@@ -1756,6 +1765,184 @@
         $('.seccion-btns-polietileno').html(htmlbtnsReservaPolietileno)
     }
 
+    //Consulta de datos de turnos y horarios 
+    async consultaturnos(clasificacion) {
+        let urlAction = $("#PlanProduccion").attr("GetTurnosHorarios"); // Se obtiene el endpoint para consulta por Id la clasificacion del tipo de producto
+        // Consultar al servidor qué dclasificacion corresponde
+        const response = await $.ajax({
+            url: urlAction, // atributo en el HTML igual que los demás
+            type: 'POST'
+        });
+
+        if (response.Status == "OK") {
+            //Parsear turnos
+            let turnos = JSON.parse(response.Data); 
+            //Limpieza de contenedor checks
+            $("#checksTurnoHorasGyF").html('');
+            $("#checksTurnoHorasM").html('');
+
+            turnos.forEach(function (turno) {
+                //
+                if (clasificacion == "GuataFiltro") {
+                    // Construccion de checks para turnos de guata y filtro
+                    ConsultaPlanProduccionCs.construccionChecksTurnosHorariosGyF(turno);
+                } else {
+                    // Construccion de checks para turnos de maquila
+                    ConsultaPlanProduccionCs.construccionChecksTurnosHorariosM(turno);
+                }
+                
+            });
+
+        }
+        else {
+            StopLoading();
+            LayoutCs.Alerta("Producción", response.Message);
+        }
+
+    }
+
+    //Armado de estructura de checks turnos GyF
+    construccionChecksTurnosHorariosGyF(turno) {
+        let check = `
+            <div class="form-check mb-2">
+                <input class="form-check-input check-tipo-turno turno${turno.IdTurno}GyF"
+                       type="radio"
+                       name="tipoTurno"
+                       value="${turno.IdTurno}"
+                       id="turno${turno.IdTurno}GyF">
+
+                <label class="form-check-label" for="turno${turno.IdTurno}GyF">
+                    <div class="fw-semibold">
+                        ${turno.Turno}
+                    </div>
+                    <small class="text-secondary texto-info">
+                        (${turno.TurnoHorarioInicio} - ${turno.TurnoHorarioFin})
+                    </small>
+                </label>
+
+            </div>
+        `;
+
+
+        $("#checksTurnoHorasGyF").append(check);
+    }
+
+    //Armado de estructura de checks turnos M
+    construccionChecksTurnosHorariosM(turno) {
+        let check = `
+            <div class="form-check mb-2">
+                <input class="form-check-input check-tipo-turno turno${turno.IdTurno}M"
+                       type="radio"
+                       name="tipoTurnoM"
+                       value="${turno.IdTurno}"
+                       id="turno${turno.IdTurno}M">
+
+                <label class="form-check-label" for="turno${turno.IdTurno}M">
+                    <div class="fw-semibold">
+                        ${turno.Turno}
+                    </div>
+                    <small class="text-secondary texto-info">
+                        (${turno.TurnoHorarioInicio} - ${turno.TurnoHorarioFin})
+                    </small>
+                </label>
+
+            </div>
+        `;
+
+
+        $("#checksTurnoHorasM").append(check);
+    }
+
+    async armadoPanelesModal(idTipoProducto) {
+        let urlAction = $("#PlanProduccion").attr("GetCTP"); // Se obtiene el endpoint para consulta por Id la clasificacion del tipo de producto
+        // Consultar al servidor qué dclasificacion corresponde
+        const response = await $.ajax({
+            url: urlAction, // atributo en el HTML igual que los demás
+            type: 'POST',
+            data: { idTipoProducto: idTipoProducto }
+        });
+
+        if (response.Status == "OK") {
+            // Se obtiene a que clasificacion o que grupo pertenece
+            if (response.Clasificacion == "GuataFiltro") {
+
+                //Armar los checks para los turnos de manera dinamica
+                await ConsultaPlanProduccionCs.consultaturnos(response.Clasificacion)
+
+                //Colocar el tipo de modal 
+                $('#titulo-modalProd').html("<i class='bi bi-plus-circle me-2'></i>Producción (Fibras y Guata)");
+
+                // Mostrar/ocultar SOLO los tabs (links), nunca los panes
+                $("#nav-FResina-tab, #nav-RPolietileno-tab, #nav-Rfibras-tab, #nav-tag-tab, #nav-Dev-tab").show();
+                $("#nav-ConsumoM-tab, #nav-tagM-tab, #nav-DevM-tab").hide();
+
+                // Bootstrap se encarga de mostrar/ocultar los panels correctamente
+                $("#nav-FResina-tab").tab("show");
+                ConsultaPlanProduccionCs.clasificacionModal = 'GuataFiltro';
+                $('#modalOpcionesPP').modal('show');
+
+
+
+            }
+            else if (response.Clasificacion == "Maquila") {
+
+                //Armar los checks para los turnos de manera dinamica
+                await ConsultaPlanProduccionCs.consultaturnos(response.Clasificacion)
+
+                //Colocar el tipo de modal 
+                $('#titulo-modalProd').html("<i class='bi bi-plus-circle me-2'></i>Producción (Maquilas)");
+
+                $("#nav-ConsumoM-tab, #nav-tagM-tab, #nav-DevM-tab").show();
+                $("#nav-FResina-tab, #nav-RPolietileno-tab, #nav-Rfibras-tab, #nav-tag-tab, #nav-Dev-tab").hide();
+
+                $("#nav-ConsumoM-tab").tab("show");
+                ConsultaPlanProduccionCs.clasificacionModal = 'Maquila';
+                $('#modalOpcionesPP').modal('show');
+
+
+            }
+            else {
+                LayoutCs.Alerta("Producción", "Tipo de producto no reconocido");
+            }
+            StopLoading();
+        }
+        else {
+            StopLoading();
+            LayoutCs.Alerta("Producción", response.Message);
+        }
+    }
+
+    async consultaClasificacion(idTipoProducto) {
+        let urlAction = $("#PlanProduccion").attr("GetCTP"); // Se obtiene el endpoint para consulta por Id la clasificacion del tipo de producto
+        // Consultar al servidor qué dclasificacion corresponde
+        const response = await $.ajax({
+            url: urlAction, // atributo en el HTML igual que los demás
+            type: 'POST',
+            data: { idTipoProducto: idTipoProducto }
+        });
+
+        if (response.Status == "OK") {
+            var txtTooltip = ""
+            // Se obtiene a que clasificacion o que grupo pertenece
+            if (response.Clasificacion == "GuataFiltro") {
+                return txtTooltip = "Producción - Guata y Filtro";
+                
+            }
+            else if (response.Clasificacion == "Maquila") {
+                return txtTooltip = "Producción - Maquilas";
+               
+            }
+            else {
+                LayoutCs.Alerta("Producción", "Clasificacion no reconocida");
+            }
+            StopLoading();
+        }
+        else {
+            StopLoading();
+            LayoutCs.Alerta("Producción", response.Message);
+        }
+    }
+
     //Reserva polietileno
     indicadorBascula() {
         let htmlSeccionEncabezado = `
@@ -2385,6 +2572,46 @@ function closeParo(paro) {
 }
 
 
+// ══════════════════════════════════════════════════
+// Detectar turno actual por hora del sistema
+// ══════════════════════════════════════════════════
+//JS desde el navegador
+// function detectarTurnoPorHora() {
+//     let hora = new Date().getHours();
+//     let minutos = new Date().getMinutes();
+//     let horaDecimal = hora + (minutos / 60);
+
+//     // Turno 1: 06:00 a 14:00
+//     if (horaDecimal >= 6 && horaDecimal < 14) {
+//         return { gyf: 'turno1GyF', maquila: 'turno1M' };
+//     }
+//     // Turno 2: 14:00 a 22:00
+//     else if (horaDecimal >= 14 && horaDecimal < 22) {
+//         return { gyf: 'turno2GyF', maquila: 'turno2M' };
+//     }
+//     // Turno 3: 22:00 a 06:00 (cruza medianoche)
+//     else {
+//         return { gyf: 'turno3GyF', maquila: 'turno3M' };
+//     }
+// }
+
+// Desde el servidor, desde el back
+async function detectarTurnoPorHora() {
+    const response = await $.ajax({
+        url: '/Produccion/GetHoraServidor',
+        type: 'POST'
+    });
+
+    if (response.Status !== 'OK') return "1";
+
+    const data = JSON.parse(response.Data);
+    let horaDecimal = data.hora + (data.minutos / 60);
+
+    if (horaDecimal >= 6 && horaDecimal < 14) return "1";
+    if (horaDecimal >= 14 && horaDecimal < 22) return "2";
+    return "3";
+}
+
 //EVENTOS
 $(function () {
 
@@ -2392,12 +2619,12 @@ $(function () {
     let articulo = "";
     let linea = "";
 
-    // Lectura valor inicial Turno GyF
-    ConsultaPlanProduccionCs.turnoActual = $('input[name="tipoTurno"]:checked').val();
-
-    // Lectura valor inicial Turno Maquila
-    ConsultaPlanProduccionCs.turnoActual = $('input[name="tipoTurnoM"]:checked').val();
-
+    ConsultaPlanProduccionCs.turnoActual = null;
+    ConsultaPlanProduccionCs.turnoActualM = null;
+    ConsultaPlanProduccionCs.turnoPendiente = null;
+    ConsultaPlanProduccionCs.grupoTurnoPendiente = null;
+    ConsultaPlanProduccionCs.clasificacionModal = null;
+   
 
     const User = sessionStorage.getItem("email");
 
@@ -2850,7 +3077,7 @@ $(function () {
 
     //Mostrar modal de autorizacion para cambios de turno
         //Guata y Filtro
-    $(document).on('change', 'input[name="tipoTurno"]', function () {
+    $(document).on('click', 'input[name="tipoTurno"]', function () {
 
         let nuevoTurno = $(this).val();
 
@@ -2858,37 +3085,118 @@ $(function () {
             return;
 
         ConsultaPlanProduccionCs.turnoPendiente = nuevoTurno;
+        ConsultaPlanProduccionCs.grupoTurnoPendiente = 'tipoTurno'; // guardamos qué grupo
+
 
         // Regresar el radio al turno actual
         $('input[name="tipoTurno"][value="' + ConsultaPlanProduccionCs.turnoActual + '"]')
             .prop('checked', true);
 
-        // Abrir modal
+        // Limpiar estado del modal antes de abrir
+        $('#txtCodigoTurno').val('');
+        $('#lblErrorTurno').addClass('d-none');
+
         $('#modalAutorizacionTurno').modal('show');
 
     });
 
         //Maquila
-    $(document).on('change', 'input[name="tipoTurnoM"]', function () {
+    $(document).on('click', 'input[name="tipoTurnoM"]', function () {
 
         let nuevoTurno = $(this).val();
 
-        if (nuevoTurno === ConsultaPlanProduccionCs.turnoActual)
+        if (nuevoTurno === ConsultaPlanProduccionCs.turnoActualM)
             return;
 
         ConsultaPlanProduccionCs.turnoPendiente = nuevoTurno;
+        ConsultaPlanProduccionCs.grupoTurnoPendiente = 'tipoTurnoM'; // guardamos qué grupo
 
-        // Regresar el radio al turno actual
-        $('input[name="tipoTurnoM"][value="' + ConsultaPlanProduccionCs.turnoActual + '"]')
+
+        // Regresar el radio al turno actual    
+        $('input[name="tipoTurnoM"][value="' + ConsultaPlanProduccionCs.turnoActualM + '"]')
             .prop('checked', true);
 
-        // Abrir modal
+        // Limpiar estado del modal antes de abrir
+        $('#txtCodigoTurno').val('');
+        $('#lblErrorTurno').addClass('d-none');
+
         $('#modalAutorizacionTurno').modal('show');
 
     });
 
 
+    // ══════════════════════════════════════════════════
+    // Validar código — botón VALIDAR del modal
+    // ══════════════════════════════════════════════════
+    $(document).on('click', '#btnConfirmarCambio', function () {
+
+        let codigo = $('#txtCodigoTurno').val().trim();
+
+        // 👇 Aquí va tu lógica real de validación (fetch al backend, etc.)
+        let CODIGO_VALIDO = '1234';
+
+        if (codigo !== CODIGO_VALIDO) {
+            $('#lblErrorTurno').removeClass('d-none');
+            $('#txtCodigoTurno').val('').focus();
+            return;
+        }
+
+        // Código correcto → aplicar el cambio
+        let grupo = ConsultaPlanProduccionCs.grupoTurnoPendiente;
+
+        if (grupo === 'tipoTurno') {
+            ConsultaPlanProduccionCs.turnoActual = ConsultaPlanProduccionCs.turnoPendiente;
+            $('input[name="tipoTurno"][value="' + ConsultaPlanProduccionCs.turnoActual + '"]')
+                .prop('checked', true);
+
+        } else if (grupo === 'tipoTurnoM') {
+            ConsultaPlanProduccionCs.turnoActualM = ConsultaPlanProduccionCs.turnoPendiente;
+            $('input[name="tipoTurnoM"][value="' + ConsultaPlanProduccionCs.turnoActualM + '"]')
+                .prop('checked', true);
+        }
+
+        // Limpiar y cerrar
+        ConsultaPlanProduccionCs.turnoPendiente = null;
+        ConsultaPlanProduccionCs.grupoTurnoPendiente = null;
+        $('#txtCodigoTurno').val('');
+        $('#lblErrorTurno').addClass('d-none');
+        $('#modalAutorizacionTurno').modal('hide');
+    });
+
+
+    // ══════════════════════════════════════════════════
+    // Cancelar o cerrar sin validar → revertir
+    // ══════════════════════════════════════════════════
+    $('#modalAutorizacionTurno').on('hidden.bs.modal', function () {
+        ConsultaPlanProduccionCs.turnoPendiente = null;
+        ConsultaPlanProduccionCs.grupoTurnoPendiente = null;
+        $('#txtCodigoTurno').val('');
+        $('#lblErrorTurno').addClass('d-none');
+    });
+
     //=================================================================================
+
+    // ══════════════════════════════════════════════════
+    // Detectar turno CADA VEZ que se abre el modal
+    // ══════════════════════════════════════════════════
+    $('#modalOpcionesPP').on('shown.bs.modal', async function () {
+
+        let turno = await detectarTurnoPorHora();
+        
+        if (ConsultaPlanProduccionCs.clasificacionModal === 'GuataFiltro') {
+           
+            $('input[name="tipoTurno"]').prop('checked', false);
+            $('input[name="tipoTurno"][value="' + turno + '"]').prop('checked', true);
+            ConsultaPlanProduccionCs.turnoActual = turno;
+        }
+        else if (ConsultaPlanProduccionCs.clasificacionModal === 'Maquila') {
+           
+            $('input[name="tipoTurnoM"]').prop('checked', false);
+            $('input[name="tipoTurnoM"][value="' + turno + '"]').prop('checked', true);
+            ConsultaPlanProduccionCs.turnoActualM = turno;
+        }
+    });
+
     //========================= Eventos y funcionalidad ===============================
     //Botones modal produccion GyF y Maquila
     $(document).on('click', '#btn-Mproduccion', async function () {
@@ -2935,50 +3243,8 @@ $(function () {
         //funciones armado de modal produccion
         ConsultaPlanProduccionCs.informacionEncabezadoProd(planProduccion, ordenFabricacion, pedido, linea, cantidad, fechaIni, articulo, estatusColor, estatus, piezasproducidas, tipoProducto, itemCode);
 
-               
-        let urlAction = $("#PlanProduccion").attr("GetCTP"); // Se obtiene el endpoint para consulta por Id la clasificacion del tipo de producto
-        // Consultar al servidor qué dclasificacion corresponde
-        const response = await $.ajax({
-            url: urlAction, // atributo en el HTML igual que los demás
-            type: 'POST',
-            data: { idTipoProducto: idTipoProducto }
-        });        
-
-        if (response.Status == "OK") {
-           // Se obtiene a que clasificacion o que grupo pertenece
-            if (response.Clasificacion == "GuataFiltro") {
-                //Colocar el tipo de modal 
-                $('#titulo-modalProd').html("<i class='bi bi-plus-circle me-2'></i>Producción (Fibras y Guata)");
-
-                // Mostrar/ocultar SOLO los tabs (links), nunca los panes
-                $("#nav-FResina-tab, #nav-RPolietileno-tab, #nav-Rfibras-tab, #nav-tag-tab, #nav-Dev-tab").show();
-                $("#nav-ConsumoM-tab, #nav-tagM-tab, #nav-DevM-tab").hide();
-
-                // Bootstrap se encarga de mostrar/ocultar los panels correctamente
-                $("#nav-FResina-tab").tab("show");
-
-                $('#modalOpcionesPP').modal('show');
-            }
-            else if (response.Clasificacion == "Maquila") {
-                //Colocar el tipo de modal 
-                $('#titulo-modalProd').html("<i class='bi bi-plus-circle me-2'></i>Producción (Maquilas)");
-
-                $("#nav-ConsumoM-tab, #nav-tagM-tab, #nav-DevM-tab").show();
-                $("#nav-FResina-tab, #nav-RPolietileno-tab, #nav-Rfibras-tab, #nav-tag-tab, #nav-Dev-tab").hide();
-
-                $("#nav-ConsumoM-tab").tab("show");
-
-                $('#modalOpcionesPP').modal('show');
-            }
-            else {
-                LayoutCs.Alerta("Producción", "Tipo de producto no reconocido");
-            }
-            StopLoading();
-        }
-        else {
-            StopLoading();
-            LayoutCs.Alerta("Producción", response.Message);
-        }
+        //Armado de paneles para guata y filtro o maquila
+        await ConsultaPlanProduccionCs.armadoPanelesModal(idTipoProducto);
        
     });
 

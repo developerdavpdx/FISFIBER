@@ -76,6 +76,7 @@ namespace Fisfiber.Controllers
         public string GCGetOpRubro { get { return "EXEC SpPdxFF_GetOpRubro"; } }
         public string GCGetOpTipoMTO { get { return "EXEC SpPdxFF_GetOpTipoMTTO"; } }
         public string GCGetTipoProducto { get { return "EXEC SpPdxFF_TipoProducto @IdTipoProducto"; } }
+        public string GetTurnosYHorarios { get { return "EXEC SpPdxFF_GetTurnosYHorarios"; } }
         public string GCAllLineas { get { return "EXEC SpPdxFF_GetAllLineas "; } }
         public string GCLineasProduccion { get { return "EXEC SpPdxFF_GetLineasPlanesProduccion "; } }
         public string GCLineasProduccionT { get { return "EXEC SpPdxFF_GetLineasPlanesTerminadas "; } }
