@@ -328,6 +328,7 @@ namespace Fisfiber.Controllers
         public string GCNotifiNoLeidas { get { return "EXEC SpPdxFF_GetNotificacionesNoLeidas @usuario "; } }
         public string GCNotifiLeidas { get { return " EXEC SpPdxFF_MarcarNotificacionesComoLeidas @ids "; } }
         public string GCGetMetaDataSBO { get { return " EXEC SpPdxFF_GetMetaDataSBO @tabla,@campodefinido "; } }
+        public string GCGetCorreosMailsDestinatariosCV { get { return "EXEC SpPdxFF_GetEnvioNotificacionesCodigoValidacion"; } }
 
         #endregion
 

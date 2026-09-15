@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Reflection;
 using System.Security.Policy;
 using System.Text;
@@ -598,6 +599,70 @@ namespace Fisfiber.Controllers
                      ConfigurationManager.AppSettings["SMTP_PASSWORD"])
                 };
 
+                // ============================================================
+                // RUTA FÍSICA DE LA IMAGEN
+                // ============================================================
+                string imagePath = null;
+
+                if (!string.IsNullOrWhiteSpace(pathImg))
+                {
+                    imagePath = HostingEnvironment.MapPath(pathImg);
+                }
+
+                // ============================================================
+                // DETERMINAR TIPO MIME DE LA IMAGEN
+                // ============================================================
+                string contentType = null;
+
+                if (!string.IsNullOrWhiteSpace(imagePath) &&
+                    System.IO.File.Exists(imagePath))
+                {
+                    string extension =
+                        Path.GetExtension(imagePath)?.ToLowerInvariant();
+
+                    switch (extension)
+                    {
+                        case ".png":
+                            contentType = "image/png";
+                            break;
+
+                        case ".jpg":
+                        case ".jpeg":
+                            contentType = "image/jpeg";
+                            break;
+
+                        case ".gif":
+                            contentType = "image/gif";
+                            break;
+
+                        case ".bmp":
+                            contentType = "image/bmp";
+                            break;
+
+                        case ".webp":
+                            contentType = "image/webp";
+                            break;
+
+                        case ".svg":
+                            contentType = "image/svg+xml";
+                            break;
+
+                        case ".ico":
+                            contentType = "image/x-icon";
+                            break;
+
+                        case ".tif":
+                        case ".tiff":
+                            contentType = "image/tiff";
+                            break;
+
+                        default:
+                            contentType = null;
+                            break;
+                    }
+                }
+
+
                 // Iterar sobre la lista de correos para enviar los mensajes
                 foreach (var correo in correos)
                 {
@@ -612,19 +677,38 @@ namespace Fisfiber.Controllers
                             IsBodyHtml = emailRequest.IsHtml
                         };
 
-                        // Crear una vista alternativa con el HTML del cuerpo
-                        var alternateView = AlternateView.CreateAlternateViewFromString(emailRequest.Body, null, "text/html");
+                        // ====================================================
+                        // CREAR VISTA HTML
+                        // ====================================================
+                        var alternateView =
+                            AlternateView.CreateAlternateViewFromString(
+                                emailRequest.Body,
+                                Encoding.UTF8,
+                                "text/html");
 
-                        // Agregar la imagen como recurso embebido
-                        string imagePath = HostingEnvironment.MapPath(pathImg);  // Ruta local de la imagen
-                        var linkedResource = new LinkedResource(imagePath, "image/jpeg")
+                        // ====================================================
+                        // AGREGAR IMAGEN EMBEBIDA
+                        // ====================================================
+                        if (!string.IsNullOrWhiteSpace(imagePath) &&
+                            System.IO.File.Exists(imagePath) &&
+                            !string.IsNullOrWhiteSpace(contentType))
                         {
-                            ContentId = "imgAct", // Identificador único para referenciar la imagen
-                            TransferEncoding = System.Net.Mime.TransferEncoding.Base64
-                        };
+                            var linkedResource =
+                                new LinkedResource(
+                                    imagePath,
+                                    contentType)
+                                {
+                                    ContentId = "imgAct",
 
-                        // Asociar el recurso embebido con la vista alternativa
-                        alternateView.LinkedResources.Add(linkedResource);
+                                    TransferEncoding =
+                                        System.Net.Mime.TransferEncoding.Base64
+                                };
+
+                            // Asociar imagen con la vista HTML
+                            alternateView.LinkedResources.Add(linkedResource);
+                        }
+
+                        // Agregar la vista HTML al correo
                         mail.AlternateViews.Add(alternateView);
 
                         // Agregar destinatario
@@ -810,5 +894,14 @@ namespace Fisfiber.Controllers
             }
         }
 
+        public static string ConvertirImagenBase64(string imagePath)
+        {
+            if (string.IsNullOrWhiteSpace(imagePath) || !System.IO.File.Exists(imagePath))
+                return "";
+
+            byte[] imageBytes = System.IO.File.ReadAllBytes(imagePath);
+            string base64 = Convert.ToBase64String(imageBytes);
+            return $"data:image/png;base64,{base64}";
+        }
     }
 }

@@ -2612,6 +2612,32 @@ async function detectarTurnoPorHora() {
     return "3";
 }
 
+
+function envioCodigoValidacion(codigo) {
+    Loading();
+    return $.ajax({  // ← agregar return
+        url: '/PlanProduccion/EnvioCodigoValidacionMail',
+        type: 'POST',
+        data: { codigoAutorizacion: codigo },
+        success: function (response) {
+            if (response.Status == 'OK') {
+                LayoutCs.Alerta(
+                    "Código de autorización enviado",
+                    "Se ha enviado la solicitud de autorización al Supervisor, Analista de Producción o Director correspondiente para validar el cambio de turno.",
+                    "OK"
+                );
+                StopLoading();
+            } else {
+                StopLoading();
+                LayoutCs.Alerta("Producción", response.Message);
+            }
+        },
+        error: function () {
+            StopLoading();
+        }
+    });
+}
+
 //EVENTOS
 $(function () {
 
@@ -3096,7 +3122,14 @@ $(function () {
         $('#txtCodigoTurno').val('');
         $('#lblErrorTurno').addClass('d-none');
 
-        $('#modalAutorizacionTurno').modal('show');
+        let codigoAutorizacion = 1234;
+
+        //Se envia el correo para el codigo de validación
+        envioCodigoValidacion(codigoAutorizacion).done(function (response) {
+            if (response.Status == 'OK') {
+                $('#modalAutorizacionTurno').modal('show');
+            }
+        });
 
     });
 
@@ -3232,6 +3265,9 @@ $(function () {
         //Asignacion color de estatus en producción
         let estatusColor = "";
         switch (estatus) {
+            case 'En proceso':
+                estatusColor = 'proceso';
+                break;
             case 'En cola':
                 estatusColor = "pendiente"
                 break;

@@ -220,7 +220,7 @@
 .nav-tabs .nav-link:focus-visible {
     background-color: #334155;
     color: #ffffff;
-    box-shadow: 2px -1px 7px 0px #7e7e7e;
+    box-shadow: 2px -1px 7px 0px #7e7e7e; 
 }
 
 

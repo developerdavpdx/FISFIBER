@@ -17,8 +17,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using File = System.IO.File;
+using System.Text;
 
 namespace Fisfiber.Controllers
 {
@@ -26,6 +29,7 @@ namespace Fisfiber.Controllers
     {
         Logica Logic = new Logica();
         AccesoDatos AD = new AccesoDatos();
+        GlobalController Global = new GlobalController();
         private static readonly ILog log = LogManager.GetLogger(typeof(ProduccionController));
 
         #region VIEWS
@@ -2770,6 +2774,683 @@ namespace Fisfiber.Controllers
                 string finalmessage = AD.Excepcion(E, msg).ToString();
                 return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" });
             }
+        }
+
+
+        //Se envia el codigo de verificacion para cambio de turno
+        public JsonResult EnvioCodigoValidacionMail(string codigoAutorizacion) {
+            try
+            {
+                
+
+                // Validar que exista código
+                if (string.IsNullOrWhiteSpace(codigoAutorizacion))
+                {
+                    return Json(new
+                    {
+                        Status = "ERROR",
+                        Message = "No se recibió el código de autorización."
+                    });
+                }
+
+                //Obtener los destinatarios del correo
+                List<Correos> correos =
+                           ObtenerDestinatariosCodigoAutorizacion();
+
+                // Validar que existan destinatarios
+                if (correos == null || !correos.Any())
+                {
+                    return Json(new
+                    {
+                        Status = "ERROR",
+                        Message = "No se encontraron destinatarios para el código de autorización."
+                    });
+                }
+
+                string imagePath = null;
+
+                string pathImg = "~/assets/img/logo-fiber.png";
+
+                if (!string.IsNullOrWhiteSpace(pathImg))
+                {
+                    imagePath = HostingEnvironment.MapPath(pathImg);
+                }
+
+
+                // Recorrer cada destinatario
+                foreach (var correo in correos)
+                {
+                    // Generar HTML personalizado para el destinatario actual
+                    string htmlFinal =
+                        CodigoAutorizacionCambioTurno(
+                            correo.NombreDestinatario,
+                            imagePath,
+                            codigoAutorizacion
+                        );
+
+                    // Configurar correo
+                    EmailRequest emailRequest = new EmailRequest();
+
+                    emailRequest.To = "";
+                    emailRequest.Subject = "Código de autorización - Cambio de turno";
+                    emailRequest.Body = htmlFinal;
+                    emailRequest.IsHtml = true;
+
+                    // Enviar únicamente al destinatario actual
+                    Global.SendEmails(
+                        emailRequest,
+                        pathImg,
+                        new List<Correos> { correo },
+                        "FFISA"
+                    );
+                }
+
+                return Json(new
+                {
+                    Status = "OK",
+                    Message = "Código de autorización enviado correctamente."
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new
+                {
+                    Status = "ERROR",
+                    Message = ex.Message
+                });
+            }
+        }
+
+        //Correo codigo validacion
+        public static string CodigoAutorizacionCambioTurno(string nombreUsuario, string imagePath, string codigoAutorizacion)
+        {
+            // Convertir imagen a Base64
+            string imagenBase64 = GlobalController.ConvertirImagenBase64(imagePath);
+
+            string html = @"
+                <!DOCTYPE html>
+                <html lang='es'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+                    <title>Código de autorización - FFISA</title>
+
+                    <style type='text/css'>
+
+                        /* RESET */
+                        html,
+                        body {
+                            margin: 0 !important;
+                            padding: 0 !important;
+                            width: 100% !important;
+                            height: 100% !important;
+                        }
+
+                        body {
+                            background-color: #F3F3F3;
+                            font-family: Arial, Helvetica, sans-serif;
+                            -webkit-text-size-adjust: 100%;
+                            -ms-text-size-adjust: 100%;
+                        }
+
+                        table {
+                            border-spacing: 0 !important;
+                            border-collapse: collapse !important;
+                            margin: 0 auto;
+                        }
+
+                        img {
+                            border: 0;
+                            outline: none;
+                            text-decoration: none;
+                            -ms-interpolation-mode: bicubic;
+                        }
+
+                        a {
+                            text-decoration: none;
+                        }
+
+                        /* RESPONSIVE */
+                        @media only screen and (max-width: 600px) {
+
+                            .email-container {
+                                width: 100% !important;
+                            }
+
+                            .content-padding {
+                                padding-left: 25px !important;
+                                padding-right: 25px !important;
+                            }
+
+                            .logo {
+                                width: 175px !important;
+                                height: auto !important;
+                            }
+
+                            .title {
+                                font-size: 25px !important;
+                                line-height: 32px !important;
+                            }
+
+                            .code {
+                                font-size: 34px !important;
+                                letter-spacing: 8px !important;
+                            }
+
+                            .footer-text {
+                                font-size: 11px !important;
+                                line-height: 17px !important;
+                            }
+                        }
+
+                    </style>
+                </head>
+
+                <body style='margin:0; padding:0; background-color:#F3F3F3;'>
+
+                    <!-- CONTENEDOR GENERAL -->
+                    <table width='100%'
+                           cellpadding='0'
+                           cellspacing='0'
+                           border='0'
+                           bgcolor='#F3F3F3'
+                           style='width:100%; background-color:#F3F3F3;'>
+
+                        <tr>
+                            <td align='center'
+                                valign='top'
+                                style='padding:35px 15px;'>
+
+                                <!-- CONTENEDOR DEL CORREO -->
+                                <table class='email-container'
+                                       width='600'
+                                       cellpadding='0'
+                                       cellspacing='0'
+                                       border='0'
+                                       bgcolor='#FFFFFF'
+                                       style='
+                                           width:600px;
+                                           max-width:600px;
+                                           background-color:#FFFFFF;
+                                           border-collapse:collapse;
+                                       '>
+
+                                    <!-- ========================= -->
+                                    <!-- HEADER -->
+                                    <!-- ========================= -->
+
+                                    <tr>
+                                        <td bgcolor='#080808'
+                                            align='center'
+                                            style='background-color:#080808; padding:20px 30px;'>
+
+                                            <img class='logo'
+                                                 src='{{IMAGEN_FIBBER}}'
+                                                 width='190'
+                                                 alt='FFISA - Fis Fiber Industries'
+                                                 style='
+                                                     display:block;
+                                                     width:190px;
+                                                     max-width:100%;
+                                                     height:auto;
+                                                     margin:0 auto;
+                                                 '>
+
+                                        </td>
+                                    </tr>
+
+
+                                    <!-- ========================= -->
+                                    <!-- BARRA -->
+                                    <!-- ========================= -->
+
+                                    <tr>
+                                        <td bgcolor='#080808'
+                                            height='6'
+                                            style='
+                                                height:6px;
+                                                line-height:6px;
+                                                font-size:0;
+                                                background-color:#d51e2d;;
+                                            '>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+
+
+                                    <!-- ========================= -->
+                                    <!-- CONTENIDO -->
+                                    <!-- ========================= -->
+
+                                    <tr>
+                                        <td class='content-padding'
+                                            align='left'
+                                            style='
+                                                padding:45px 55px 20px 55px;
+                                            '>
+
+                                            <!-- TÍTULO -->
+
+                                            <table width='100%'
+                                                   cellpadding='0'
+                                                   cellspacing='0'
+                                                   border='0'>
+
+                                                <tr>
+                                                    <td align='center'
+                                                        style='
+                                                            padding-bottom:10px;
+                                                        '>
+
+                                                        <div class='title'
+                                                             style='
+                                                                 font-family:Arial,
+                                                                 Helvetica,sans-serif;
+                                                                 font-size:28px;
+                                                                 line-height:36px;
+                                                                 font-weight:bold;
+                                                                 color:#080808;
+                                                             '>
+
+                                                            Autorización requerida
+
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td align='center'
+                                                        style='
+                                                            padding-bottom:30px;
+                                                        '>
+
+                                                        <div style='
+                                                            width:50px;
+                                                            height:3px;
+                                                            background-color:#E52F34;
+                                                            margin:0 auto;
+                                                            font-size:0;
+                                                            line-height:0;
+                                                        '>
+                                                            &nbsp;
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+
+                                            <!-- SALUDO -->
+
+                                            <table width='100%'
+                                                   cellpadding='0'
+                                                   cellspacing='0'
+                                                   border='0'>
+
+                                                <tr>
+                                                    <td style='
+                                                        font-family:Arial,
+                                                        Helvetica,sans-serif;
+                                                        font-size:15px;
+                                                        line-height:24px;
+                                                        color:#333333;
+                                                        padding-bottom:15px;
+                                                    '>
+
+                                                        Hola, <strong>{{NOMBRE_USUARIO}}</strong>:
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style='
+                                                        font-family:Arial,
+                                                        Helvetica,sans-serif;
+                                                        font-size:15px;
+                                                        line-height:24px;
+                                                        color:#555555;
+                                                        padding-bottom:25px;
+                                                    '>
+
+                                                        Se ha generado una solicitud de cambio de turno que requiere su autorización.
+                                                        Para validar y continuar con el proceso en el sistema FFISA, utilice el siguiente
+                                                        código de autorización:
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+
+                                            <!-- ========================= -->
+                                            <!-- CAJA DEL CÓDIGO -->
+                                            <!-- ========================= -->
+
+                                            <table width='100%'
+                                                   cellpadding='0'
+                                                   cellspacing='0'
+                                                   border='0'
+                                                   bgcolor='#F7F7F7'
+                                                   style='
+                                                       background-color:#F7F7F7;
+                                                       border:1px solid #E5E5E5;
+                                                   '>
+
+                                                <tr>
+                                                    <td align='center'
+                                                        style='
+                                                            padding:22px 20px 8px 20px;
+                                                        '>
+
+                                                        <div style='
+                                                            font-family:Arial,
+                                                            Helvetica,sans-serif;
+                                                            font-size:12px;
+                                                            line-height:18px;
+                                                            font-weight:bold;
+                                                            color:#777777;
+                                                            letter-spacing:1.5px;
+                                                        '>
+
+                                                            CÓDIGO DE AUTORIZACIÓN
+
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td align='center'
+                                                        style='
+                                                            padding:5px 20px 20px 20px;
+                                                        '>
+
+                                                        <div class='code'
+                                                             style='
+                                                                 font-family:Arial,
+                                                                 Helvetica,sans-serif;
+                                                                 font-size:40px;
+                                                                 line-height:48px;
+                                                                 font-weight:bold;
+                                                                 color:#E52F34;
+                                                                 letter-spacing:10px;
+                                                             '>
+
+                                                            {{CODIGO_AUTORIZACION}}
+
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+
+                                            <!-- ========================= -->
+                                            <!-- VIGENCIA -->
+                                            <!-- ========================= -->
+
+                                            <table width='100%'
+                                                   cellpadding='0'
+                                                   cellspacing='0'
+                                                   border='0'>
+
+                                                <tr>
+                                                    <td align='center'
+                                                        style='
+                                                            padding:12px 0 30px 0;
+                                                            font-family:Arial,
+                                                            Helvetica,sans-serif;
+                                                            font-size:12px;
+                                                            line-height:18px;
+                                                            color:#888888;
+                                                        '>
+
+                                                        Este código es válido únicamente para
+                                                        la solicitud actual.
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+
+                                            <!-- SEPARADOR -->
+
+                                            <table width='100%'
+                                                   cellpadding='0'
+                                                   cellspacing='0'
+                                                   border='0'>
+
+                                                <tr>
+                                                    <td style='
+                                                        border-top:1px solid #EEEEEE;
+                                                        font-size:0;
+                                                        line-height:0;
+                                                    '>
+                                                        &nbsp;
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+
+                                            <!-- ========================= -->
+                                            <!-- SEGURIDAD -->
+                                            <!-- ========================= -->
+
+                                            <table width='100%'
+                                                   cellpadding='0'
+                                                   cellspacing='0'
+                                                   border='0'>
+
+                                                <tr>
+                                                    <td style='
+                                                        padding:25px 0 10px 0;
+                                                        font-family:Arial,
+                                                        Helvetica,sans-serif;
+                                                        font-size:14px;
+                                                        line-height:22px;
+                                                        color:#555555;
+                                                    '>
+
+                                                        <strong style='color:#080808;'>
+                                                            Importante:
+                                                        </strong>
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style='
+                                                        font-family:Arial,
+                                                        Helvetica,sans-serif;
+                                                        font-size:13px;
+                                                        line-height:21px;
+                                                        color:#777777;
+                                                        padding-bottom:10px;
+                                                    '>
+
+                                                        Por seguridad, no compartas este código
+                                                        con otras personas. El código se utiliza
+                                                        para validar su autorización dentro del
+                                                        sistema.
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style='
+                                                        font-family:Arial,
+                                                        Helvetica,sans-serif;
+                                                        font-size:13px;
+                                                        line-height:21px;
+                                                        color:#777777;
+                                                        padding-bottom:25px;
+                                                    '>
+
+                                                        Si no realizaste esta solicitud,
+                                                        puedes ignorar este correo.
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+                                        </td>
+                                    </tr>
+
+
+                                    <!-- ========================= -->
+                                    <!-- FOOTER NEGRO -->
+                                    <!-- ========================= -->
+
+                                    <tr>
+                                        <td bgcolor='#080808'
+                                            align='center'
+                                            style='
+                                                background-color:#080808;
+                                                padding:28px 30px;
+                                            '>
+
+                                            <div style='
+                                                font-family:Arial,
+                                                Helvetica,sans-serif;
+                                                font-size:13px;
+                                                line-height:20px;
+                                                color:#FFFFFF;
+                                                font-weight:bold;
+                                            '>
+
+                                                FFISA
+
+                                            </div>
+
+                                            <div style='
+                                                font-family:Arial,
+                                                Helvetica,sans-serif;
+                                                font-size:11px;
+                                                line-height:18px;
+                                                color:#AAAAAA;
+                                                padding-top:5px;
+                                            '>
+
+                                                Fis Fiber Industries
+
+                                            </div>
+
+                                            <div class='footer-text'
+                                                 style='
+                                                     font-family:Arial,
+                                                     Helvetica,sans-serif;
+                                                     font-size:11px;
+                                                     line-height:17px;
+                                                     color:#777777;
+                                                     padding-top:15px;
+                                                 '>
+
+                                                Este es un correo automático.
+                                                Por favor, no respondas directamente a este mensaje.
+
+                                            </div>
+
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+
+                                <!-- ========================= -->
+                                <!-- TEXTO LEGAL EXTERIOR -->
+                                <!-- ========================= -->
+
+                                <table width='600'
+                                       class='email-container'
+                                       cellpadding='0'
+                                       cellspacing='0'
+                                       border='0'
+                                       style='
+                                           width:600px;
+                                           max-width:600px;
+                                       '>
+
+                                    <tr>
+                                        <td align='center'
+                                            style='
+                                                padding:15px 20px 0 20px;
+                                                font-family:Arial,
+                                                Helvetica,sans-serif;
+                                                font-size:10px;
+                                                line-height:16px;
+                                                color:#999999;
+                                            '>
+
+                                            © FFISA - Fis Fiber Industries.
+                                            Todos los derechos reservados.
+
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </body>
+                </html>";
+            
+            //Integrar el nombre de usuario al correo
+            html = html.Replace(
+                 "{{NOMBRE_USUARIO}}",
+                 nombreUsuario
+             );
+
+            //Integrar la imagen de la empresa al correo
+            html = html.Replace(
+                "{{IMAGEN_FIBBER}}", 
+                imagenBase64
+                );
+
+            //Integrar el codigo de autorizacion al correo
+            html = html.Replace(
+                "{{CODIGO_AUTORIZACION}}",
+                codigoAutorizacion
+            );
+
+
+            return html;
+        }
+
+        //Obtencion de destinatarios para el envio del codigo de autorizacion en cambios de turnos
+        [HttpGet]
+        private List<Correos> ObtenerDestinatariosCodigoAutorizacion()
+        {
+            AD.RequestParameters = new Dictionary<string, string>();
+
+            string result = Logic.GlobalProcedure(
+                AD.GCGetCorreosMailsDestinatariosCV,
+                AD.RequestParameters
+            );
+
+            if (string.IsNullOrWhiteSpace(result) || result == "[]")
+            {
+                return new List<Correos>();
+            }
+
+            if (result.Contains("Error"))
+            {
+                throw new Exception(result);
+            }
+
+            List<Correos> correos =
+                JsonConvert.DeserializeObject<List<Correos>>(result);
+
+            return correos ?? new List<Correos>();
         }
 
         #endregion
