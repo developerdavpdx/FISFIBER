@@ -22,6 +22,7 @@ using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using File = System.IO.File;
 using System.Text;
+using System.IO;
 
 namespace Fisfiber.Controllers
 {
@@ -2776,9 +2777,47 @@ namespace Fisfiber.Controllers
             }
         }
 
+        //Asignar y obtener el codigo de verificacion
+        public JsonResult AsignaCodigoVerificacion(string empleado, string linea, string ordenFabricacion)
+        {
+            try
+            {
+                AD.RequestParameters = new Dictionary<string, string>();
+                AD.RequestParameters.Add("solicitante", empleado);
+                AD.RequestParameters.Add("linea", linea);
+                AD.RequestParameters.Add("ordenFabricacion", ordenFabricacion);
+                string CVT = Logic.GlobalProcedure(AD.GCetAsignarCodigoVerificacion, AD.RequestParameters);
+                //retornamos en JSON la data obtenida
+                // Validación del los datos
+                if (CVT.Contains("Error"))
+                {
+                    return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = CVT });
+                }
+                //No existe información
+                else if (CVT.Contains("[]"))
+                {
+                    return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = "No se pudo generar el código" });
+                }
+                //OK
+                var result = Json(new AccesoDatos.JsonResponse { Status = "OK", Data = CVT, Message = "Se ha generado el código de verificación correctamente." });
+                result.MaxJsonLength = 2147483644; //Modificamos directamente el tamaño de la cadena JSON
+                return result;
+            }
+            catch (Exception E)
+            {
+                //Devolver el error en formato JSON
+                string MethodName = MethodBase.GetCurrentMethod().Name;
+                string ControllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+                string msg = "No es posible obtener el código de verificación " + MethodName + " en: " + ControllerName + ", por favor contacte al administrador del sistema con el siguiente código de error: ";
+                string finalmessage = AD.Excepcion(E, msg).ToString();
+                log.Error($"{finalmessage} - {E.Message}", E);
+
+                return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" });
+            }
+        }
 
         //Se envia el codigo de verificacion para cambio de turno
-        public JsonResult EnvioCodigoValidacionMail(string codigoAutorizacion) {
+        public JsonResult EnvioCodigoValidacionMail(string codigoAutorizacion, string linea, string ordenFabricacion) {
             try
             {
                 
@@ -2825,7 +2864,9 @@ namespace Fisfiber.Controllers
                         CodigoAutorizacionCambioTurno(
                             correo.NombreDestinatario,
                             imagePath,
-                            codigoAutorizacion
+                            codigoAutorizacion,
+                            linea, 
+                            ordenFabricacion
                         );
 
                     // Configurar correo
@@ -2862,10 +2903,49 @@ namespace Fisfiber.Controllers
         }
 
         //Correo codigo validacion
-        public static string CodigoAutorizacionCambioTurno(string nombreUsuario, string imagePath, string codigoAutorizacion)
+        public static string CodigoAutorizacionCambioTurno(string nombreUsuario, string imagePath, string codigoAutorizacion, string linea, string ordenFabricacion)
         {
-            // Convertir imagen a Base64
-            string imagenBase64 = GlobalController.ConvertirImagenBase64(imagePath);
+
+            // =====================================================
+            // CONVERTIR IMAGEN A BASE64
+            // =====================================================
+
+            string imgTag = "";
+
+            if (!string.IsNullOrWhiteSpace(imagePath) &&
+                System.IO.File.Exists(imagePath))
+            {
+                string ext =
+                    Path.GetExtension(imagePath).ToLower();
+
+                string mimeType =
+                    ext == ".png" ? "image/png" : "image/jpeg";
+
+                byte[] imageBytes =
+                    System.IO.File.ReadAllBytes(imagePath);
+
+                string base64 =
+                    Convert.ToBase64String(imageBytes);
+
+                imgTag = $@"<img class='logo'
+                         src='data:{mimeType};base64,{base64}'
+                         width='190'
+                         alt='FFISA - Fis Fiber Industries'
+                         style='
+                             display:block;
+                             width:190px;
+                             max-width:100%;
+                             height:auto;
+                             margin:0 auto;
+                         '>";
+            }
+            else
+            {
+                // Fallback si no hay imagen
+                imgTag = @"<div style='color:#FFFFFF; font-size:18px; font-weight:bold;'>
+                       FFISA
+                   </div>";
+            }
 
             string html = @"
                 <!DOCTYPE html>
@@ -2985,17 +3065,7 @@ namespace Fisfiber.Controllers
                                             align='center'
                                             style='background-color:#080808; padding:20px 30px;'>
 
-                                            <img class='logo'
-                                                 src='{{IMAGEN_FIBBER}}'
-                                                 width='190'
-                                                 alt='FFISA - Fis Fiber Industries'
-                                                 style='
-                                                     display:block;
-                                                     width:190px;
-                                                     max-width:100%;
-                                                     height:auto;
-                                                     margin:0 auto;
-                                                 '>
+                                            {{IMG_LOGO}}
 
                                         </td>
                                     </tr>
@@ -3115,7 +3185,7 @@ namespace Fisfiber.Controllers
                                                         padding-bottom:25px;
                                                     '>
 
-                                                        Se ha generado una solicitud de cambio de turno que requiere su autorización.
+                                                        Se ha generado una solicitud de cambio de turno para la <b>línea {{LINEA}}</b> con Orden de fabricación <b>{{OF}}</b> que requiere su autorización.
                                                         Para validar y continuar con el proceso en el sistema FFISA, utilice el siguiente
                                                         código de autorización:
 
@@ -3410,11 +3480,18 @@ namespace Fisfiber.Controllers
                  nombreUsuario
              );
 
-            //Integrar la imagen de la empresa al correo
+            html = html.Replace("{{IMG_LOGO}}", imgTag); 
+
+            //Integrar la linea
             html = html.Replace(
-                "{{IMAGEN_FIBBER}}", 
-                imagenBase64
-                );
+                "{{LINEA}}",
+                linea 
+            );
+            //Integrar la orden de fabricacion
+            html = html.Replace(
+                "{{OF}}",
+                ordenFabricacion
+            );
 
             //Integrar el codigo de autorizacion al correo
             html = html.Replace(
@@ -3452,6 +3529,45 @@ namespace Fisfiber.Controllers
 
             return correos ?? new List<Correos>();
         }
+
+        //Consultar el codigo de verificacion de autorizacion para cambios de turno
+        public JsonResult consultaCodigoVerificacion(string codigo)
+        {
+            try
+            {
+                AD.RequestParameters = new Dictionary<string, string>();
+                AD.RequestParameters.Add("codigo", codigo);
+               
+                string CCVT = Logic.GlobalProcedure(AD.GCetConsultarCodigoVerificacion, AD.RequestParameters);
+                //retornamos en JSON la data obtenida
+                // Validación del los datos
+                if (CCVT.Contains("Error"))
+                {
+                    return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = CCVT });
+                }
+                //No existe información
+                else if (CCVT.Contains("[]"))
+                {
+                    return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = "No se pudo validar el código de verificación" });
+                }
+                //OK
+                var result = Json(new AccesoDatos.JsonResponse { Data = CCVT });
+                result.MaxJsonLength = 2147483644; //Modificamos directamente el tamaño de la cadena JSON
+                return result;
+            }
+            catch (Exception E)
+            {
+                //Devolver el error en formato JSON
+                string MethodName = MethodBase.GetCurrentMethod().Name;
+                string ControllerName = this.ControllerContext.RouteData.Values["controller"].ToString();
+                string msg = "No es posible obtener el código de verificación " + MethodName + " en: " + ControllerName + ", por favor contacte al administrador del sistema con el siguiente código de error: ";
+                string finalmessage = AD.Excepcion(E, msg).ToString();
+                log.Error($"{finalmessage} - {E.Message}", E);
+
+                return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" });
+            }
+        }
+
 
         #endregion
     }

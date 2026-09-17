@@ -576,32 +576,40 @@ namespace Fisfiber.Controllers
         {
             try
             {
-                // Obtener la lista de correos
-
-                AD.RequestParameters = new Dictionary<string, string>();
-
-                string result = Logic.GlobalProcedure("", AD.RequestParameters);
-                // correos = JsonConvert.DeserializeObject<List<Correos>>(result);
-
                 if (correos == null || !correos.Any())
                 {
-                    return Json(new { success = false, message = "No se encontraron destinatarios." });
+                    return Json(new
+                    {
+                        success = false,
+                        message = "No se encontraron destinatarios."
+                    });
                 }
 
-                //LA CONFIGURACION DEL SMTP SE PEUDE CAMBIAR EN EL WEB CONFIG
-                var smtp = new SmtpClient
-                {
-                    Host = ConfigurationManager.AppSettings["SMTP_HOST"],
-                    Port = int.Parse(ConfigurationManager.AppSettings["SMTP_PORT"] ?? "587"),
-                    EnableSsl = true,
-                    Credentials = new NetworkCredential(
-                     ConfigurationManager.AppSettings["SMTP_USER"],
-                     ConfigurationManager.AppSettings["SMTP_PASSWORD"])
-                };
+                string smtpHost =
+                    ConfigurationManager.AppSettings["SMTP_HOST"];
 
-                // ============================================================
-                // RUTA FÍSICA DE LA IMAGEN
-                // ============================================================
+                int smtpPort =
+                    int.Parse(
+                        ConfigurationManager.AppSettings["SMTP_PORT"] ?? "587"
+                    );
+
+                string smtpUser =
+                    ConfigurationManager.AppSettings["SMTP_USER"];
+
+                string smtpPassword =
+                    ConfigurationManager.AppSettings["SMTP_PASSWORD"];
+
+                if (string.IsNullOrWhiteSpace(smtpHost) ||
+                    string.IsNullOrWhiteSpace(smtpUser) ||
+                    string.IsNullOrWhiteSpace(smtpPassword))
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "La configuración SMTP está incompleta."
+                    });
+                }
+
                 string imagePath = null;
 
                 if (!string.IsNullOrWhiteSpace(pathImg))
@@ -609,134 +617,126 @@ namespace Fisfiber.Controllers
                     imagePath = HostingEnvironment.MapPath(pathImg);
                 }
 
-                // ============================================================
-                // DETERMINAR TIPO MIME DE LA IMAGEN
-                // ============================================================
-                string contentType = null;
-
-                if (!string.IsNullOrWhiteSpace(imagePath) &&
-                    System.IO.File.Exists(imagePath))
+                if (!string.IsNullOrWhiteSpace(imagePath))
                 {
-                    string extension =
-                        Path.GetExtension(imagePath)?.ToLowerInvariant();
-
-                    switch (extension)
+                    if (!System.IO.File.Exists(imagePath))
                     {
-                        case ".png":
-                            contentType = "image/png";
-                            break;
-
-                        case ".jpg":
-                        case ".jpeg":
-                            contentType = "image/jpeg";
-                            break;
-
-                        case ".gif":
-                            contentType = "image/gif";
-                            break;
-
-                        case ".bmp":
-                            contentType = "image/bmp";
-                            break;
-
-                        case ".webp":
-                            contentType = "image/webp";
-                            break;
-
-                        case ".svg":
-                            contentType = "image/svg+xml";
-                            break;
-
-                        case ".ico":
-                            contentType = "image/x-icon";
-                            break;
-
-                        case ".tif":
-                        case ".tiff":
-                            contentType = "image/tiff";
-                            break;
-
-                        default:
-                            contentType = null;
-                            break;
+                        return Json(new
+                        {
+                            success = false,
+                            message = "No se encontró la imagen del logo en: " + imagePath
+                        });
                     }
                 }
 
-
-                // Iterar sobre la lista de correos para enviar los mensajes
-                foreach (var correo in correos)
+                using (var smtp = new SmtpClient())
                 {
-                    try
+                    smtp.Host = smtpHost;
+                    smtp.Port = smtpPort;
+                    smtp.EnableSsl = true;
+                    smtp.Credentials =
+                        new NetworkCredential(
+                            smtpUser,
+                            smtpPassword
+                        );
+
+                    int enviados = 0;
+                    int errores = 0;
+
+                    List<string> erroresDetalle =
+                        new List<string>();
+
+                    foreach (var correo in correos)
                     {
-                        // Crear el mensaje de correo
-                        var mail = new MailMessage
+                        try
                         {
-                            From = new MailAddress(ConfigurationManager.AppSettings["SMTP_USER"], Alias),
-                            Subject = emailRequest.Subject,
-                            Body = emailRequest.Body,
-                            IsBodyHtml = emailRequest.IsHtml
-                        };
+                            using (var mail = new MailMessage())
+                            {
+                                mail.From =
+                                    new MailAddress(
+                                        smtpUser,
+                                        Alias
+                                    );
 
-                        // ====================================================
-                        // CREAR VISTA HTML
-                        // ====================================================
-                        var alternateView =
-                            AlternateView.CreateAlternateViewFromString(
-                                emailRequest.Body,
-                                Encoding.UTF8,
-                                "text/html");
+                                mail.To.Add(correo.Correo);
 
-                        // ====================================================
-                        // AGREGAR IMAGEN EMBEBIDA
-                        // ====================================================
-                        if (!string.IsNullOrWhiteSpace(imagePath) &&
-                            System.IO.File.Exists(imagePath) &&
-                            !string.IsNullOrWhiteSpace(contentType))
-                        {
-                            var linkedResource =
-                                new LinkedResource(
-                                    imagePath,
-                                    contentType)
-                                {
-                                    ContentId = "imgAct",
+                                mail.Subject =
+                                    emailRequest.Subject;
 
-                                    TransferEncoding =
-                                        System.Net.Mime.TransferEncoding.Base64
-                                };
+                                mail.SubjectEncoding =
+                                    Encoding.UTF8;
 
-                            // Asociar imagen con la vista HTML
-                            alternateView.LinkedResources.Add(linkedResource);
+                                // =====================================================
+                                // VISTA HTML CON IMAGEN EN BASE64 YA EMBEBIDA EN EL BODY
+                                // =====================================================
+
+                                var htmlView =
+                                    AlternateView.CreateAlternateViewFromString(
+                                        emailRequest.Body,
+                                        Encoding.UTF8,
+                                        "text/html"
+                                    );
+
+                                mail.AlternateViews.Add(htmlView);
+
+                                // =====================================================
+                                // ENVIAR
+                                // =====================================================
+
+                                smtp.Send(mail);
+
+                                enviados++;
+                            }
                         }
+                        catch (Exception ex)
+                        {
+                            errores++;
 
-                        // Agregar la vista HTML al correo
-                        mail.AlternateViews.Add(alternateView);
-
-                        // Agregar destinatario
-                        mail.To.Add(correo.Correo);
-
-                        // Enviar el correo
-                        smtp.Send(mail);
+                            erroresDetalle.Add(
+                                $"{correo.Correo}: {ex.Message}"
+                            );
+                        }
                     }
-                    catch (Exception ex)
+
+                    if (errores > 0 && enviados == 0)
                     {
-                        // Loguear errores de correos individuales si es necesario
-                        // Continuar con el siguiente correo
-                        Console.WriteLine($"Error al enviar a {correo.Correo}: {ex.Message}");
+                        return Json(new
+                        {
+                            success = false,
+                            message =
+                                "No se pudo enviar ningún correo.",
+                            errores = erroresDetalle
+                        });
                     }
+
+                    if (errores > 0)
+                    {
+                        return Json(new
+                        {
+                            success = true,
+                            message =
+                                $"Se enviaron {enviados} correo(s), pero {errores} presentaron errores.",
+                            errores = erroresDetalle
+                        });
+                    }
+
+                    return Json(new
+                    {
+                        success = true,
+                        message =
+                            $"Se enviaron correctamente {enviados} correo(s)."
+                    });
                 }
-
-                smtp.Dispose();
-
-
-                return Json(new { success = true, message = "Correos enviados correctamente" });
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = $"Error general: {ex.Message}" });
+                return Json(new
+                {
+                    success = false,
+                    message = $"Error general al enviar correos: {ex.Message}"
+                });
             }
         }
-
-
         public JsonResult UpdateHeaderISO(string Modulo, string FL, string FR, string Code, string Nivel, string Revision)
         {
             try
@@ -894,14 +894,6 @@ namespace Fisfiber.Controllers
             }
         }
 
-        public static string ConvertirImagenBase64(string imagePath)
-        {
-            if (string.IsNullOrWhiteSpace(imagePath) || !System.IO.File.Exists(imagePath))
-                return "";
-
-            byte[] imageBytes = System.IO.File.ReadAllBytes(imagePath);
-            string base64 = Convert.ToBase64String(imageBytes);
-            return $"data:image/png;base64,{base64}";
-        }
+       
     }
 }

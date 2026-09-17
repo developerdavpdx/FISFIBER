@@ -1766,7 +1766,7 @@
     }
 
     //Consulta de datos de turnos y horarios 
-    async consultaturnos(clasificacion) {
+    async consultaturnos(clasificacion, linea, ordenFabricacion) {
         let urlAction = $("#PlanProduccion").attr("GetTurnosHorarios"); // Se obtiene el endpoint para consulta por Id la clasificacion del tipo de producto
         // Consultar al servidor qué dclasificacion corresponde
         const response = await $.ajax({
@@ -1785,10 +1785,10 @@
                 //
                 if (clasificacion == "GuataFiltro") {
                     // Construccion de checks para turnos de guata y filtro
-                    ConsultaPlanProduccionCs.construccionChecksTurnosHorariosGyF(turno);
+                    ConsultaPlanProduccionCs.construccionChecksTurnosHorariosGyF(turno, linea, ordenFabricacion);
                 } else {
                     // Construccion de checks para turnos de maquila
-                    ConsultaPlanProduccionCs.construccionChecksTurnosHorariosM(turno);
+                    ConsultaPlanProduccionCs.construccionChecksTurnosHorariosM(turno, linea, ordenFabricacion);
                 }
                 
             });
@@ -1802,12 +1802,14 @@
     }
 
     //Armado de estructura de checks turnos GyF
-    construccionChecksTurnosHorariosGyF(turno) {
+    construccionChecksTurnosHorariosGyF(turno, linea, ordenFabricacion) {
         let check = `
             <div class="form-check mb-2">
                 <input class="form-check-input check-tipo-turno turno${turno.IdTurno}GyF"
                        type="radio"
                        name="tipoTurno"
+                        data-linea="${linea}"
+                        data-OF="OF-${ordenFabricacion}"
                        value="${turno.IdTurno}"
                        id="turno${turno.IdTurno}GyF">
 
@@ -1828,12 +1830,14 @@
     }
 
     //Armado de estructura de checks turnos M
-    construccionChecksTurnosHorariosM(turno) {
+    construccionChecksTurnosHorariosM(turno, linea, ordenFabricacion) {
         let check = `
             <div class="form-check mb-2">
                 <input class="form-check-input check-tipo-turno turno${turno.IdTurno}M"
                        type="radio"
                        name="tipoTurnoM"
+                        data-linea="${linea}"
+                        data-OF="OF-${ordenFabricacion}"
                        value="${turno.IdTurno}"
                        id="turno${turno.IdTurno}M">
 
@@ -1853,7 +1857,7 @@
         $("#checksTurnoHorasM").append(check);
     }
 
-    async armadoPanelesModal(idTipoProducto) {
+    async armadoPanelesModal(idTipoProducto, linea, ordenFabricacion) {
         let urlAction = $("#PlanProduccion").attr("GetCTP"); // Se obtiene el endpoint para consulta por Id la clasificacion del tipo de producto
         // Consultar al servidor qué dclasificacion corresponde
         const response = await $.ajax({
@@ -1867,7 +1871,7 @@
             if (response.Clasificacion == "GuataFiltro") {
 
                 //Armar los checks para los turnos de manera dinamica
-                await ConsultaPlanProduccionCs.consultaturnos(response.Clasificacion)
+                await ConsultaPlanProduccionCs.consultaturnos(response.Clasificacion, linea, ordenFabricacion)
 
                 //Colocar el tipo de modal 
                 $('#titulo-modalProd').html("<i class='bi bi-plus-circle me-2'></i>Producción (Fibras y Guata)");
@@ -1887,7 +1891,7 @@
             else if (response.Clasificacion == "Maquila") {
 
                 //Armar los checks para los turnos de manera dinamica
-                await ConsultaPlanProduccionCs.consultaturnos(response.Clasificacion)
+                await ConsultaPlanProduccionCs.consultaturnos(response.Clasificacion, linea, ordenFabricacion)
 
                 //Colocar el tipo de modal 
                 $('#titulo-modalProd').html("<i class='bi bi-plus-circle me-2'></i>Producción (Maquilas)");
@@ -2613,29 +2617,74 @@ async function detectarTurnoPorHora() {
 }
 
 
-function envioCodigoValidacion(codigo) {
+async function GeneraCodigoV(empleado, linea, ordenFabricacion) {
     Loading();
-    return $.ajax({  // ← agregar return
-        url: '/PlanProduccion/EnvioCodigoValidacionMail',
-        type: 'POST',
-        data: { codigoAutorizacion: codigo },
-        success: function (response) {
-            if (response.Status == 'OK') {
-                LayoutCs.Alerta(
-                    "Código de autorización enviado",
-                    "Se ha enviado la solicitud de autorización al Supervisor, Analista de Producción o Director correspondiente para validar el cambio de turno.",
-                    "OK"
-                );
-                StopLoading();
-            } else {
-                StopLoading();
-                LayoutCs.Alerta("Producción", response.Message);
+    try {
+        const response = await $.ajax({
+            url: '/PlanProduccion/AsignaCodigoVerificacion',
+            type: 'POST',
+            data: {
+                empleado: empleado,
+                linea: linea,
+                ordenFabricacion: ordenFabricacion
             }
-        },
-        error: function () {
+        });
+        
+        if (response.Status == 'OK') {
+
+            // Puede que ya venga como objeto, no string
+            let codigoValidacion = typeof response.Data === 'string'
+                ? JSON.parse(response.Data)
+                : response.Data;
             StopLoading();
+            return codigoValidacion[0].CodigoVerificacion;
+           
+        } else {
+            LayoutCs.Alerta("Producción", response.Message);
+            StopLoading();
+            return null;
+            
         }
-    });
+        
+    } catch (ex) {
+        StopLoading();        
+        return ex.toString();
+    }
+}
+
+async function envioCodigoValidacion(codigo, ordenFabricacion, linea) {
+    Loading();
+    try {
+        const response = await $.ajax({
+            url: '/PlanProduccion/EnvioCodigoValidacionMail',
+            type: 'POST',
+            data: {
+                codigoAutorizacion: codigo,
+                linea: linea,
+                ordenFabricacion: ordenFabricacion
+            }
+        });
+                
+        if (response.Status == 'OK') {
+            LayoutCs.Alerta(
+                "Código de autorización enviado",
+                "Se ha enviado la solicitud de autorización al Supervisor, Analista de Producción o Director correspondiente para validar el cambio de turno.",
+                "OK"
+            );
+            StopLoading();
+            return response;
+           
+        } else {
+            LayoutCs.Alerta("Producción", response.Message);
+            StopLoading();
+            return null;
+            
+        }
+
+    } catch (ex) {
+        StopLoading();
+        return ex.toString();
+    }
 }
 
 //EVENTOS
@@ -2644,6 +2693,7 @@ $(function () {
     //Variables globales 
     let articulo = "";
     let linea = "";
+
 
     ConsultaPlanProduccionCs.turnoActual = null;
     ConsultaPlanProduccionCs.turnoActualM = null;
@@ -3102,98 +3152,133 @@ $(function () {
     });
 
     //Mostrar modal de autorizacion para cambios de turno
-        //Guata y Filtro
-    $(document).on('click', 'input[name="tipoTurno"]', function () {
+    // Guata y Filtro
+    $(document).on('click', 'input[name="tipoTurno"]', async function () {
 
+        let linea = $(this).data('linea');
+        let ordenFabricacion = $(this).data('of');
         let nuevoTurno = $(this).val();
 
         if (nuevoTurno === ConsultaPlanProduccionCs.turnoActual)
             return;
 
         ConsultaPlanProduccionCs.turnoPendiente = nuevoTurno;
-        ConsultaPlanProduccionCs.grupoTurnoPendiente = 'tipoTurno'; // guardamos qué grupo
+        ConsultaPlanProduccionCs.grupoTurnoPendiente = 'tipoTurno';
 
-
-        // Regresar el radio al turno actual
         $('input[name="tipoTurno"][value="' + ConsultaPlanProduccionCs.turnoActual + '"]')
             .prop('checked', true);
 
-        // Limpiar estado del modal antes de abrir
         $('#txtCodigoTurno').val('');
         $('#lblErrorTurno').addClass('d-none');
 
-        let codigoAutorizacion = 1234;
+        // 1. Generar código y esperar
+        let empleado = sessionStorage.getItem("empleado");
+        let codigoAutorizacion = await GeneraCodigoV(empleado, linea, ordenFabricacion);
 
-        //Se envia el correo para el codigo de validación
-        envioCodigoValidacion(codigoAutorizacion).done(function (response) {
-            if (response.Status == 'OK') {
-                $('#modalAutorizacionTurno').modal('show');
-            }
-        });
+        if (codigoAutorizacion == null) return; 
 
+        // 2. Enviar correo y esperar
+        let resultado = await envioCodigoValidacion(codigoAutorizacion, ordenFabricacion, linea);
+
+        if (resultado != null) {
+            $('#modalAutorizacionTurno').modal('show');
+        }
     });
 
-        //Maquila
-    $(document).on('click', 'input[name="tipoTurnoM"]', function () {
+    // Maquila
+    $(document).on('click', 'input[name="tipoTurnoM"]', async function () {
 
+        let ordenFabricacion = $(this).data('of');
+        let linea = $(this).data('linea');
         let nuevoTurno = $(this).val();
 
         if (nuevoTurno === ConsultaPlanProduccionCs.turnoActualM)
             return;
 
         ConsultaPlanProduccionCs.turnoPendiente = nuevoTurno;
-        ConsultaPlanProduccionCs.grupoTurnoPendiente = 'tipoTurnoM'; // guardamos qué grupo
+        ConsultaPlanProduccionCs.grupoTurnoPendiente = 'tipoTurnoM';
 
-
-        // Regresar el radio al turno actual    
         $('input[name="tipoTurnoM"][value="' + ConsultaPlanProduccionCs.turnoActualM + '"]')
             .prop('checked', true);
 
-        // Limpiar estado del modal antes de abrir
         $('#txtCodigoTurno').val('');
         $('#lblErrorTurno').addClass('d-none');
 
-        $('#modalAutorizacionTurno').modal('show');
+        // 1. Generar código y esperar
+        let empleado = sessionStorage.getItem("empleado");
+        let codigoAutorizacion = await GeneraCodigoV(empleado, linea, ordenFabricacion);
 
+        if (codigoAutorizacion == null) return;
+
+        // 2. Enviar correo y esperar
+        let resultado = await envioCodigoValidacion(codigoAutorizacion, ordenFabricacion, linea);
+
+        if (resultado != null) {
+            $('#modalAutorizacionTurno').modal('show');
+        }
     });
-
 
     // ══════════════════════════════════════════════════
     // Validar código — botón VALIDAR del modal
     // ══════════════════════════════════════════════════
-    $(document).on('click', '#btnConfirmarCambio', function () {
-
+    $(document).on('click', '#btnConfirmarCambio', async function () {
+        Loading();
         let codigo = $('#txtCodigoTurno').val().trim();
+              
+        try {
+            const response = await $.ajax({
+                url: '/PlanProduccion/consultaCodigoVerificacion',
+                type: 'GET',
+                data: {
+                    codigo: codigo,                    
+                }
+            });
+            let DatosCVT = JSON.parse(response.Data)
+            if (response.Status == 'OK') {
+                LayoutCs.Alerta(
+                    "Código validado correctamente",
+                    "",
+                    "OK"
+                );
 
-        // 👇 Aquí va tu lógica real de validación (fetch al backend, etc.)
-        let CODIGO_VALIDO = '1234';
+                // Código correcto → aplicar el cambio
+                let grupo = ConsultaPlanProduccionCs.grupoTurnoPendiente;
 
-        if (codigo !== CODIGO_VALIDO) {
-            $('#lblErrorTurno').removeClass('d-none');
-            $('#txtCodigoTurno').val('').focus();
-            return;
+                if (grupo === 'tipoTurno') {
+                    ConsultaPlanProduccionCs.turnoActual = ConsultaPlanProduccionCs.turnoPendiente;
+                    $('input[name="tipoTurno"][value="' + ConsultaPlanProduccionCs.turnoActual + '"]')
+                        .prop('checked', true);
+
+                } else if (grupo === 'tipoTurnoM') {
+                    ConsultaPlanProduccionCs.turnoActualM = ConsultaPlanProduccionCs.turnoPendiente;
+                    $('input[name="tipoTurnoM"][value="' + ConsultaPlanProduccionCs.turnoActualM + '"]')
+                        .prop('checked', true);
+                }
+
+                // Limpiar y cerrar
+                ConsultaPlanProduccionCs.turnoPendiente = null;
+                ConsultaPlanProduccionCs.grupoTurnoPendiente = null;
+                $('#txtCodigoTurno').val('');
+                $('#lblErrorTurno').addClass('d-none');
+                $('#modalAutorizacionTurno').modal('hide');
+                StopLoading();
+                return response;
+            } else {
+
+                $('#lblErrorTurno').removeClass('d-none');
+                $('#txtCodigoTurno').val('').focus();
+                return;
+                LayoutCs.Alerta("Producción", response.Message);
+                StopLoading();
+                return null;
+            }
+            
+
+        } catch (ex) {
+            StopLoading();
+            return ex.toString();
         }
-
-        // Código correcto → aplicar el cambio
-        let grupo = ConsultaPlanProduccionCs.grupoTurnoPendiente;
-
-        if (grupo === 'tipoTurno') {
-            ConsultaPlanProduccionCs.turnoActual = ConsultaPlanProduccionCs.turnoPendiente;
-            $('input[name="tipoTurno"][value="' + ConsultaPlanProduccionCs.turnoActual + '"]')
-                .prop('checked', true);
-
-        } else if (grupo === 'tipoTurnoM') {
-            ConsultaPlanProduccionCs.turnoActualM = ConsultaPlanProduccionCs.turnoPendiente;
-            $('input[name="tipoTurnoM"][value="' + ConsultaPlanProduccionCs.turnoActualM + '"]')
-                .prop('checked', true);
-        }
-
-        // Limpiar y cerrar
-        ConsultaPlanProduccionCs.turnoPendiente = null;
-        ConsultaPlanProduccionCs.grupoTurnoPendiente = null;
-        $('#txtCodigoTurno').val('');
-        $('#lblErrorTurno').addClass('d-none');
-        $('#modalAutorizacionTurno').modal('hide');
+       
     });
 
 
@@ -3280,7 +3365,7 @@ $(function () {
         ConsultaPlanProduccionCs.informacionEncabezadoProd(planProduccion, ordenFabricacion, pedido, linea, cantidad, fechaIni, articulo, estatusColor, estatus, piezasproducidas, tipoProducto, itemCode);
 
         //Armado de paneles para guata y filtro o maquila
-        await ConsultaPlanProduccionCs.armadoPanelesModal(idTipoProducto);
+        await ConsultaPlanProduccionCs.armadoPanelesModal(idTipoProducto, linea, ordenFabricacion);
        
     });
 

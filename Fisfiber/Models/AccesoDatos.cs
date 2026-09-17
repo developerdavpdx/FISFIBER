@@ -133,6 +133,8 @@ namespace Fisfiber.Controllers
         public string GetBitacoraHeaderDetails { get { return "EXEC SpPdxFF_GetBitacoraHeaderDetails @folio,@tabla"; } }
         public string GCGetBitacora { get { return "EXEC SpPdxFF_GetBitacora @folio,@tabla"; } }
         public string GCetBitacoraPlanProduccionDetails { get { return "EXEC SpPdxFF_GetBitacoraPlanProduccionDetails @folio,@revision"; } }
+        public string GCetAsignarCodigoVerificacion { get { return "EXEC SpPdxFF_AsignarCodigoVerificacion @solicitante, @linea, @ordenFabricacion"; } }
+        public string GCetConsultarCodigoVerificacion { get { return "EXEC SpPdxFF_ConsultaCodigoVerificacion @codigo"; } }
 
         /// <summary>
         /// Registra el historial de versiones de el plan de produccion
