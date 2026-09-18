@@ -3530,7 +3530,8 @@ namespace Fisfiber.Controllers
             return correos ?? new List<Correos>();
         }
 
-        //Consultar el codigo de verificacion de autorizacion para cambios de turno
+        //Consultar el codigo de verificacion de autorizacion para cambios de turno (Validar si existe y autenticidad)
+        [HttpGet]
         public JsonResult consultaCodigoVerificacion(string codigo)
         {
             try
@@ -3543,15 +3544,18 @@ namespace Fisfiber.Controllers
                 // Validación del los datos
                 if (CCVT.Contains("Error"))
                 {
-                    return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = CCVT });
+                    return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = CCVT },
+                        JsonRequestBehavior.AllowGet);
                 }
                 //No existe información
                 else if (CCVT.Contains("[]"))
                 {
-                    return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = "No se pudo validar el código de verificación" });
-                }
+                    return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = "No se pudo validar el código de verificación" },
+                        JsonRequestBehavior.AllowGet);
+            }
                 //OK
-                var result = Json(new AccesoDatos.JsonResponse { Data = CCVT });
+                var result = Json(new AccesoDatos.JsonResponse { Status = "OK", Data = CCVT, Message = "Proceso realizado correctamente" },
+                        JsonRequestBehavior.AllowGet);
                 result.MaxJsonLength = 2147483644; //Modificamos directamente el tamaño de la cadena JSON
                 return result;
             }
@@ -3564,8 +3568,9 @@ namespace Fisfiber.Controllers
                 string finalmessage = AD.Excepcion(E, msg).ToString();
                 log.Error($"{finalmessage} - {E.Message}", E);
 
-                return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" });
-            }
+                return Json(new AccesoDatos.JsonResponse { Status = "ERROR", Message = finalmessage.ToString(), Data = "[]" },
+                        JsonRequestBehavior.AllowGet);
+        }
         }
 
 

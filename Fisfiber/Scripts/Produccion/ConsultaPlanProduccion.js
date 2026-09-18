@@ -1247,7 +1247,7 @@
     // ------- Botones de confirmacion GUATA y FILTRO --------
 
     //Confirmacion impresion de materiales
-    ConfirmarPrintEtiqueta() {
+    ConfirmarPrintEtiqueta(modeloGeneraEtiqueta) {
         $.confirm({
 
             theme: 'modern',
@@ -2030,7 +2030,86 @@
 
     //=================================================================================
     //======================== Eventos de botones G y F ===============================
-    
+
+    // En tu clase, un método que construye y valida según el caso
+    async construirModeloEtiqueta(tipoBtnGeneraEtiqueta, $btn) {
+
+        switch (tipoBtnGeneraEtiqueta) {
+
+            case "btn-generaEtiquetaTagGyF": {
+                let tipoEtiqueta = $('input[name="tipoEtiqueta"]:checked').val() || null;
+                let turnoSeleccionado = $('input[name="tipoTurno"]:checked').val() || null;
+
+                // Limpiar errores previos
+                $('#nav-tag .check-tipo-etiquetaGyF').removeClass('is-invalid');
+                $('#nav-tag .check-tipo-turno').removeClass('is-invalid');
+                $('#errorTipoEtiquetaGyF, #errorTurnoGyF').hide();
+
+                let valido = true;
+
+                if (!tipoEtiqueta) {
+                    $('#nav-tag .check-tipo-etiquetaGyF').addClass('is-invalid');
+                    $('#errorTipoEtiquetaGyF').show();
+                    valido = false;
+                }
+                if (!turnoSeleccionado) {
+                    $('#nav-tag .check-tipo-turno').addClass('is-invalid');
+                    $('#errorTurnoGyF').show();
+                    valido = false;
+                }
+
+                if (!valido) return null;
+
+
+                return new GeneracionEtiquetaDto({
+                    tipoBtnGeneraEtiqueta,
+                    tipoEtiqueta: tipoEtiqueta,
+                    turnoEnCurso: turnoSeleccionado,
+                   
+                });
+            }
+
+            case "btn-generaEtiquetaTagM": {
+
+                let tipoEtiqueta = $('input[name="tipoEtiquetaM"]:checked').val() || null;
+                let turnoSeleccionado = $('input[name="tipoTurnoM"]:checked').val() || null;
+
+                // Limpiar errores previos
+                $('#nav-tagM .check-etiquetaM').removeClass('is-invalid');
+                $('#nav-tagM .check-tipo-turno').removeClass('is-invalid');
+                $('#errorTipoEtiquetaM, #errorTurnoM').hide();
+
+                let valido = true;
+
+                if (!tipoEtiqueta) {
+                    $('#nav-tagM .check-etiquetaM').addClass('is-invalid');
+                    $('#errorTipoEtiquetaM').show();
+                    valido = false;
+                }
+                if (!turnoSeleccionado) {
+                    $('#nav-tagM .check-tipo-turno').addClass('is-invalid');
+                    $('#errorTurnoM').show();
+                    valido = false;
+                }
+
+                if (!valido) return null;
+
+
+                return new GeneracionEtiquetaDto({
+                    tipoBtnGeneraEtiqueta,
+                    tipoEtiqueta: tipoEtiqueta,
+                    turnoEnCurso: turnoSeleccionado,
+
+                });
+            }
+
+            default:
+                LayoutCs.Alerta("Etiqueta", "Tipo de botón no reconocido.");
+                return null;
+        }
+    }
+
+
     //Se procesa el guardado de la reserva de polietileno
     procesaGuardadoReservaPolietileno(modeloRPolietileno) {
         try {
@@ -3059,8 +3138,16 @@ $(function () {
 
     //Modales de confirmacion
     //Impresion de materiales
-    $(document).on("click", ".btn-generaEtiqueta", function () {
-        ConsultaPlanProduccionCs.ConfirmarPrintEtiqueta();
+    $(document).on("click", ".btn-generaEtiqueta", async function () {
+        let tipoBtnGeneraEtiqueta = $(this).data('btngeneraetiqueta');
+        let $btn = $(this);
+
+        let modeloGeneraEtiqueta = await ConsultaPlanProduccionCs.construirModeloEtiqueta(tipoBtnGeneraEtiqueta, $btn);
+
+        // Si el modelo viene null es porque algo falló en la construcción/validación
+        if (!modeloGeneraEtiqueta) return;
+
+        ConsultaPlanProduccionCs.ConfirmarPrintEtiqueta(modeloGeneraEtiqueta);
 
     });
 
@@ -3223,7 +3310,7 @@ $(function () {
     // ══════════════════════════════════════════════════
     $(document).on('click', '#btnConfirmarCambio', async function () {
         Loading();
-        let codigo = $('#txtCodigoTurno').val().trim();
+        let codigo = $('#txtCodigoTurno').val().trim().toUpperCase();
               
         try {
             const response = await $.ajax({
@@ -3233,11 +3320,12 @@ $(function () {
                     codigo: codigo,                    
                 }
             });
+            
             let DatosCVT = JSON.parse(response.Data)
-            if (response.Status == 'OK') {
+            if (DatosCVT[0].Estatus == 'OK') {
                 LayoutCs.Alerta(
                     "Código validado correctamente",
-                    "",
+                    "El cambio de turno se realizó correctamente",
                     "OK"
                 );
 
@@ -3267,8 +3355,7 @@ $(function () {
 
                 $('#lblErrorTurno').removeClass('d-none');
                 $('#txtCodigoTurno').val('').focus();
-                return;
-                LayoutCs.Alerta("Producción", response.Message);
+                LayoutCs.Alerta("Código Incorrecto", DatosCVT[0].Mensaje, "ERROR");
                 StopLoading();
                 return null;
             }
@@ -3368,6 +3455,9 @@ $(function () {
         await ConsultaPlanProduccionCs.armadoPanelesModal(idTipoProducto, linea, ordenFabricacion);
        
     });
+
+    // --- Sección Etiquetado
+    
 
     //Seccion de Reserva de polietileno
     $(document).on('click', '#nav-RPolietileno-tab', function () {

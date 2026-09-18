@@ -1293,7 +1293,7 @@
                                                             <input class="form-check-input check-tipo-etiqueta check-tipo-etiquetaGyF"
                                                                    type="radio"
                                                                    name="tipoEtiqueta"
-                                                                   value="conformeGyF"
+                                                                   value="1"
                                                                    id="conformeGyF">
 
                                                             <label class="form-check-label" for="conformeGyF">
@@ -1305,7 +1305,7 @@
                                                             <input class="form-check-input check-tipo-etiqueta check-tipo-etiquetaGyF"
                                                                    type="radio"
                                                                    name="tipoEtiqueta"
-                                                                   value="noConformeGyF"
+                                                                   value="2"
                                                                    id="noConformeGyF">
 
                                                             <label class="form-check-label" for="noConformeGyF">
@@ -1317,7 +1317,7 @@
                                                             <input class="form-check-input check-tipo-etiqueta check-tipo-etiquetaGyF"
                                                                    type="radio"
                                                                    name="tipoEtiqueta"
-                                                                   value="recorteGyF"
+                                                                   value="3"
                                                                    id="recorteGyF">
 
                                                             <label class="form-check-label" for="recorteGyF">
@@ -1329,7 +1329,7 @@
                                                             <input class="form-check-input check-tipo-etiqueta check-tipo-etiquetaGyF"
                                                                    type="radio"
                                                                    name="tipoEtiqueta"
-                                                                   value="rellenoGyF"
+                                                                   value="4"
                                                                    id="rellenoGyF">
 
                                                             <label class="form-check-label" for="rellenoGyF">
@@ -1337,6 +1337,9 @@
                                                             </label>
                                                         </div>
 
+                                                        <div id="errorTipoEtiquetaGyF" class="text-danger small ps-2 mt-1" style="display:none;">
+                                                            <i class="bi bi-exclamation-circle me-1"></i>Debes seleccionar un tipo de etiqueta.
+                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -1354,7 +1357,10 @@
                                                         <div id="checksTurnoHorasGyF">
 
                                                         </div>
-                                                        
+
+                                                        <div id="errorTurnoGyF" class="text-danger small ps-2 mt-1" style="display:none;">
+                                                            <i class="bi bi-exclamation-circle me-1"></i>Debes seleccionar un turno.
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -1888,7 +1894,7 @@
                                                             <input class="form-check-input check-tipo-etiqueta check-etiquetaM"
                                                                    type="radio"
                                                                    name="tipoEtiquetaM"
-                                                                   value="conformeM"
+                                                                   value="1"
                                                                    id="conformeM">
 
                                                             <label class="form-check-label" for="conformeM">
@@ -1900,7 +1906,7 @@
                                                             <input class="form-check-input check-tipo-etiqueta check-etiquetaM"
                                                                    type="radio"
                                                                    name="tipoEtiquetaM"
-                                                                   value="noConformeM"
+                                                                   value="2"
                                                                    id="noConformeM">
 
                                                             <label class="form-check-label" for="noConformeM">
@@ -1912,7 +1918,7 @@
                                                             <input class="form-check-input check-tipo-etiqueta check-etiquetaM"
                                                                    type="radio"
                                                                    name="tipoEtiquetaM"
-                                                                   value="recorteM"
+                                                                   value="3"
                                                                    id="recorteM">
 
                                                             <label class="form-check-label" for="recorteM">
@@ -1924,7 +1930,7 @@
                                                             <input class="form-check-input check-tipo-etiqueta check-etiquetaM"
                                                                    type="radio"
                                                                    name="tipoEtiquetaM"
-                                                                   value="rellenoM"
+                                                                   value="4"
                                                                    id="rellenoM">
 
                                                             <label class="form-check-label" for="rellenoM">
@@ -1932,6 +1938,9 @@
                                                             </label>
                                                         </div>
 
+                                                        <div id="errorTipoEtiquetaM" class="text-danger small ps-2 mt-1" style="display:none;">
+                                                            <i class="bi bi-exclamation-circle me-1"></i>Debes seleccionar un tipo de etiqueta.
+                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -1951,6 +1960,9 @@
 
                                                         </div>
 
+                                                        <div id="errorTurnoM" class="text-danger small ps-2 mt-1" style="display:none;">
+                                                            <i class="bi bi-exclamation-circle me-1"></i>Debes seleccionar un turno.
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -2232,6 +2244,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
 <script src="~/Scripts/Datatables/datatablehelper.js"></script>
+<script src="~/Scripts/Modelos/GeneracionEtiquetaDto.js"></script>
 <script src="~/Scripts/PlanProduccion/ReservaPolietilenoDto.js"></script>
 <script src="~/Scripts/Helpers/PesoAnimator.js"></script>
 <script src="~/Scripts/Produccion/ConsultaPlanProduccion.js?v=1.4.4"></script>

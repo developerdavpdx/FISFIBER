@@ -405,6 +405,7 @@
     <Content Include="ImgPruebas\pruebaEvidencia.png" />
     <Content Include="Scripts\Helpers\pesoAnimator.js" />
     <Content Include="Scripts\Inspeccion\InspeccionProducto.js" />
+    <Content Include="Scripts\Modelos\GeneracionEtiquetaDto.js" />
     <Content Include="Scripts\PlanProduccion\ReservaPolietilenoDto.js" />
     <Content Include="Scripts\Produccion\ReporteOrdenesTrabajo.js" />
     <Content Include="Scripts\Produccion\ConsultaGestionRecetas.js" />
