@@ -905,13 +905,6 @@ div.dt-container .dt-paging .dt-paging-button.disabled {
     cursor: default;
 }
 
-article, aside, figcaption, figure, footer, header, hgroup, main, nav {
-    display: inline-flex !important;
-    width: auto !important;
-    flex: none !important;
-    white-space: nowrap;
-}
-
 /* Labels */
 div.dt-container .dt-length label,
 div.dt-container .dt-search label {

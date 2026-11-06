@@ -993,7 +993,7 @@ class DashboardProduccion {
         //await this.obtenerInfoParos(FI, FF, Linea, Turno, GrupoArticulos);
 
         // Lanzar ambas en paralelo
-        const promesaInspec = this.obtenerInfoInspec(Linea, Turno, GrupoArticulos);
+        const promesaInspec = this.obtenerInfoInspec(Linea, Turno, GrupoArticulos, FI, FF);
         const promesaParos = this.obtenerInfoParos(FI, FF, Linea, Turno, GrupoArticulos);
 
         // Esperar solo la que necesitas
@@ -1694,7 +1694,7 @@ class DashboardProduccion {
         }
     }
 
-    async obtenerInfoInspec(linea, turno, grupoArt) {
+    async obtenerInfoInspec(linea, turno, grupoArt, fi, ff) {
         try {
 
             $("#tablaInspeccion").empty();
@@ -1713,7 +1713,9 @@ class DashboardProduccion {
                 data: {
                     Linea: linea,
                     Turno: turno,
-                    GrupoArticulos: grupoArt
+                    GrupoArticulos: grupoArt,
+                    FI: fi,
+                    FF: ff
                 }
             });
 

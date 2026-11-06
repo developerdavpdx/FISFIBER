@@ -151,4 +151,45 @@ msbuild Fisfiber.sln /t:Build /p:Configuration=Debug "/p:Platform=Any CPU"
   SignalR y Microsoft.Extensions `9.0.5 → 10.0.14`). Validar antes de subir.
 - Faltan 6 SPs `SpPdxFF_*` en `FISYS1` respecto al código (código de
   verificación, turnos/horarios, reserva de polietileno, tipo de producto).
+  **Actualización nov-2026**: los de reserva de polietileno ya se crearon
+  (`database/sp/SpPdxFF_InsertaLineasFyGReservaPolietileno.sql` y
+  `SpPdxFF_GetLineasReservasPolietileno.sql`).
 - `FISYS1` está prácticamente sin datos maestros (artículos, socios).
+
+---
+
+## 7. Dashboard: datos demo y fixes (nov-2026)
+
+`FISYS1` **ya tiene datos de demostración** para el Dashboard de Producción
+(noviembre 2026) y se conservan en la base. Todo lo creado usa el prefijo
+`DEMO` / `MOLIDO` y los almacenes `PROD`, `49`, `26`.
+
+- Detalle completo (qué se creó, cómo, cómo verificarlo y qué limpiar si algún
+  día se requiere): **`docs/dashboard-demo-2026-11.md`**.
+- SPs corregidos y versionados en **`database/sp/`**:
+  - `SpPdxFF_GetMolidoConsumido` (el JOIN producto/componente nunca coincidía).
+  - `SpPdxFF_GetParosMantByFecha` y `...ByDia` (ignoraban `@FI/@FF`).
+  - `SpPdxFF_GetInspeccionesMesActual` (se le agregaron `@FI/@FF` opcionales).
+- La web ahora pasa el rango de fechas a Inspecciones
+  (`AccesoDatos.GCGetInfoInspec`, `DashboardController.GetInfoInspecc`,
+  `Scripts/Dashboard/dashboard.js`; versión de script `?v=1.1.5`).
+- Ojo: varios SPs siguen usando el **mes actual** si no reciben fechas, así que
+  la demo sólo se ve en el mes en que se generaron los datos.
+
+También hay datos demo en otros módulos (mismo documento, sección 7):
+Compras (`3 OCs` + proveedor `DEMO-P001`), Logística (plan de embarques
+`PV-116/117/118`, monitor `M-001`, 2 entregas en `ODLN`), Unidades
+(`@FFISA_ADUNI`) y catálogos de paros/etiquetas/impresoras/capacidades.
+Incluye un **fix de modelo**: `UnidadViewModel.Capacidad` pasó de `int` a
+`decimal` (la vista `/Unidad/Unidades` daba HTTP 500 al haber datos).
+
+Además (sección 8 del documento):
+- Los endpoints `/Produccion/InspeccionProducto`, `/PlanEmb/Index`,
+  `/PlanVentas/Index` y `/Unidad/Index` daban **404** (no existía su vista);
+  ahora redirigen a la pantalla real.
+- **Correos**: destinatarios en `@FFISA_E_MAIL` (códigos
+  `NuevoPlanVentas`, `NotificacionCyC`, `AutPlanEmbarque`, `Logistica`, etc.)
+  apuntando a `pdxdesarrollo@gmail.com` y `Pam3.galvan@gmail.com`. El SMTP ya
+  está **habilitado y probado** (`smtp.gmail.com:587`,
+  `remotedesktoppdx@gmail.com`). La campanita de notificaciones in-app sigue
+  comentada en `_Layout`. 

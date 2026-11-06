@@ -68,7 +68,7 @@ namespace Fisfiber.Controllers
         public string GCGetInfoMesLT { get { return "EXEC SpPdxFF_GetProdByTMesLT @Linea, @FI"; } }
         public string GCGetInfoLineaMesLT { get { return "EXEC SpPdxFF_GetProdLineaTotalMes @Linea, @FI, @FF, @Alm, @NumF"; } }
         public string GCGetInfoParos { get { return "EXEC SpPdxFF_GetParosMantByFecha @FI, @FF, @Linea, @Turno, @GrupoArticulos"; } }
-        public string GCGetInfoInspec { get { return "EXEC SpPdxFF_GetInspeccionesMesActual @Linea, @GrupoArticulos, @Turno"; } }
+        public string GCGetInfoInspec { get { return "EXEC SpPdxFF_GetInspeccionesMesActual @Linea, @GrupoArticulos, @Turno, @FI, @FF"; } }
         public string GCGetByDayParos { get { return "EXEC SpPdxFF_GetParosMantByDia @FI, @FF, @Linea, @Turno, @GrupoArticulos"; } }
         public string GCGetStockByArt { get { return "EXEC SpPdxFF_GetStockByArticulo  @Alm, @Pedido"; } }
 

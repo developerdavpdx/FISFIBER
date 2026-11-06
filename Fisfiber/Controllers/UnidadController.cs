@@ -20,7 +20,7 @@ namespace Fisfiber.Controllers
         // GET: Unidad
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Unidades");
         }
 
         public ActionResult Unidades()

@@ -147,7 +147,9 @@ namespace Fisfiber.Controllers
                 {
                     {"Linea",(Linea == string.Empty ? null : Linea)},
                     {"Turno",(Turno == string.Empty ? null : Turno) },
-                    {"GrupoArticulos",(GrupoArticulos == string.Empty ? null : GrupoArticulos) }
+                    {"GrupoArticulos",(GrupoArticulos == string.Empty ? null : GrupoArticulos) },
+                    {"FI", null },
+                    {"FF", null }
                 };
 
             string inspecciones = Logic.GlobalProcedure(AD.GCGetInfoInspec, AD.RequestParameters);
@@ -446,7 +448,7 @@ namespace Fisfiber.Controllers
             }
         }
 
-        public JsonResult GetInfoInspecc(string Linea, string Turno, string GrupoArticulos)
+        public JsonResult GetInfoInspecc(string Linea, string Turno, string GrupoArticulos, string FI, string FF)
         {
             try
             {
@@ -454,7 +456,9 @@ namespace Fisfiber.Controllers
                 {
                     {"Linea",(Linea == string.Empty ? null : Linea)},
                     {"Turno",(Turno == string.Empty ? null : Turno) },
-                    {"GrupoArticulos",(GrupoArticulos == string.Empty ? null : GrupoArticulos) }
+                    {"GrupoArticulos",(GrupoArticulos == string.Empty ? null : GrupoArticulos) },
+                    {"FI",(string.IsNullOrWhiteSpace(FI) ? null : FI) },
+                    {"FF",(string.IsNullOrWhiteSpace(FF) ? null : FF) }
                 };
 
                 string inspecciones = Logic.GlobalProcedure(AD.GCGetInfoInspec, AD.RequestParameters);

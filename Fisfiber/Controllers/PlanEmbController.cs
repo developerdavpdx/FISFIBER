@@ -47,7 +47,7 @@ namespace Fisfiber.Controllers
         // GET: PlanEmb
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("PlanEmbarques");
         }
 
         public ActionResult PlanEmbarques()

@@ -228,7 +228,7 @@ namespace Fisfiber.Controllers
         // GET: PlanVentas
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("PlanVentas");
         }
 
         public ActionResult PlanVentas()

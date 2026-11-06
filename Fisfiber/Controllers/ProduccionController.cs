@@ -47,7 +47,7 @@ namespace Fisfiber.Controllers
 
         public ActionResult InspeccionProducto()
         {
-            return View();
+            return RedirectToAction("InspeccionProducto", "InspeccionProd");
         }
 
         public ActionResult ReciboSobrantes()

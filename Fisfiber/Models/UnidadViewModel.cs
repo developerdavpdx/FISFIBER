@@ -10,7 +10,7 @@ namespace Fisfiber.Models
     {
         public int Id { get; set; }
         public string TipoUnidad { get; set; }
-        public int Capacidad { get; set; }
+        public decimal Capacidad { get; set; }
         public string EstadoNombre { get; set; }
         public string Comentarios { get; set; }
         public string Operador { get; set; }

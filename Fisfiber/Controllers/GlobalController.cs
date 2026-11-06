@@ -534,44 +534,6 @@ namespace Fisfiber.Controllers
 
 
         [ValidateInput(false)]
-        public ActionResult SendEmail(EmailRequest emailRequest)
-        {
-            try
-            {
-
-                // Configurar el cliente SMTP
-                var smtp = new SmtpClient
-                {
-                    Host = "smtp.office365.com", // Cambia según tu servidor SMTP
-                    Port = 587, // Cambia según el puerto de tu servidor SMTP
-                    EnableSsl = true,
-                    Credentials = new NetworkCredential("soporte@paradox-et.com", "Paradox#2023")
-                };
-
-                // Crear el mensaje de correo
-                var mail = new MailMessage
-                {
-                    From = new MailAddress("soporte@paradox-et.com"),
-                    Subject = emailRequest.Subject,
-                    Body = emailRequest.Body,
-                    IsBodyHtml = emailRequest.IsHtml
-                };
-
-                // Agregar destinatario
-                mail.To.Add(emailRequest.To);
-
-                // Enviar el correo
-                smtp.Send(mail);
-
-                return Json(new { success = true, message = "Correo enviado correctamente" });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = $"Error al enviar el correo: {ex.Message}" });
-            }
-        }
-
-        [ValidateInput(false)]
         public ActionResult SendEmails(EmailRequest emailRequest, string pathImg, List<Correos> correos, string Alias)
         {
             try
