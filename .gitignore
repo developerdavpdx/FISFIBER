@@ -82,3 +82,6 @@ appsettings.Local.json
 Generated/
 ServiceFabricBackup/
 
+
+# CodeGraph (indice local del agente)
+.codegraph/
